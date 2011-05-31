@@ -20,12 +20,76 @@ Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
 JS.require("JS.Class", function() {
 
 	/*	Game Object
-		A game object is pretty much anything.	*/
+		A game object is pretty much anything. It is not physical;
+		that is a Physical Game Object. */
 	
 	Fiesta.GameObject = new JS.Class({
 		
 		// Constructor
 		initialize: function() {
+			this.sprite;
+		},
+		
+		// Get/set sprite
+		getSprite: function() { return this.sprite; },
+		setSprite: function(spr) {
+			// TODO: check if it's a sprite, throw error if not
+				this.sprite = spr;
+		},
+		
+		// Events
+			// TODO: change these to be more event-driven
+		onKeyDown: function(key) {},
+		onKeyUp: function(key) {},
+		onFrame: function(fps) {
+			this.x += this.velocityX / fps;
+			this.y += this.velocityY / fps;
+			this.z += this.velocityZ / fps;
+			this.velocityX += this.accelerationX / fps;
+			this.velocityY += this.accelerationY / fps;
+			this.velocityZ += this.accelerationZ / fps;
+			if (this.frictionX) {
+				var frictX = this.frictionX / fps;
+				if (this.velocityX < 0)
+					frictX = frictX * -1;
+				if (Math.abs(this.velocityX) > Math.abs(frictX))
+					this.velocityX -= frictX;
+				else
+					this.velocityX = 0;
+			}
+			if (this.frictionY) {
+				var frictY = this.frictionY / fps;
+				if (this.velocityY < 0)
+					frictY = frictY * -1;
+				if (Math.abs(this.velocityY) > Math.abs(frictY))
+					this.velocityY -= frictY;
+				else
+					this.velocityY = 0;
+			}
+			if (this.frictionZ) {
+				var frictZ = this.frictionZ / fps;
+				if (this.velocityZ < 0)
+					frictZ = frictZ * -1;
+				if (Math.abs(this.velocityZ) > Math.abs(frictZ))
+					this.velocityZ -= frictZ;
+				else
+					this.velocityZ = 0;
+			}
+		},
+		onDraw: function() {}
+		
+	});
+	
+	/*	Physical Game Object
+		A physical game object can be seen; it has coordinates, speeds,
+		velocities, and more.	*/
+	
+	Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
+		
+		// Constructor
+		initialize: function() {
+			this.callSuper();
+			
 			this.x;
 			this.y;
 			this.z;
@@ -38,7 +102,6 @@ JS.require("JS.Class", function() {
 			this.frictionX;
 			this.frictionY;
 			this.frictionZ;
-			this.sprite;
 			
 			this.setCoordinates(0, 0, 0);
 			this.setVelocityX(0);
@@ -50,13 +113,6 @@ JS.require("JS.Class", function() {
 			this.setFrictionX(0);
 			this.setFrictionY(0);
 			this.setFrictionZ(0);
-		},
-		
-		// Get/set sprite
-		getSprite: function() { return this.sprite; },
-		setSprite: function(spr) {
-			// TODO: check if it's a sprite, throw error if not
-				this.sprite = spr;
 		},
 		
 		// Get/set location
@@ -157,48 +213,7 @@ JS.require("JS.Class", function() {
 				this.frictionZ = f;
 			else
 				throw new TypeError(f + " is not a valid Z friction");
-		},
-		
-		// Events
-			// TODO: change these to be more event-driven
-		onKeyDown: function(key) {},
-		onKeyUp: function(key) {},
-		onFrame: function(fps) {
-			this.x += this.velocityX / fps;
-			this.y += this.velocityY / fps;
-			this.z += this.velocityZ / fps;
-			this.velocityX += this.accelerationX / fps;
-			this.velocityY += this.accelerationY / fps;
-			this.velocityZ += this.accelerationZ / fps;
-			if (this.frictionX) {
-				var frictX = this.frictionX / fps;
-				if (this.velocityX < 0)
-					frictX = frictX * -1;
-				if (Math.abs(this.velocityX) > Math.abs(frictX))
-					this.velocityX -= frictX;
-				else
-					this.velocityX = 0;
-			}
-			if (this.frictionY) {
-				var frictY = this.frictionY / fps;
-				if (this.velocityY < 0)
-					frictY = frictY * -1;
-				if (Math.abs(this.velocityY) > Math.abs(frictY))
-					this.velocityY -= frictY;
-				else
-					this.velocityY = 0;
-			}
-			if (this.frictionZ) {
-				var frictZ = this.frictionZ / fps;
-				if (this.velocityZ < 0)
-					frictZ = frictZ * -1;
-				if (Math.abs(this.velocityZ) > Math.abs(frictZ))
-					this.velocityZ -= frictZ;
-				else
-					this.velocityZ = 0;
-			}
-		},
-		onDraw: function() {}
+		}
 		
 	});
 	
