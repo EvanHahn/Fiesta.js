@@ -3,17 +3,17 @@
 	
 	Please enjoy! */
 
+var Fiesta = {};
+
 /*	Config variables
 	These aim to be user-friendly configuration variables.	*/
 
-var PLAYGROUND_DEFAULT_WIDTH = 400;
-var PLAYGROUND_DEFAULT_HEIGHT = 300;
-var PLAYGROUND_DEFAULT_FPS = 60;
-var PLAYGROUND_DEFAULT_CONTEXT = "2d";
+Fiesta.PLAYGROUND_DEFAULT_WIDTH = 400;
+Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
+Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
+Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
 
 /*	Fiesta namespace */
-
-var Fiesta = {};
 
 /*	Here are all of our classes	*/
 
@@ -331,15 +331,15 @@ JS.require("JS.Class", function() {
 			if (theContext)
 				this.setContext(theContext);
 			else
-				this.setContext(PLAYGROUND_DEFAULT_CONTEXT);
+				this.setContext(Fiesta.PLAYGROUND_DEFAULT_CONTEXT);
 			if (framerate)
 				this.setFPS(framerate);
 			else
-				this.setFPS(PLAYGROUND_DEFAULT_FPS);
+				this.setFPS(Fiesta.PLAYGROUND_DEFAULT_FPS);
 			if (theWidth && theHeight)
 				this.setSize(theWidth, theHeight);
 			else
-				this.setSize(PLAYGROUND_DEFAULT_WIDTH, PLAYGROUND_DEFAULT_HEIGHT);
+				this.setSize(Fiesta.PLAYGROUND_DEFAULT_WIDTH, Fiesta.PLAYGROUND_DEFAULT_HEIGHT);
 		},
 		
 		// Get/set my size
