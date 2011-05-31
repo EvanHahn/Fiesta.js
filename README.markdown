@@ -7,6 +7,8 @@ It is built using [JS.Class](http://jsclass.jcoglan.com/).
 
 It's not done yet!
 
+It is licensed under the MIT License.
+
 Fiesta's goals
 --------------
 
