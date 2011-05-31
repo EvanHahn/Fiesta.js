@@ -27,55 +27,21 @@ JS.require("JS.Class", function() {
 		
 		// Constructor
 		initialize: function() {
-			this.sprite;
+			this._sprite;
 		},
 		
 		// Get/set sprite
-		getSprite: function() { return this.sprite; },
+		getSprite: function() { return this._sprite; },
 		setSprite: function(spr) {
 			// TODO: check if it's a sprite, throw error if not
-				this.sprite = spr;
+				this._sprite = spr;
 		},
 		
 		// Events
 			// TODO: change these to be more event-driven
 		onKeyDown: function(key) {},
 		onKeyUp: function(key) {},
-		onFrame: function(fps) {
-			this.x += this.velocityX / fps;
-			this.y += this.velocityY / fps;
-			this.z += this.velocityZ / fps;
-			this.velocityX += this.accelerationX / fps;
-			this.velocityY += this.accelerationY / fps;
-			this.velocityZ += this.accelerationZ / fps;
-			if (this.frictionX) {
-				var frictX = this.frictionX / fps;
-				if (this.velocityX < 0)
-					frictX = frictX * -1;
-				if (Math.abs(this.velocityX) > Math.abs(frictX))
-					this.velocityX -= frictX;
-				else
-					this.velocityX = 0;
-			}
-			if (this.frictionY) {
-				var frictY = this.frictionY / fps;
-				if (this.velocityY < 0)
-					frictY = frictY * -1;
-				if (Math.abs(this.velocityY) > Math.abs(frictY))
-					this.velocityY -= frictY;
-				else
-					this.velocityY = 0;
-			}
-			if (this.frictionZ) {
-				var frictZ = this.frictionZ / fps;
-				if (this.velocityZ < 0)
-					frictZ = frictZ * -1;
-				if (Math.abs(this.velocityZ) > Math.abs(frictZ))
-					this.velocityZ -= frictZ;
-				else
-					this.velocityZ = 0;
-			}
-		},
+		onFrame: function(fps) {},
 		onDraw: function() {}
 		
 	});
@@ -90,18 +56,18 @@ JS.require("JS.Class", function() {
 		initialize: function() {
 			this.callSuper();
 			
-			this.x;
-			this.y;
-			this.z;
-			this.velocityX;
-			this.velocityY;
-			this.velocityZ;
-			this.accelerationX;
-			this.accelerationY;
-			this.accelerationZ;
-			this.frictionX;
-			this.frictionY;
-			this.frictionZ;
+			this._x;
+			this._y;
+			this._z;
+			this._velocityX;
+			this._velocityY;
+			this._velocityZ;
+			this._accelerationX;
+			this._accelerationY;
+			this._accelerationZ;
+			this._frictionX;
+			this._frictionY;
+			this._frictionZ;
 			
 			this.setCoordinates(0, 0, 0);
 			this.setVelocityX(0);
@@ -116,24 +82,24 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Get/set location
-		getX: function() { return this.x; },
-		getY: function() { return this.y; },
-		getZ: function() { return this.z; },
+		getX: function() { return this._x; },
+		getY: function() { return this._y; },
+		getZ: function() { return this._z; },
 		setX: function(coord) {
 			if (typeof coord === typeof 1.0)
-				this.x = coord;
+				this._x = coord;
 			else
 				throw new TypeError(coord + " is not a valid X coordinate");
 		},
 		setY: function(coord) {
 			if (typeof coord === typeof 1.0)
-				this.y = coord;
+				this._y = coord;
 			else
 				throw new TypeError(coord + " is not a valid Y coordinate");
 		},
 		setZ: function(coord) {
 			if (typeof coord === typeof 1.0)
-				this.z = coord;
+				this._z = coord;
 			else
 				throw new TypeError(coord + " is not a valid Z coordinate");
 		},
@@ -147,72 +113,109 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Get/set velocity
-		getVelocityX: function() { return this.velocityX; },
-		getVelocityY: function() { return this.velocityY; },
-		getVelocityZ: function() { return this.velocityZ; },
+		getVelocityX: function() { return this._velocityX; },
+		getVelocityY: function() { return this._velocityY; },
+		getVelocityZ: function() { return this._velocityZ; },
 		setVelocityX: function(v) {
 			if (typeof v === typeof 1.0)
-				this.velocityX = v;
+				this._velocityX = v;
 			else
 				throw new TypeError(v + " is not a valid X velocity");
 		},
 		setVelocityY: function(v) {
 			if (typeof v === typeof 1.0)
-				this.velocityY = v;
+				this._velocityY = v;
 			else
 				throw new TypeError(v + " is not a valid Y velocity");
 		},
 		setVelocityZ: function(v) {
 			if (typeof v === typeof 1.0)
-				this.velocityZ = v;
+				this._velocityZ = v;
 			else
 				throw new TypeError(v + " is not a valid Z velocity");
 		},
 		
 		// Get/set acceleration
-		getAccelerationX: function() { return this.accelerationX; },
-		getAccelerationY: function() { return this.accelerationY; },
-		getAccelerationZ: function() { return this.accelerationZ; },
+		getAccelerationX: function() { return this._accelerationX; },
+		getAccelerationY: function() { return this._accelerationY; },
+		getAccelerationZ: function() { return this._accelerationZ; },
 		setAccelerationX: function(a) {
 			if (typeof a === typeof 1.0)
-				this.accelerationX = a;
+				this._accelerationX = a;
 			else
 				throw new TypeError(a + " is not a valid X acceleration");
 		},
 		setAccelerationY: function(a) {
 			if (typeof a === typeof 1.0)
-				this.accelerationY = a;
+				this._accelerationY = a;
 			else
 				throw new TypeError(a + " is not a valid Y acceleration");
 		},
 		setAccelerationZ: function(a) {
 			if (typeof a === typeof 1.0)
-				this.accelerationZ = a;
+				this._accelerationZ = a;
 			else
 				throw new TypeError(a + " is not a valid Z acceleration");
 		},
 		
 		// Get/set friction
-		getFrictionX: function() { return this.frictionX; },
-		getFrictionY: function() { return this.frictionY; },
-		getFrictionZ: function() { return this.frictionZ; },
+		getFrictionX: function() { return this._frictionX; },
+		getFrictionY: function() { return this._frictionY; },
+		getFrictionZ: function() { return this._frictionZ; },
 		setFrictionX: function(f) {
 			if (typeof f === typeof 1.0)
-				this.frictionX = f;
+				this._frictionX = f;
 			else
 				throw new TypeError(f + " is not a valid X friction");
 		},
 		setFrictionY: function(f) {
 			if (typeof f === typeof 1.0)
-				this.frictionY = f;
+				this._frictionY = f;
 			else
 				throw new TypeError(f + " is not a valid Y friction");
 		},
 		setFrictionZ: function(f) {
 			if (typeof f === typeof 1.0)
-				this.frictionZ = f;
+				this._frictionZ = f;
 			else
 				throw new TypeError(f + " is not a valid Z friction");
+		},
+		
+		// Physics
+		onFrame: function(fps) {
+			this._x += this._velocityX / fps;
+			this._y += this._velocityY / fps;
+			this._z += this._velocityZ / fps;
+			this._velocityX += this._accelerationX / fps;
+			this._velocityY += this._accelerationY / fps;
+			this._velocityZ += this._accelerationZ / fps;
+			if (this._frictionX) {
+				var frictX = this._frictionX / fps;
+				if (this._velocityX < 0)
+					frictX = frictX * -1;
+				if (Math.abs(this._velocityX) > Math.abs(frictX))
+					this._velocityX -= frictX;
+				else
+					this._velocityX = 0;
+			}
+			if (this._frictionY) {
+				var frictY = this._frictionY / fps;
+				if (this._velocityY < 0)
+					frictY = frictY * -1;
+				if (Math.abs(this._velocityY) > Math.abs(frictY))
+					this._velocityY -= frictY;
+				else
+					this._velocityY = 0;
+			}
+			if (this._frictionZ) {
+				var frictZ = this._frictionZ / fps;
+				if (this.velocityZ < 0)
+					frictZ = frictZ * -1;
+				if (Math.abs(this._velocityZ) > Math.abs(frictZ))
+					this._velocityZ -= frictZ;
+				else
+					this._velocityZ = 0;
+			}
 		}
 		
 	});
@@ -224,11 +227,11 @@ JS.require("JS.Class", function() {
 		
 		// Constructor
 		initialize: function() {
-			this.urls = [];
-			this.currentIndex = 0;
-			this.animateSpeed = 30;
-			this.originX;
-			this.originY;
+			this._urls = [];
+			this._currentIndex = 0;
+			this._animateSpeed = 30;
+			this._originX;
+			this._originY;
 			if (arguments)
 				this.setURLs(arguments);
 			this.setOrigin(0, 0);
@@ -236,17 +239,17 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Get/set my origin
-		getOriginX: function() { return this.originX; },
-		getOriginY: function() { return this.originY; },
+		getOriginX: function() { return this._originX; },
+		getOriginY: function() { return this._originY; },
 		setOriginX: function(coord) {
 			if (typeof coord === typeof 1.0)
-				this.originX = coord;
+				this._originX = coord;
 			else
 				throw new TypeError(coord + " is not a valid X coordinate");
 		},
 		setOriginY: function(coord) {
 			if (typeof coord === typeof 1.0)
-				this.originY = coord;
+				this._originY = coord;
 			else
 				throw new TypeError(coord + " is not a valid Y coordinate");
 		},
@@ -256,34 +259,34 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Get/set my sprite URL
-		getURLs: function() { return this.urls; },
+		getURLs: function() { return this._urls; },
 		setURLs: function() {
 			var u = arguments[0];
 			if (u.length < 1)
 				throw new TypeError("You cannot set sprites to nothing");
-			this.urls.length = 0;	// Empty it out
+			this._urls.length = 0;	// Empty it out
 			for (var i in u) {
 				if (typeof u[i] === typeof "")
-					this.urls[i] = u[i];
+					this._urls[i] = u[i];
 				else
 					throw new TypeError(u[i] + " is not a valid sprite URL");
 			}
-			if (this.urls.length > 1)
+			if (this._urls.length > 1)
 				this.Animate();
 		},
 		
 		// Get and set which index I'm at, and my animation speed
 		Animate: function() {
-			this.currentIndex ++;
-			if (this.currentIndex >= this.urls.length)
-				this.currentIndex = 0;
+			this._currentIndex ++;
+			if (this._currentIndex >= this._urls.length)
+				this._currentIndex = 0;
 			var me = this;	// I have to do this for the setTimeout
-			setTimeout(function() { me.Animate() }, this.animateSpeed);
+			setTimeout(function() { me.Animate() }, this._animateSpeed);
 		},
-		getIndex: function() { return this.currentIndex; },
+		getIndex: function() { return this._currentIndex; },
 		setIndex: function(i) {
 			if ((typeof i === typeof 1) && ((Math.ceil(i) !== i) || i === 0))
-				this.currentIndex = i;
+				this._currentIndex = i;
 			else
 				throw new TypeError(i + " is not a valid index");
 		},
@@ -291,8 +294,8 @@ JS.require("JS.Class", function() {
 		// Get my Image() -- this also preloads!
 		getImage: function() {
 			var img = new Image();
-			if (this.urls)
-				img.src = this.urls[this.currentIndex];
+			if (this._urls)
+				img.src = this._urls[this._currentIndex];
 			return img;
 		}
 		
@@ -305,25 +308,25 @@ JS.require("JS.Class", function() {
 		
 		// Constructor
 		initialize: function(sources) {
-			this.files = sources;
-			this.element;
+			this._files = sources;
+			this._element;
 		},
 		
 		// Play!
 		// I've tried better ways to do this (ie, using HTML5's play() on the
 		// existing element), but those don't seem to work as reliably.
 		play: function() {
-			if (this.element)
-				document.getElementsByTagName("body")[0].removeChild(this.element);
+			if (this._element)
+				document.getElementsByTagName("body")[0].removeChild(this._element);
 			var audio = document.createElement("audio");
 			audio.setAttribute("autoplay", "autoplay");
-			for (var i in this.files) {
+			for (var i in this._files) {
 				var source = document.createElement("source");
-				source.setAttribute("src", this.files[i]);
+				source.setAttribute("src", this._files[i]);
 				audio.appendChild(source);
 			}
 			document.getElementsByTagName("body")[0].appendChild(audio);
-			this.element = audio;
+			this._element = audio;
 		}
 		
 	});
@@ -335,15 +338,14 @@ JS.require("JS.Class", function() {
 		
 		// Constructor
 		initialize: function(theWidth, theHeight, theContext, framerate) {
-			this.width;
-			this.height;
-			this.gameObjects = [];
-			this.element;
-			this.fps;
-			this.context;
-			this.frameNumber = 0;
-			this.redraw = true;
-			this.placeTime;
+			this._width;
+			this._height;
+			this._gameObjects = [];
+			this._element;
+			this._fps;
+			this._context;
+			this._redraw = true;
+			this._timePlaced;
 			if (theContext)
 				this.setContext(theContext);
 			else
@@ -359,22 +361,22 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Get/set my size
-		getWidth: function() { return this.width; },
-		getHeight: function() { return this.height; },
+		getWidth: function() { return this._width; },
+		getHeight: function() { return this._height; },
 		setWidth: function(w) {
 			if ((typeof w === typeof 1) && (w >= 0)) {
-				this.width = w;
-				if (this.element)
-					this.element.setAttribute("width", this.width);
+				this._width = w;
+				if (this._element)
+					this._element.setAttribute("width", this._width);
 			}
 			else
 				throw new TypeError(w + " is not a valid playground width");
 		},
 		setHeight: function(h) {
 			if ((typeof h === typeof 1) && (h >= 0)) {
-				this.height = h;
-				if (this.element)
-					this.element.setAttribute("height", this.height);
+				this._height = h;
+				if (this._element)
+					this._element.setAttribute("height", this._height);
 			}
 			else
 				throw new TypeError(h + " is not a valid playground height");
@@ -385,10 +387,10 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Get/set my frames per second
-		getFPS: function() { return this.fps; },
+		getFPS: function() { return this._fps; },
 		setFPS: function(f) {
 			if ((typeof f === typeof 1) && (f >= 0) && (Math.round(f) === f)) {
-				this.fps = f;
+				this._fps = f;
 			}
 			else
 				throw new TypeError(f + " is not a valid framerate");
@@ -396,44 +398,44 @@ JS.require("JS.Class", function() {
 		
 		// Place me inside the DOM; returns HTMLNode that was placed
 		place: function(domElement) {
-			this.element = document.createElement("canvas");
-			this.element.setAttribute("class", "fiesta_playground");
-			this.element.style.overflow = "hidden";
-			this.element.setAttribute("width", this.width);
-			this.element.setAttribute("height", this.height);
+			this._element = document.createElement("canvas");
+			this._element.setAttribute("class", "fiesta_playground");
+			this._element.style.overflow = "hidden";
+			this._element.setAttribute("width", this._width);
+			this._element.setAttribute("height", this._height);
 			var me = this; // here so next statement works
 			document.onkeydown = function(key) { me.onKeyDown(key); };
 			document.onkeyup = function(key) { me.onKeyUp(key); };
-			domElement.appendChild(this.element);
+			domElement.appendChild(this._element);
 			this.placeTime = Date.now();
-			return this.element;
+			return this._element;
 		},
 		
 		// Interact with DOM element
 		domElementExists: function() {
-			if (this.element)
+			if (this._element)
 				return true;
 			else
 				return false;
 		},
 		getDOMElement: function() {
-			if (this.element)
-				return this.element;
+			if (this._element)
+				return this._element;
 			else
 				throw new Error("This playground is not yet in the DOM, so we can't talk to it");
 		},
 		getContext: function() {
-			return this.element.getContext(this.context);
+			return this._element.getContext(this._context);
 		},
 		setContext: function(c) {
 			if ((c == "2d") || (c === "3d"))
-				this.context = c;
+				this._context = c;
 			else
 				throw new Error(c + " is not a valid context");
 		},
-		getPlaceTime: function() {
-			if (this.placeTime)
-				return this.placeTime;
+		getTimePlaced: function() {
+			if (this._timePlaced)
+				return this._timePlaced;
 			else
 				throw new Error("This playground has not yet been placed.");
 		},
@@ -441,7 +443,7 @@ JS.require("JS.Class", function() {
 		// Spawn a game object inside of this playground
 		spawn: function(object) {
 			// TODO: make sure it's a game object
-			this.gameObjects.push(object);
+			this._gameObjects.push(object);
 		},
 		
 		// Draw a sprite on this playground
@@ -466,13 +468,13 @@ JS.require("JS.Class", function() {
 		
 		// Events
 		onKeyDown: function(key) {
-			for (var i in this.gameObjects) {
-				this.gameObjects[i].onKeyDown(key);
+			for (var i in this._gameObjects) {
+				this._gameObjects[i].onKeyDown(key);
 			}
 		},
 		onKeyUp: function(key) {
-			for (var i in this.gameObjects) {
-				this.gameObjects[i].onKeyUp(key);
+			for (var i in this._gameObjects) {
+				this._gameObjects[i].onKeyUp(key);
 			}
 		},
 		
@@ -480,10 +482,10 @@ JS.require("JS.Class", function() {
 		frame: function() {
 			var thisObject = this;	// Here so the next statement is ok
 			setTimeout(function() { thisObject.frame() }, 1000 / this.getFPS());
-			if (this.redraw)
-				this.getContext().clearRect(0, 0, this.width, this.height);
-			for (var i in this.gameObjects) {
-				var obj = this.gameObjects[i];
+			if (this._redraw)
+				this.getContext().clearRect(0, 0, this._width, this._height);
+			for (var i in this._gameObjects) {
+				var obj = this._gameObjects[i];
 				obj.onFrame(this.getFPS());
 				var spr = obj.getSprite();
 				var img = spr.getImage();
@@ -508,14 +510,14 @@ Fiesta.checkSupport = function() {
 };
 
 // Make a GUID
-Fiesta.guids = [];
+Fiesta._guids = [];
 Fiesta.guid = function() {
 	var guid = Math.floor(Math.random() * Date.now());
-	for (var i in this.guids) {
-		if (this.guids[i] === guid)
+	for (var i in this._guids) {
+		if (this._guids[i] === guid)
 			return this.guid();	// Start over
 	}
-	this.guids.push(guid);
+	this._guids.push(guid);
 	return guid;
 };
 
