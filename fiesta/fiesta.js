@@ -466,6 +466,15 @@ JS.require("JS.Class", function() {
 
 /*	General-purpose functions	*/
 
+// Does my browser support Fiesta?
+	// TODO: audio
+	// TODO: test this
+Fiesta.checkSupport = function() {
+	var canvas = !!document.createElement("canvas").getContext;
+	var audio = true;
+	return (canvas && audio);
+};
+
 // Make a GUID
 Fiesta.guids = [];
 Fiesta.guid = function() {
