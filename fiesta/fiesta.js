@@ -377,7 +377,8 @@ JS.require("JS.Class", function() {
 		
 		// Place me inside the DOM; returns HTMLNode that was placed
 		place: function(domElement) {
-			this.element = document.createElement("canvas");			this.element.setAttribute("class", "fiesta_playground");
+			this.element = document.createElement("canvas");
+			this.element.setAttribute("class", "fiesta_playground");
 			this.element.style.overflow = "hidden";
 			this.element.setAttribute("width", this.width);
 			this.element.setAttribute("height", this.height);
