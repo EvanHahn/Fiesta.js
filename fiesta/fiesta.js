@@ -6,12 +6,10 @@
 /*	Config variables
 	These aim to be user-friendly configuration variables.	*/
 
-// TODO: move some of these out of here (most notably, CONTEXT)
 var PLAYGROUND_DEFAULT_WIDTH = 400;
 var PLAYGROUND_DEFAULT_HEIGHT = 300;
 var PLAYGROUND_DEFAULT_FPS = 60;
-if (!CONTEXT)
-	var CONTEXT = "2d";
+var PLAYGROUND_DEFAULT_CONTEXT = "2d";
 
 /*	Fiesta namespace */
 
@@ -321,14 +319,19 @@ JS.require("JS.Class", function() {
 	Fiesta.Playground = new JS.Class({
 		
 		// Constructor
-		initialize: function(framerate, theWidth, theHeight) {
+		initialize: function(theWidth, theHeight, theContext, framerate) {
 			this.width;
 			this.height;
 			this.gameObjects = [];
 			this.element;
 			this.fps;
+			this.context;
 			this.frameNumber = 0;
 			this.redraw = true;
+			if (theContext)
+				this.setContext(theContext);
+			else
+				this.setContext(PLAYGROUND_DEFAULT_CONTEXT);
 			if (framerate)
 				this.setFPS(framerate);
 			else
@@ -403,7 +406,13 @@ JS.require("JS.Class", function() {
 				throw new Error("This playground is not yet in the DOM, so we can't talk to it");
 		},
 		getContext: function() {
-			return this.element.getContext(CONTEXT);
+			return this.element.getContext(this.context);
+		},
+		setContext: function(c) {
+			if ((c == "2d") || (c === "3d"))
+				this.context = c;
+			else
+				throw new Error(c + " is not a valid context");
 		},
 		
 		// Spawn a game object inside of this playground
