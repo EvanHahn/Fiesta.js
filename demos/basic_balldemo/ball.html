@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<script>
+		FIESTA_PATH = "../../fiesta";
+		JSCLASS_PATH = "../../fiesta/jsclass-min-3.0";
+	</script>
+	<script src="../../fiesta/jsclass-min-3.0/loader.js"></script>
+	<script>
+		JS.Packages(function() { with(this) {
+		file(FIESTA_PATH + "/fiesta.js").provides("Fiesta");
+		file(JSCLASS_PATH + "/core.js").provides("JS.Class");
+		}});
+	</script>
+	
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css">
+
+	<style type="text/css">
+	
+	.fiesta_playground {
+		background-color: #000;
+	}
+	
+	</style>
+	
+</head>
+<body>
+
+	<script type="text/javascript">
+	
+	// Config
+	var room_width = 800;
+	var room_height = 600;
+	
+	JS.require("JS.Class", "Fiesta", function() {
+		
+		// Ballin'
+		var Ball = new JS.Class(Fiesta.GameObject, {
+			
+			// Constructor
+			initialize: function() {
+				
+				// Call super
+				this.callSuper();
+				
+				// Sprites
+				this.spr_ball = new Fiesta.Sprite("ball.gif");
+				this.spr_ball.setOrigin(16, 16);
+				this.setSprite(this.spr_ball);
+				
+				// Config
+				this.friction = 100;
+				this.acceleration = 500;
+				
+				// Go for it!
+				this.setFrictionX(this.friction);
+				this.setFrictionY(this.friction);
+				this.setCoordinates(room_width / 2, room_height / 2);
+				
+			},
+			
+			// Move around
+			onKeyDown: function(key) {
+				console.log(key.keyCode);
+				switch (key.keyCode) {
+					case 38:	// up
+						this.setAccelerationY(this.acceleration * -1);
+						break;
+					case 40:	// down
+						this.setAccelerationY(this.acceleration);
+						break;
+					case 37:	// left
+						this.setAccelerationX(this.acceleration * -1);
+						break;
+					case 39:	// right
+						this.setAccelerationX(this.acceleration);
+						break;
+				}
+			},
+			onKeyUp: function(key) {
+				console.log(key.keyCode);
+				switch (key.keyCode) {
+					case 38:	// up
+						this.setAccelerationY(0);
+						break;
+					case 40:	// down
+						this.setAccelerationY(0);
+						break;
+					case 37:	// left
+						this.setAccelerationX(0);
+						break;
+					case 39:	// right
+						this.setAccelerationX(0);
+						break;
+				}
+			},
+			
+			// On frame
+			onFrame: function() {
+				this.callSuper();
+				if ((this.getX() < (0 + this.getSprite().getOriginX())) || (this.getX() > (room_width - this.getSprite().getOriginX())))
+					this.setVelocityX(this.getVelocityX() * -1)
+				if ((this.getY() < (0 + this.getSprite().getOriginY())) || (this.getY() > (room_height - this.getSprite().getOriginY())))
+					this.setVelocityY(this.getVelocityY() * -1)
+			}
+			
+		});
+		var ball = new Ball();
+		
+		// Set up the playground
+		var playground = new Fiesta.Playground(100, room_width, room_height);
+		playground.place(document.getElementsByTagName("body")[0]);
+		playground.frame();
+		
+		// spawn the object
+		playground.spawn(ball);
+		
+	});
+	
+	</script>
+	
+	<div id="frames"></div>
+
+</body>
+</html>
