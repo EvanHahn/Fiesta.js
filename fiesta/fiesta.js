@@ -328,6 +328,7 @@ JS.require("JS.Class", function() {
 			this.context;
 			this.frameNumber = 0;
 			this.redraw = true;
+			this.placeTime;
 			if (theContext)
 				this.setContext(theContext);
 			else
@@ -389,6 +390,7 @@ JS.require("JS.Class", function() {
 			document.onkeydown = function(key) { me.onKeyDown(key); };
 			document.onkeyup = function(key) { me.onKeyUp(key); };
 			domElement.appendChild(this.element);
+			this.placeTime = Date.now();
 			return this.element;
 		},
 		
@@ -413,6 +415,12 @@ JS.require("JS.Class", function() {
 				this.context = c;
 			else
 				throw new Error(c + " is not a valid context");
+		},
+		getPlaceTime: function() {
+			if (this.placeTime)
+				return this.placeTime;
+			else
+				throw new Error("This playground has not yet been placed.");
 		},
 		
 		// Spawn a game object inside of this playground
