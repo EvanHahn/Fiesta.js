@@ -266,22 +266,22 @@ JS.require("JS.Class", function() {
 				throw new TypeError("You cannot set sprites to nothing");
 			this._urls.length = 0;	// Empty it out
 			for (var i in u) {
-				if (typeof u[i] === typeof "")
+				if (typeof u[i] === typeof "")	// TODO: check file extension
 					this._urls[i] = u[i];
 				else
 					throw new TypeError(u[i] + " is not a valid sprite URL");
 			}
 			if (this._urls.length > 1)
-				this.Animate();
+				this.animate();
 		},
 		
 		// Get and set which index I'm at, and my animation speed
-		Animate: function() {
+		animate: function() {
 			this._currentIndex ++;
 			if (this._currentIndex >= this._urls.length)
 				this._currentIndex = 0;
 			var me = this;	// I have to do this for the setTimeout
-			setTimeout(function() { me.Animate() }, this._animateSpeed);
+			setTimeout(function() { me.animate() }, this._animateSpeed);
 		},
 		getIndex: function() { return this._currentIndex; },
 		setIndex: function(i) {
@@ -308,8 +308,27 @@ JS.require("JS.Class", function() {
 		
 		// Constructor
 		initialize: function(sources) {
-			this._files = sources;
+			this._files = [];
 			this._element;
+			
+			this.setFiles(sources);
+		},
+		
+		// Set the sources
+		setFiles: function(sources) {
+			if (typeof sources === typeof "") {
+				if (Fiesta.getFileExtension(sources) === "")
+				{
+					var soundExtensions = ["ogg", "wav", "mp3"];
+					for (var i in soundExtensions)
+						this._files.push(sources + "." + soundExtensions[i]);
+				} else
+					this._files = [sources];
+			}
+			else if (typeof sources === typeof [])
+				this._files = sources;
+			else
+				throw new Error(sources + " isn't something I can make a sound out of.");
 		},
 		
 		// Play!
@@ -535,6 +554,15 @@ Fiesta.preloadSprites = function() {
 	{
 		arguments[0].getImage();
 	}
+};
+
+// Get the file extension
+Fiesta.getFileExtension = function(filename) {
+	var extension = filename.split(".").pop();
+	if (extension === filename)	// No extension
+		return "";
+	else
+		return extension;
 };
 
 // Convert rotation measurements
