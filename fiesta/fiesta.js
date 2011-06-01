@@ -478,7 +478,8 @@ JS.require("JS.Class", function() {
 			// Check that everything is ok
 			if (!this.domElementExists())
 				throw new TypeError("Cannot draw a sprite on a non-existant canvas");
-				// TODO: make sure it's a sprite
+			if (!(sprite instanceof Fiesta.Sprite))
+				throw new TypeError(sprite + " is not a sprite");
 			if (typeof xCoord !== typeof 1.0)
 				throw new TypeError(xCoord + " is not a valid X coordinate");
 			if (typeof yCoord !== typeof 1.0)
@@ -512,12 +513,16 @@ JS.require("JS.Class", function() {
 			if (this._redraw)
 				this.getContext().clearRect(0, 0, this._width, this._height);
 			for (var i in this._gameObjects) {
-				var obj = this._gameObjects[i];
-				obj.onFrame(this.getFPS());
-				var spr = obj.getSprite();
-				var img = spr.getImage();
-				this.drawSprite(spr, obj.getX(), obj.getY(), img.width, img.height);
-				obj.onDraw();
+				try {
+					var obj = this._gameObjects[i];
+					obj.onFrame(this.getFPS());
+					var spr = obj.getSprite();
+					var img = spr.getImage();
+					this.drawSprite(spr, obj.getX(), obj.getY(), img.width, img.height);
+					obj.onDraw();
+				} catch (e) {
+					console.error(e);
+				}
 			}
 		}
 		
