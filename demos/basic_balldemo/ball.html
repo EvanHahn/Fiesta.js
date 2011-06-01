@@ -67,7 +67,9 @@
 					"left keyup": this.stopX,
 					"right keyup": this.stopX,
 					"up keyup": this.stopY,
-					"down keyup": this.stopY
+					"down keyup": this.stopY,
+					"click": this.random,
+					"rightclick": this.stop
 				});
 				
 			},
@@ -79,6 +81,16 @@
 			moveRight: function() { this.setAccelerationX(this._acceleration); },
 			stopY: function() { this.setAccelerationY(0); },
 			stopX: function() { this.setAccelerationX(0); },
+			stop: function() {
+				this.stopX();
+				this.stopY();
+			},
+			random: function() {
+				var multiplier = 1 - 2 * Math.round(Math.random());
+				this.setVelocityX(multiplier * 1000);
+				multiplier = 1 - 2 * Math.round(Math.random());
+				this.setVelocityY(multiplier * 1000);
+			},
 			
 			// On frame
 			onFrame: function() {

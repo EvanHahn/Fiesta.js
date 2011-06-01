@@ -552,15 +552,42 @@ JS.require("JS.Class", function() {
 
 /*	General-purpose functions	*/
 
-// Bind commands to functions
+// Bind commands to functions (works for any object)
+Fiesta._leftclicks = [];
+Fiesta._rightclicks = [];
+Fiesta._middleclicks = [];
 Fiesta._keydowns = [];
 Fiesta._keyups = [];
 	// TODO: add error checking
 Fiesta.bindCommands = function(object, binds) {
 	
-	// Populate the different command types
+	// Are my modifiers all pressed (if I want them to be)?
+	var modifiersPressed = function(str, key) {
+		var desires = {
+			shift: Fiesta.contains(str, "shift"),
+			control: Fiesta.contains(str, "control") || Fiesta.contains(str, "ctrl"),
+			alt: Fiesta.contains(str, "alt") || Fiesta.contains(str, "opt") || Fiesta.contains(str, "option"),
+			meta: Fiesta.contains(str, "meta")
+		};
+		var shift = !desires.shift || key.shiftKey;
+		var control = !desires.control || key.ctrlKey;
+		var alt = !desires.alt || key.altKey;
+		var meta = !desires.meta || key.metaKey;
+		return (shift && control && alt && meta);
+	};
+	
+	// Populate the different command types, find modifiers
 	for (var i in binds) {
 		switch (Fiesta.getEventType(i)) {
+			case "leftclick":
+				Fiesta._leftclicks.push(i);
+				break;
+			case "rightclick":
+				Fiesta._rightclicks.push(i);
+				break;
+			case "middleclick":
+				Fiesta._middleclicks.push(i);
+				break;
 			case "keyup":
 				Fiesta._keyups.push(i);
 				break;
@@ -571,15 +598,40 @@ Fiesta.bindCommands = function(object, binds) {
 	}
 	
 	// Do the bindings
+	window.oncontextmenu = function() {};
+	window.onclick = function(mouse) {	// TODO: only left click works for now
+		for (var i in Fiesta._leftclicks) {
+			var leftPressed = (mouse.button == 0);	// TODO: IE browser compatibility (button code = 1)
+			var modifiers = modifiersPressed(Fiesta._leftclicks[i], mouse);
+			if (leftPressed && modifiers)
+				binds[Fiesta._leftclicks[i]].call(object);
+		}
+		for (var i in Fiesta._rightclicks) {
+			var rightPressed = (mouse.button == 2);
+			var modifiers = modifiersPressed(Fiesta._rightclicks[i], mouse);
+			if (rightPressed && modifiers)
+				binds[Fiesta._rightclicks[i]].call(object);
+		}
+		for (var i in Fiesta._middleclicks) {
+			var middlePressed = (mouse.button == 1);	// TODO: IE browser compatibility (button code = 4)
+			var modifiers = modifiersPressed(Fiesta._middleclicks[i], mouse);
+			if (middlePressed && modifiers)
+				binds[Fiesta._middleclicks[i]].call(object);
+		}
+	};
 	window.onkeydown = function(key) {
 		for (var i in Fiesta._keydowns) {
-			if (key.keyCode == Fiesta.getKeyCode(Fiesta._keydowns[i]))
+			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keydowns[i]));
+			var modifiers = modifiersPressed(Fiesta._keydowns[i], key);
+			if (keyPressed && modifiers)
 				binds[Fiesta._keydowns[i]].call(object);
 		}
 	};
 	window.onkeyup = function(key) {
 		for (var i in Fiesta._keyups) {
-			if (key.keyCode == Fiesta.getKeyCode(Fiesta._keyups[i]))
+			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keyups[i]));
+			var modifiers = modifiersPressed(Fiesta._keyups[i], key);
+			if (keyPressed && modifiers)
 				binds[Fiesta._keyups[i]].call(object);
 		}
 	};
@@ -590,13 +642,15 @@ Fiesta.bindCommands = function(object, binds) {
 Fiesta.getEventType = function(str) {
 	var command = str.split(" ").join("").toLowerCase();
 	var event = Fiesta.DEFAULT_COMMAND;
-	if (command.indexOf("keyup") !== -1) event = "keyup";
-	if (command.indexOf("keydown") !== -1) event = "keydown";
+	if (Fiesta.contains(command, "click") && !Fiesta.contains(command, "right")) event = "leftclick";	// TODO: default of leftclick is hard-coded in; should be config
+	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) event = "rightclick";
+	if (Fiesta.contains(command, "keyup")) event = "keyup";
+	if (Fiesta.contains(command, "keydown")) event = "keydown";
 		// TODO: more events
 	return event;
 };
 
-// Change command string to keycode
+// Change command name to keycode (simple)
 Fiesta.getKeyCode = function(str) {
 	var translations = {
 		"backspace": 8,
@@ -717,6 +771,8 @@ Fiesta.getKeyCode = function(str) {
 			// TODO: numlock keys
 	};
 	var command = str.split(" ")[0].toLowerCase();
+	if (Fiesta.contains(command, "+"))
+		return Fiesta.getKeyCode(str.split("+")[1]);
 	if (translations[command])
 		return translations[command];
 	else
@@ -767,6 +823,11 @@ Fiesta.getFileExtension = function(filename) {
 		return "";
 	else
 		return extension;
+};
+
+// Does a string contain another string?
+Fiesta.contains = function(str, searching) {
+	return (str.indexOf(searching) !== -1);
 };
 
 // Convert rotation measurements
