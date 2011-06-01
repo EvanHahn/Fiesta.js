@@ -58,6 +58,11 @@ JS.require("JS.Class", function() {
 				throw new TypeError(p + " is not a valid playground");
 		},
 		
+		// Remove me from the playground
+		destroy: function() {
+			this.getPlayground().destroy(this);
+		},
+		
 		// Events
 			// TODO: onSpawn, onDestroy
 		onFrame: function(fps) {},
@@ -485,6 +490,19 @@ JS.require("JS.Class", function() {
 			}
 			else
 				throw new TypeError(object + " is not something that can be spawned");
+		},
+		
+		// Destroy an object inside of this playground
+		destroy: function(object) {
+			if (object instanceof Fiesta.GameObject) {
+				var location = this._gameObjects.indexOf(object);
+				if (location !== -1)
+					this._gameObjects.splice(location, 1);
+				else
+					throw new Error("Looks like there is no object " + object + " to destroy");
+			}
+			else
+				throw new TypeError(object + " is not something that can be destroyed");
 		},
 		
 		// Draw a sprite on this playground
