@@ -33,8 +33,14 @@ JS.require("JS.Class", function() {
 		// Get/set sprite
 		getSprite: function() { return this._sprite; },
 		setSprite: function(spr) {
-			// TODO: check if it's a sprite, throw error if not
+			if (spr instanceof Fiesta.Sprite)
 				this._sprite = spr;
+			else if ((spr instanceof Image) && (spr.src))
+				this._sprite = new Fiesta.Sprite(spr.src);
+			else if (typeof spr === typeof "")
+				this._sprite = new Fiesta.Sprite(spr);
+			else
+				throw new TypeError(spr + " is not a sprite (nor something I can turn into one)");
 		},
 		
 		// Events
