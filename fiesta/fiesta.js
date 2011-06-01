@@ -570,9 +570,5 @@ Fiesta.degreesToRadians = function(d) { return (d * Math.PI) / 180; };
 Fiesta.radiansToDegrees = function(r) { return (r * 180) / Math.pi; };
 
 // Distances between points (2 and 3 dimensions)
-Fiesta.pointDistance2D = function(x1, y1, x2, y2) {
-	return Math.sqrt(Math.pow((x1 - x2),2) + Math.pow(y1 - y2,2));
-};
-Fiesta.pointDistance3D = function(x1, y1, z1, x2, y2, z2) {
-	// TODO
-};
+Fiesta.pointDistance2D = function(x1, y1, x2, y2) { return Fiesta.pointDistance3D(x1, y1, 0, x2, y2, 0); };
+Fiesta.pointDistance3D = function(x1, y1, z1, x2, y2, z2) { return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2)); };
