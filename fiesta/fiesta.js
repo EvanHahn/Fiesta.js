@@ -28,6 +28,7 @@ JS.require("JS.Class", function() {
 		// Constructor
 		initialize: function() {
 			this._sprite;
+			this._playground;
 		},
 		
 		// Get/set sprite
@@ -43,10 +44,22 @@ JS.require("JS.Class", function() {
 				throw new TypeError(spr + " is not a sprite (nor something I can turn into one)");
 		},
 		
+		// Get/set playground
+		getPlayground: function() {
+			if (this._playground)
+				return this._playground;
+			else
+				throw new Error("This object is not yet in a playground");
+		},
+		_setPlayground: function(p) {
+			if (p instanceof Fiesta.Playground)
+				this._playground = p;
+			else
+				throw new TypeError(p + " is not a valid playground");
+		},
+		
 		// Events
-			// TODO: change these to be more event-driven
-		onKeyDown: function(key) {},
-		onKeyUp: function(key) {},
+			// TODO: onSpawn, onDestroy
 		onFrame: function(fps) {},
 		onDraw: function() {}
 		
@@ -188,7 +201,8 @@ JS.require("JS.Class", function() {
 		},
 		
 		// Physics
-		onFrame: function(fps) {
+		onFrame: function() {
+			var fps = this.getPlayground().getFPS();
 			this._x += this._velocityX / fps;
 			this._y += this._velocityY / fps;
 			this._z += this._velocityZ / fps;
@@ -428,9 +442,6 @@ JS.require("JS.Class", function() {
 			this._element.style.overflow = "hidden";
 			this._element.setAttribute("width", this._width);
 			this._element.setAttribute("height", this._height);
-			var me = this; // here so next statement works
-			document.onkeydown = function(key) { me.onKeyDown(key); };
-			document.onkeyup = function(key) { me.onKeyUp(key); };
 			domElement.appendChild(this._element);
 			this.placeTime = Date.now();
 			this.frame();
@@ -468,8 +479,10 @@ JS.require("JS.Class", function() {
 		
 		// Spawn a game object inside of this playground
 		spawn: function(object) {
-			if (object instanceof Fiesta.GameObject)
+			if (object instanceof Fiesta.GameObject) {
 				this._gameObjects.push(object);
+				object._setPlayground(this);
+			}
 			else
 				throw new TypeError(object + " is not something that can be spawned");
 		},
@@ -495,18 +508,6 @@ JS.require("JS.Class", function() {
 			context.drawImage(image, xCoord - sprite.getOriginX(), yCoord - sprite.getOriginY(), spriteWidth, spriteHeight);
 		},
 		
-		// Events
-		onKeyDown: function(key) {
-			for (var i in this._gameObjects) {
-				this._gameObjects[i].onKeyDown(key);
-			}
-		},
-		onKeyUp: function(key) {
-			for (var i in this._gameObjects) {
-				this._gameObjects[i].onKeyUp(key);
-			}
-		},
-		
 		// Do this every frame
 		frame: function() {
 			var thisObject = this;	// Here so the next statement is ok
@@ -516,7 +517,7 @@ JS.require("JS.Class", function() {
 			for (var i in this._gameObjects) {
 				try {
 					var obj = this._gameObjects[i];
-					obj.onFrame(this.getFPS());
+					obj.onFrame();
 					var spr = obj.getSprite();
 					var img = spr.getImage();
 					this.drawSprite(spr, obj.getX(), obj.getY(), img.width, img.height);
