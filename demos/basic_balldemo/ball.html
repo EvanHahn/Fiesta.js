@@ -58,41 +58,27 @@
 				this.setFrictionY(this._friction);
 				this.setCoordinates(room_width / 2, room_height / 2);
 				
+				// Bind commands to behaviors
+				Fiesta.bindCommands(this, {
+					"left keydown": this.moveLeft,
+					"right keydown": this.moveRight,
+					"up keydown": this.moveUp,
+					"down keydown": this.moveDown,
+					"left keyup": this.stopX,
+					"right keyup": this.stopX,
+					"up keyup": this.stopY,
+					"down keyup": this.stopY
+				});
+				
 			},
 			
-			// Move around
-			onKeyDown: function(key) {
-				switch (key.keyCode) {
-					case 38:	// up
-						this.setAccelerationY(this._acceleration * -1);
-						break;
-					case 40:	// down
-						this.setAccelerationY(this._acceleration);
-						break;
-					case 37:	// left
-						this.setAccelerationX(this._acceleration * -1);
-						break;
-					case 39:	// right
-						this.setAccelerationX(this._acceleration);
-						break;
-				}
-			},
-			onKeyUp: function(key) {
-				switch (key.keyCode) {
-					case 38:	// up
-						this.setAccelerationY(0);
-						break;
-					case 40:	// down
-						this.setAccelerationY(0);
-						break;
-					case 37:	// left
-						this.setAccelerationX(0);
-						break;
-					case 39:	// right
-						this.setAccelerationX(0);
-						break;
-				}
-			},
+			// Movement
+			moveUp: function() { this.setAccelerationY(this._acceleration * -1); },
+			moveDown: function() { this.setAccelerationY(this._acceleration); },
+			moveLeft: function() { this.setAccelerationX(this._acceleration * -1); },
+			moveRight: function() { this.setAccelerationX(this._acceleration); },
+			stopY: function() { this.setAccelerationY(0); },
+			stopX: function() { this.setAccelerationX(0); },
 			
 			// On frame
 			onFrame: function() {

@@ -8,12 +8,12 @@ var Fiesta = {};
 /*	Config variables
 	These aim to be user-friendly configuration variables.	*/
 
+Fiesta.DEFAULT_COMMAND = "keydown";
+
 Fiesta.PLAYGROUND_DEFAULT_WIDTH = 400;
 Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
 Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
 Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
-
-/*	Fiesta namespace */
 
 /*	Here are all of our classes	*/
 
@@ -533,6 +533,177 @@ JS.require("JS.Class", function() {
 
 /*	General-purpose functions	*/
 
+// Bind commands to functions
+Fiesta._keydowns = [];
+Fiesta._keyups = [];
+	// TODO: add error checking
+Fiesta.bindCommands = function(object, binds) {
+	
+	// Populate the different command types
+	for (var i in binds) {
+		switch (Fiesta.getEventType(i)) {
+			case "keyup":
+				Fiesta._keyups.push(i);
+				break;
+			case "keydown":
+				Fiesta._keydowns.push(i);
+				break;
+		}
+	}
+	
+	// Do the bindings
+	window.onkeydown = function(key) {
+		for (var i in Fiesta._keydowns) {
+			if (key.keyCode == Fiesta.getKeyCode(Fiesta._keydowns[i]))
+				binds[Fiesta._keydowns[i]].call(object);
+		}
+	};
+	window.onkeyup = function(key) {
+		for (var i in Fiesta._keyups) {
+			if (key.keyCode == Fiesta.getKeyCode(Fiesta._keyups[i]))
+				binds[Fiesta._keyups[i]].call(object);
+		}
+	};
+	
+};
+
+// Extract event from command string
+Fiesta.getEventType = function(str) {
+	var command = str.split(" ").join("").toLowerCase();
+	var event = Fiesta.DEFAULT_COMMAND;
+	if (command.indexOf("keyup") !== -1) event = "keyup";
+	if (command.indexOf("keydown") !== -1) event = "keydown";
+		// TODO: more events
+	return event;
+};
+
+// Change command string to keycode
+Fiesta.getKeyCode = function(str) {
+	var translations = {
+		"backspace": 8,
+		"tab": 9,
+		"enter": 13,
+		"return": 13,
+		"shift": 16,
+		"control": 17,
+		"ctrl": 17,
+		"alt": 18,
+		"opt": 18,
+		"option": 18,
+		"pause/break": 19,
+		"pause": 19,
+		"break": 19,
+		"capslock": 20,
+		"caps": 20,
+		"escape": 27,
+		"esc": 27,
+		"space": 32,
+		"spacebar": 32,
+		"pageup": 33,
+		"pgup": 33,
+		"pagedown": 34,
+		"pgdown": 34,
+		"pagedn": 34,
+		"pgdn": 34,
+		"end": 35,
+		"home": 36,
+		"left": 37,
+		"leftarrow": 37,
+		"up": 38,
+		"uparrow": 38,
+		"right": 39,
+		"rightarrow": 39,
+		"down": 40,
+		"downarrow": 40,
+		"insert": 45,
+		"ins": 45,
+		"delete": 46,
+		"del": 46,
+		"0": 48,
+		"1": 49,
+		"2": 50,
+		"3": 51,
+		"4": 52,
+		"5": 53,
+		"6": 54,
+		"7": 55,
+		"8": 56,
+		"9": 57,
+		";": 59,
+		":": 59,
+		"=": 61,
+		"+": 61,
+		"a": 65,
+		"b": 66,
+		"c": 67,
+		"d": 68,
+		"e": 69,
+		"f": 70,
+		"g": 71,
+		"h": 72,
+		"i": 73,
+		"j": 74,
+		"k": 75,
+		"l": 76,
+		"m": 77,
+		"n": 78,
+		"o": 79,
+		"p": 80,
+		"q": 81,
+		"r": 82,
+		"s": 83,
+		"t": 84,
+		"u": 85,
+		"v": 86,
+		"w": 87,
+		"x": 88,
+		"y": 89,
+		"z": 90,
+		"f1": 112,
+		"f2": 113,
+		"f3": 114,
+		"f4": 115,
+		"f5": 116,
+		"f6": 117,
+		"f7": 118,
+		"f8": 119,
+		"f9": 120,
+		"f10": 121,
+		"f11": 122,
+		"f12": 123,
+		"windows": 91,
+		"meta": 91,
+		"apple": 91,
+		"command": 91,
+		"numlock": 144,
+		"num": 144,
+		"scrolllock": 145,
+		"scroll": 145,
+		"\\": 220,
+		"|": 220,
+		"[": 219,
+		"{": 219,
+		"]": 221,
+		"}": 221,
+		".": 190,
+		">": 190,
+		"/": 191,
+		"?": 191,
+		"`": 192,
+		"~": 192,
+		",": 188,
+		"<": 188,
+		"'": 222,
+		"\"": 222
+			// TODO: numlock keys
+	};
+	var command = str.split(" ")[0].toLowerCase();
+	if (translations[command])
+		return translations[command];
+	else
+		throw new Error(str + " cannot be translated to a keycode");
+};
+
 // Does my browser support Fiesta?
 	// TODO: audio
 	// TODO: test this
@@ -548,7 +719,7 @@ Fiesta.guid = function() {
 	var guid = Math.floor(Math.random() * Date.now());
 	for (var i in this._guids) {
 		if (this._guids[i] === guid)
-			return this.guid();	// Start over
+			return this.guid();	// Start over; we already have this GUID
 	}
 	this._guids.push(guid);
 	return guid;
