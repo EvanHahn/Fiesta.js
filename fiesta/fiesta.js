@@ -433,6 +433,7 @@ JS.require("JS.Class", function() {
 			document.onkeyup = function(key) { me.onKeyUp(key); };
 			domElement.appendChild(this._element);
 			this.placeTime = Date.now();
+			this.frame();
 			return this._element;
 		},
 		
