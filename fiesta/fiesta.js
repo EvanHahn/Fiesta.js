@@ -467,8 +467,10 @@ JS.require("JS.Class", function() {
 		
 		// Spawn a game object inside of this playground
 		spawn: function(object) {
-			// TODO: make sure it's a game object
-			this._gameObjects.push(object);
+			if (object instanceof Fiesta.GameObject)
+				this._gameObjects.push(object);
+			else
+				throw new TypeError(object + " is not something that can be spawned");
 		},
 		
 		// Draw a sprite on this playground
