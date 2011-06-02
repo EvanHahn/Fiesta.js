@@ -14,6 +14,7 @@ if (Fiesta.getBrowser() === "Explorer")	middleButton = 4;
 Fiesta._leftclicks = [];
 Fiesta._rightclicks = [];
 Fiesta._middleclicks = [];
+Fiesta._mousemoves = [];
 Fiesta._keydowns = [];
 Fiesta._keyups = [];
 Fiesta.bindCommands = function(object, binds) {
@@ -51,12 +52,15 @@ Fiesta.bindCommands = function(object, binds) {
 				case "middleclick":
 					Fiesta._middleclicks.push(i);
 					break;
+				case "mousemove":
+					Fiesta._mousemoves.push(i);
+					break;
 				case "keyup":
-					Fiesta.getKeyCode(i);	// Make sure error will be thrown
+					Fiesta.getKeyCode(i);	// Makes sure error will be thrown
 					Fiesta._keyups.push(i);
 					break;
 				case "keydown":
-					Fiesta.getKeyCode(i);	// Make sure error will be thrown
+					Fiesta.getKeyCode(i);	// Makes sure error will be thrown
 					Fiesta._keydowns.push(i);
 					break;
 			}
@@ -80,6 +84,11 @@ Fiesta.bindCommands = function(object, binds) {
 	};
 	
 	// Do the bindings
+	mouseBindTo.onmousemove = function(mouse) {
+		for (var i in Fiesta._mousemoves) {
+			binds[Fiesta._mousemoves[i]].call(object, mouse.clientX, mouse.clientY);
+		}
+	};
 	mouseBindTo.onclick = function(mouse) {
 		for (var i in Fiesta._leftclicks) {
 			var leftPressed = (mouse.button == leftButton);
@@ -124,6 +133,7 @@ Fiesta.getEventType = function(str) {
 	
 	var command = str.split(" ").join("").toLowerCase();
 	
+	if (Fiesta.contains(command, "mouse") && Fiesta.contains(command, "move")) return "mousemove";
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "left")) return "leftclick";
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) return "rightclick";
 	if (Fiesta.contains(command, "click")) return Fiesta.DEFAULT_CLICK;
