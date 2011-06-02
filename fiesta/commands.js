@@ -115,6 +115,9 @@ Fiesta.getEventType = function(str) {
 
 // Change command name to keycode (simple)
 Fiesta.getKeyCode = function(str) {
+	var command = str.split(" ")[0].toLowerCase();
+	if (Fiesta.contains(command, "+"))
+		return Fiesta.getKeyCode(str.split("+")[1]);
 	var translations = {
 		"backspace": 8,
 		"tab": 9,
@@ -232,9 +235,6 @@ Fiesta.getKeyCode = function(str) {
 		"'": 222,
 		"\"": 222
 	};
-	var command = str.split(" ")[0].toLowerCase();
-	if (Fiesta.contains(command, "+"))
-		return Fiesta.getKeyCode(str.split("+")[1]);
 	if (translations[command])
 		return translations[command];
 	else
