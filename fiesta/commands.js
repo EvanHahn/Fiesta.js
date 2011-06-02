@@ -83,13 +83,25 @@ Fiesta.bindCommands = function(object, binds) {
 		return false;
 	};
 	
-	// Do the bindings
-	mouseBindTo.onmousemove = function(mouse) {
-		for (var i in Fiesta._mousemoves) {
-			binds[Fiesta._mousemoves[i]].call(object, mouse.clientX, mouse.clientY);
+	// Get ready to bind! This function does cross-browser binding
+	function addListener(element, event, fn) {
+		if (element.addEventListener) {	// Everything else
+			bubble = false;
+			element.addEventListener(event, fn, bubble);
+		} else if (this.attachEvent) {	// IE
+			element.attachEvent("on" + event, fn);
 		}
-	};
-	mouseBindTo.onclick = function(mouse) {
+	}
+	
+	// Do the bindings
+	addListener(mouseBindTo, "mousemove", function(mouse) {
+		for (var i in Fiesta._mousemoves) {
+			var modifiers = modifiersPressed(Fiesta._mousemoves[i], mouse);
+			if (modifiers)
+				binds[Fiesta._mousemoves[i]].call(object, mouse.clientX, mouse.clientY);
+		}
+	});
+	addListener(mouseBindTo, "click", function(mouse) {
 		for (var i in Fiesta._leftclicks) {
 			var leftPressed = (mouse.button == leftButton);
 			var modifiers = modifiersPressed(Fiesta._leftclicks[i], mouse);
@@ -108,23 +120,23 @@ Fiesta.bindCommands = function(object, binds) {
 			if (middlePressed && modifiers)
 				binds[Fiesta._middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
-	};
-	keyboardBindTo.onkeydown = function(key) {
+	});
+	addListener(keyboardBindTo, "keydown", function(key) {
 		for (var i in Fiesta._keydowns) {
 			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keydowns[i]));
 			var modifiers = modifiersPressed(Fiesta._keydowns[i], key);
 			if (keyPressed && modifiers)
 				binds[Fiesta._keydowns[i]].call(object);
 		}
-	};
-	keyboardBindTo.onkeyup = function(key) {
+	});
+	addListener(keyboardBindTo, "keyup", function(key) {
 		for (var i in Fiesta._keyups) {
 			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keyups[i]));
 			var modifiers = modifiersPressed(Fiesta._keyups[i], key);
 			if (keyPressed && modifiers)
 				binds[Fiesta._keyups[i]].call(object);
 		}
-	};
+	});
 	
 };
 
