@@ -41,9 +41,10 @@ jsClassLoader.onload = function() {
 		file(FIESTA_PATH + "/sound.js").provides("Fiesta.Sound");
 		file(FIESTA_PATH + "/commands.js").provides("Fiesta commands");
 		file(FIESTA_PATH + "/common.js").provides("Fiesta common functions");
+		file(FIESTA_PATH + "/browser-detect.js").provides("Fiesta browser detection");
 	}});
 	
 	// Require anything that's in the core
-	JS.require("JS.Class", "Fiesta commands", "Fiesta common functions", "Fiesta.GameObject", "Fiesta.PhysicalGameObject", "Fiesta.Playground", "Fiesta.Sprite", "Fiesta.Sound");
+	JS.require("JS.Class", "Fiesta commands", "Fiesta common functions", "Fiesta browser detection", "Fiesta.GameObject", "Fiesta.PhysicalGameObject", "Fiesta.Playground", "Fiesta.Sprite", "Fiesta.Sound");
 
 };
