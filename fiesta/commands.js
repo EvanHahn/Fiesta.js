@@ -9,7 +9,6 @@ Fiesta._rightclicks = [];
 Fiesta._middleclicks = [];
 Fiesta._keydowns = [];
 Fiesta._keyups = [];
-	// TODO: add error checking
 Fiesta.bindCommands = function(object, binds) {
 	
 	// Are my modifiers all pressed (if I want them to be)?
@@ -50,9 +49,9 @@ Fiesta.bindCommands = function(object, binds) {
 	
 	// Do the bindings
 	window.oncontextmenu = function() {};
-	window.onclick = function(mouse) {	// TODO: only left click works for now
+	window.onclick = function(mouse) {
 		for (var i in Fiesta._leftclicks) {
-			var leftPressed = (mouse.button == 0);	// TODO: IE browser compatibility (button code = 1)
+			var leftPressed = (mouse.button == 0);
 			var modifiers = modifiersPressed(Fiesta._leftclicks[i], mouse);
 			if (leftPressed && modifiers)
 				binds[Fiesta._leftclicks[i]].call(object);
@@ -64,7 +63,7 @@ Fiesta.bindCommands = function(object, binds) {
 				binds[Fiesta._rightclicks[i]].call(object);
 		}
 		for (var i in Fiesta._middleclicks) {
-			var middlePressed = (mouse.button == 1);	// TODO: IE browser compatibility (button code = 4)
+			var middlePressed = (mouse.button == 1);
 			var modifiers = modifiersPressed(Fiesta._middleclicks[i], mouse);
 			if (middlePressed && modifiers)
 				binds[Fiesta._middleclicks[i]].call(object);
@@ -93,11 +92,10 @@ Fiesta.bindCommands = function(object, binds) {
 Fiesta.getEventType = function(str) {
 	var command = str.split(" ").join("").toLowerCase();
 	var event = Fiesta.DEFAULT_COMMAND;
-	if (Fiesta.contains(command, "click") && !Fiesta.contains(command, "right")) event = "leftclick";	// TODO: default of leftclick is hard-coded in; should be config
+	if (Fiesta.contains(command, "click") && !Fiesta.contains(command, "right")) event = "leftclick";
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) event = "rightclick";
 	if (Fiesta.contains(command, "keyup")) event = "keyup";
 	if (Fiesta.contains(command, "keydown")) event = "keydown";
-		// TODO: more events
 	return event;
 };
 
@@ -219,7 +217,6 @@ Fiesta.getKeyCode = function(str) {
 		"<": 188,
 		"'": 222,
 		"\"": 222
-			// TODO: numlock keys
 	};
 	var command = str.split(" ")[0].toLowerCase();
 	if (Fiesta.contains(command, "+"))

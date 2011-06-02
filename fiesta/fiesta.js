@@ -38,8 +38,8 @@ jsClassLoader.onload = function() {
 		file(FIESTA_PATH + "/playground.js").provides("Fiesta.Playground");
 		file(FIESTA_PATH + "/sprite.js").provides("Fiesta.Sprite");
 		file(FIESTA_PATH + "/sound.js").provides("Fiesta.Sound");
-		file(FIESTA_PATH + "/commands.js").provides("Fiesta commands");	// TODO: this works fine but JS.Package throws an error
-		file(FIESTA_PATH + "/common.js").provides("Fiesta common functions"); // TODO: see above
+		file(FIESTA_PATH + "/commands.js").provides("Fiesta commands");
+		file(FIESTA_PATH + "/common.js").provides("Fiesta common functions");
 	}});
 	
 	// Require anything that's in the core

@@ -44,7 +44,7 @@ Fiesta.Sprite = new JS.Class({
 			throw new TypeError("You cannot set sprites to nothing");
 		this._urls.length = 0;	// Empty it out
 		for (var i in u) {
-			if (typeof u[i] === typeof "")	// TODO: check file extension
+			if (typeof u[i] === typeof "")
 				this._urls[i] = u[i];
 			else
 				throw new TypeError(u[i] + " is not a valid sprite URL");

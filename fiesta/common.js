@@ -2,8 +2,6 @@
 	Here is a hodgepodge of Fiesta functions.	*/
 
 // Does my browser support Fiesta?
-	// TODO: audio
-	// TODO: test this
 Fiesta.checkSupport = function() {
 	var canvas = !!document.createElement("canvas").getContext;
 	var audio = true;
