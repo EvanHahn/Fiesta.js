@@ -47,29 +47,35 @@ Fiesta.bindCommands = function(object, binds) {
 		}
 	}
 	
+	// Where am I binding to?
+	var mouseBindTo = window;
+	try {
+		mouseBindTo = object.getPlayground().getDOMElement();
+	} catch (_) {}
+	var keyboardBindTo = window;
+	
 	// Do the bindings
-	window.oncontextmenu = function() {};
-	window.onclick = function(mouse) {
+	mouseBindTo.onclick = function(mouse) {
 		for (var i in Fiesta._leftclicks) {
 			var leftPressed = (mouse.button == 0);
 			var modifiers = modifiersPressed(Fiesta._leftclicks[i], mouse);
 			if (leftPressed && modifiers)
-				binds[Fiesta._leftclicks[i]].call(object);
+				binds[Fiesta._leftclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in Fiesta._rightclicks) {
 			var rightPressed = (mouse.button == 2);
 			var modifiers = modifiersPressed(Fiesta._rightclicks[i], mouse);
 			if (rightPressed && modifiers)
-				binds[Fiesta._rightclicks[i]].call(object);
+				binds[Fiesta._rightclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in Fiesta._middleclicks) {
 			var middlePressed = (mouse.button == 1);
 			var modifiers = modifiersPressed(Fiesta._middleclicks[i], mouse);
 			if (middlePressed && modifiers)
-				binds[Fiesta._middleclicks[i]].call(object);
+				binds[Fiesta._middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 	};
-	window.onkeydown = function(key) {
+	keyboardBindTo.onkeydown = function(key) {
 		for (var i in Fiesta._keydowns) {
 			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keydowns[i]));
 			var modifiers = modifiersPressed(Fiesta._keydowns[i], key);
@@ -77,7 +83,7 @@ Fiesta.bindCommands = function(object, binds) {
 				binds[Fiesta._keydowns[i]].call(object);
 		}
 	};
-	window.onkeyup = function(key) {
+	keyboardBindTo.onkeyup = function(key) {
 		for (var i in Fiesta._keyups) {
 			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keyups[i]));
 			var modifiers = modifiersPressed(Fiesta._keyups[i], key);

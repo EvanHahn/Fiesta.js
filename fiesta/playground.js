@@ -110,6 +110,7 @@ Fiesta.Playground = new JS.Class({
 		if (object instanceof Fiesta.GameObject) {
 			this._gameObjects.push(object);
 			object._setPlayground(this);
+			object.onSpawn();
 		}
 		else
 			throw new TypeError(object + " is not something that can be spawned");
@@ -119,8 +120,10 @@ Fiesta.Playground = new JS.Class({
 	destroy: function(object) {
 		if (object instanceof Fiesta.GameObject) {
 			var location = this._gameObjects.indexOf(object);
-			if (location !== -1)
+			if (location !== -1) {
 				this._gameObjects.splice(location, 1);
+				object.onDestroy();
+			}
 			else
 				throw new Error("Looks like there is no object " + object + " to destroy");
 		}

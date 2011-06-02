@@ -134,7 +134,8 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 	},
 	
 	// Physics
-	onFrame: function() {
+	onFrame: function(fps) {
+		this.callSuper();
 		var fps = this.getPlayground().getFPS();
 		this._x += this._velocityX / fps;
 		this._y += this._velocityY / fps;

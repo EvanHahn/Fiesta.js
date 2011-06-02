@@ -43,7 +43,9 @@ Fiesta.GameObject = new JS.Class({
 	},
 	
 	// Events
-	onFrame: function(fps) {},
+	onSpawn: function() {},
+	onDestroy: function() {},
+	onFrame: function() {},
 	onDraw: function() {}
 	
 });
