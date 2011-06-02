@@ -3,6 +3,13 @@
 	methods. bindCommands() should work on any object, Fiesta or not (though
 	it does depend on other Fiesta methods).	*/
 
+// Some config variables that probably don't change
+var leftButton = 0;
+if (Fiesta.getBrowser() === "Explorer")	leftButton = 1;
+var rightButton = 2;
+var middleButton = 1;
+if (Fiesta.getBrowser() === "Explorer")	middleButton = 4;
+
 // Bind commands to functions (works for any object)
 Fiesta._leftclicks = [];
 Fiesta._rightclicks = [];
@@ -57,19 +64,19 @@ Fiesta.bindCommands = function(object, binds) {
 	// Do the bindings
 	mouseBindTo.onclick = function(mouse) {
 		for (var i in Fiesta._leftclicks) {
-			var leftPressed = (mouse.button == 0);
+			var leftPressed = (mouse.button == leftButton);
 			var modifiers = modifiersPressed(Fiesta._leftclicks[i], mouse);
 			if (leftPressed && modifiers)
 				binds[Fiesta._leftclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in Fiesta._rightclicks) {
-			var rightPressed = (mouse.button == 2);
+			var rightPressed = (mouse.button == rightButton);
 			var modifiers = modifiersPressed(Fiesta._rightclicks[i], mouse);
 			if (rightPressed && modifiers)
 				binds[Fiesta._rightclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in Fiesta._middleclicks) {
-			var middlePressed = (mouse.button == 1);
+			var middlePressed = (mouse.button == middleButton);
 			var modifiers = modifiersPressed(Fiesta._middleclicks[i], mouse);
 			if (middlePressed && modifiers)
 				binds[Fiesta._middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
