@@ -2,26 +2,18 @@
 <html>
 <head>
 	
+	<!-- Fiesta -->
 	<script>
 		FIESTA_PATH = "../../fiesta";
-		JSCLASS_PATH = "../../fiesta/jsclass-min-3.0";
 	</script>
-	<script src="../../fiesta/jsclass-min-3.0/loader-browser.js"></script>
-	<script>
-		JS.Packages(function() { with(this) {
-		file(FIESTA_PATH + "/fiesta.js").provides("Fiesta");
-		file(JSCLASS_PATH + "/core.js").provides("JS.Class");
-		}});
-	</script>
+	<script src="../../fiesta/fiesta.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css">
-
+	<!-- Styles -->
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css" />
 	<style type="text/css">
-	
-	.fiesta_playground {
-		background-color: #000;
-	}
-	
+		.fiesta_playground {
+			background-color: #000;
+		}
 	</style>
 	
 </head>
@@ -33,7 +25,7 @@
 	var room_width = 400;
 	var room_height = 300;
 	
-	JS.require("JS.Class", "Fiesta", function() {
+	window.onload = function() {
 		
 		// Ballin'
 		var Ball = new JS.Class(Fiesta.PhysicalGameObject, {
@@ -67,9 +59,7 @@
 					"left keyup": this.stopX,
 					"right keyup": this.stopX,
 					"up keyup": this.stopY,
-					"down keyup": this.stopY,
-					"click": this.random,
-					"rightclick": this.stop
+					"down keyup": this.stopY
 				});
 				
 			},
@@ -111,7 +101,7 @@
 		// Spawn the object
 		playground.spawn(ball);
 		
-	});
+	};
 	
 	</script>
 
