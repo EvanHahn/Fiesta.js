@@ -30,7 +30,7 @@ Fiesta.getBrowser = function() {
 			subString: "Chrome",
 			identity: "Chrome"
 		},
-		{ 	
+		{
 			string: navigator.userAgent,
 			subString: "OmniWeb",
 			versionSearch: "OmniWeb/",
