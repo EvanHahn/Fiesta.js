@@ -12,7 +12,7 @@ var Fiesta = {};
 /*	Config variables
 	These aim to be user-friendly configuration variables.	*/
 
-Fiesta.DEFAULT_COMMAND = "keydown";
+Fiesta.DEFAULT_KEYBOARD_COMMAND = "keydown";
 Fiesta.DEFAULT_CLICK = "leftclick";
 
 Fiesta.PLAYGROUND_DEFAULT_WIDTH = 400;

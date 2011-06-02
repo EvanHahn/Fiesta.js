@@ -18,6 +18,10 @@ Fiesta._keydowns = [];
 Fiesta._keyups = [];
 Fiesta.bindCommands = function(object, binds) {
 	
+	// This is an object, right?
+	if (!(object instanceof Object))
+		throw new TypeError(object + " is not an object; I can't bind things to it");
+	
 	// Are my modifiers all pressed (if I want them to be)?
 	var modifiersPressed = function(str, key) {
 		var desires = {
@@ -34,23 +38,30 @@ Fiesta.bindCommands = function(object, binds) {
 	};
 	
 	// Populate the different command types, find modifiers
+	// If there's an error, we should keep going
 	for (var i in binds) {
-		switch (Fiesta.getEventType(i)) {
-			case "leftclick":
-				Fiesta._leftclicks.push(i);
-				break;
-			case "rightclick":
-				Fiesta._rightclicks.push(i);
-				break;
-			case "middleclick":
-				Fiesta._middleclicks.push(i);
-				break;
-			case "keyup":
-				Fiesta._keyups.push(i);
-				break;
-			case "keydown":
-				Fiesta._keydowns.push(i);
-				break;
+		try {
+			switch (Fiesta.getEventType(i)) {
+				case "leftclick":
+					Fiesta._leftclicks.push(i);
+					break;
+				case "rightclick":
+					Fiesta._rightclicks.push(i);
+					break;
+				case "middleclick":
+					Fiesta._middleclicks.push(i);
+					break;
+				case "keyup":
+					Fiesta.getKeyCode(i);	// Make sure error will be thrown
+					Fiesta._keyups.push(i);
+					break;
+				case "keydown":
+					Fiesta.getKeyCode(i);	// Make sure error will be thrown
+					Fiesta._keydowns.push(i);
+					break;
+		}
+		} catch (e) {
+			console.error(e);
 		}
 	}
 	
@@ -103,14 +114,22 @@ Fiesta.bindCommands = function(object, binds) {
 
 // Extract event from command string
 Fiesta.getEventType = function(str) {
+	
 	var command = str.split(" ").join("").toLowerCase();
-	var event = Fiesta.DEFAULT_COMMAND;
-	if (Fiesta.contains(command, "click")) event = Fiesta.DEFAULT_CLICK;
-	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "left")) event = "leftclick";
-	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) event = "rightclick";
-	if (Fiesta.contains(command, "keyup")) event = "keyup";
-	if (Fiesta.contains(command, "keydown")) event = "keydown";
-	return event;
+	
+	if (Fiesta.contains(command, "click")) return Fiesta.DEFAULT_CLICK;
+	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "left")) return "leftclick";
+	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) return "rightclick";
+	if (Fiesta.contains(command, "keyup")) return "keyup";
+	if (Fiesta.contains(command, "keydown")) return "keydown";
+	
+	try {	// We don't know what it is, so maybe it's the default keyboard command?
+		Fiesta.getKeyCode(str);
+		return Fiesta.DEFAULT_KEYBOARD_COMMAND;
+	} catch (_) {
+		throw new Error("Cannot find event type from " + str);
+	}
+	
 };
 
 // Change command name to keycode (simple)
