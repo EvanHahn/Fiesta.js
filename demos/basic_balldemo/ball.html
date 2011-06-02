@@ -36,6 +36,18 @@
 				// Call super
 				this.callSuper();
 				
+				// Bind commands to behaviors
+				Fiesta.bindCommands(this, {
+					"left keydown": this.moveLeft,
+					"right keydown": this.moveRight,
+					"up keydown": this.moveUp,
+					"down keydown": this.moveDown,
+					"left keyup": this.stopX,
+					"right keyup": this.stopX,
+					"up keyup": this.stopY,
+					"down keyup": this.stopY
+				});
+				
 				// Sprites
 				this._spr_ball = new Fiesta.Sprite("ball.gif");
 				this._spr_ball.setOrigin(16, 16);
@@ -49,18 +61,6 @@
 				this.setFrictionX(this._friction);
 				this.setFrictionY(this._friction);
 				this.setCoordinates(room_width / 2, room_height / 2);
-				
-				// Bind commands to behaviors
-				Fiesta.bindCommands(this, {
-					"left keydown": this.moveLeft,
-					"right keydown": this.moveRight,
-					"up keydown": this.moveUp,
-					"down keydown": this.moveDown,
-					"left keyup": this.stopX,
-					"right keyup": this.stopX,
-					"up keyup": this.stopY,
-					"down keyup": this.stopY
-				});
 				
 			},
 			
