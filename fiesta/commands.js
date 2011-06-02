@@ -69,29 +69,22 @@ Fiesta.bindCommands = function(object, binds) {
 		}
 	}
 	
+	// Get ready to bind! This function does cross-browser binding
+	function addListener(element, event, fn) {
+		if (element.addEventListener) {	// Everything else
+			bubble = true;
+			element.addEventListener(event, fn, bubble);
+		} else if (this.attachEvent) {	// IE
+			element.attachEvent("on" + event, fn);
+		}
+	}
+	
 	// Where am I binding to?
 	var mouseBindTo = window;
 	try {
 		mouseBindTo = object.getPlayground().getDOMElement();
 	} catch (_) {}
 	var keyboardBindTo = window;
-	
-	// Bind right click to click, not left click
-	mouseBindTo.oncontextmenu = function(mouse) {
-		mouse.button = rightButton;
-		mouseBindTo.onclick(mouse);
-		return false;
-	};
-	
-	// Get ready to bind! This function does cross-browser binding
-	function addListener(element, event, fn) {
-		if (element.addEventListener) {	// Everything else
-			bubble = false;
-			element.addEventListener(event, fn, bubble);
-		} else if (this.attachEvent) {	// IE
-			element.attachEvent("on" + event, fn);
-		}
-	}
 	
 	// Do the bindings
 	addListener(mouseBindTo, "mousemove", function(mouse) {
@@ -136,6 +129,14 @@ Fiesta.bindCommands = function(object, binds) {
 			if (keyPressed && modifiers)
 				binds[Fiesta._keyups[i]].call(object);
 		}
+	});
+	
+	// Bind right click to click, not some stupid context menu!
+	addListener(mouseBindTo, "contextmenu", function(mouse) {
+		mouse.preventDefault();
+		var ev = document.createEvent("MouseEvents");
+	    ev.initMouseEvent("click", true, true, window, 0, mouse.screenX, mouse.screenY, mouse.clientX, mouse.clientY, mouse.ctrlKey, mouse.altKey, mouse.shiftKey, mouse.metaKey, rightButton, null);
+	    mouseBindTo.dispatchEvent(ev);
 	});
 	
 };
