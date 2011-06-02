@@ -59,7 +59,7 @@ Fiesta.bindCommands = function(object, binds) {
 					Fiesta.getKeyCode(i);	// Make sure error will be thrown
 					Fiesta._keydowns.push(i);
 					break;
-		}
+			}
 		} catch (e) {
 			console.error(e);
 		}
@@ -71,6 +71,13 @@ Fiesta.bindCommands = function(object, binds) {
 		mouseBindTo = object.getPlayground().getDOMElement();
 	} catch (_) {}
 	var keyboardBindTo = window;
+	
+	// Bind right click to click, not left click
+	mouseBindTo.oncontextmenu = function(mouse) {
+		mouse.button = rightButton;
+		mouseBindTo.onclick(mouse);
+		return false;
+	};
 	
 	// Do the bindings
 	mouseBindTo.onclick = function(mouse) {
@@ -117,9 +124,9 @@ Fiesta.getEventType = function(str) {
 	
 	var command = str.split(" ").join("").toLowerCase();
 	
-	if (Fiesta.contains(command, "click")) return Fiesta.DEFAULT_CLICK;
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "left")) return "leftclick";
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) return "rightclick";
+	if (Fiesta.contains(command, "click")) return Fiesta.DEFAULT_CLICK;
 	if (Fiesta.contains(command, "keyup")) return "keyup";
 	if (Fiesta.contains(command, "keydown")) return "keydown";
 	
