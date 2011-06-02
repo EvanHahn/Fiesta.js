@@ -1,5 +1,5 @@
 /*	Fiesta.js - A JavaScript game engine
-	version 0.0.8
+	version 0.1.0
 	
 	This file includes all of the other relevant Fiesta files. Before including this
 	on any HTML page, you must define FIESTA_PATH somewhere, which just points me
