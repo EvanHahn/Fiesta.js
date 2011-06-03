@@ -10,7 +10,7 @@ Fiesta.Playground = new JS.Class({
 		this._width;
 		this._height;
 		this._element;
-		this._fps;
+		this._desiredFPS;
 		this._context;
 		this._redraw;
 		this._timePlaced;
@@ -20,9 +20,9 @@ Fiesta.Playground = new JS.Class({
 		else
 			this.setContext(Fiesta.PLAYGROUND_DEFAULT_CONTEXT);
 		if (framerate)
-			this.setFPS(framerate);
+			this.setDesiredFPS(framerate);
 		else
-			this.setFPS(Fiesta.PLAYGROUND_DEFAULT_FPS);
+			this.setDesiredFPS(Fiesta.PLAYGROUND_DEFAULT_FPS);
 		if (theWidth && theHeight)
 			this.setSize(theWidth, theHeight);
 		else
@@ -57,10 +57,10 @@ Fiesta.Playground = new JS.Class({
 	},
 	
 	// Get/set my frames per second
-	getFPS: function() { return this._fps; },
-	setFPS: function(f) {
+	getDesiredFPS: function() { return this._desiredFPS; },
+	setDesiredFPS: function(f) {
 		if ((typeof f === typeof 1) && (f >= 0) && (Math.round(f) === f)) {
-			this._fps = f;
+			this._desiredFPS = f;
 		}
 		else
 			throw new TypeError(f + " is not a valid framerate");
@@ -167,7 +167,7 @@ Fiesta.Playground = new JS.Class({
 	// Do this every frame
 	frame: function() {
 		var thisObject = this;	// Here so the next statement is ok
-		setTimeout(function() { thisObject.frame() }, 1000 / this.getFPS());
+		setTimeout(function() { thisObject.frame() }, 1000 / this.getDesiredFPS());
 		if (this._redraw)
 			this.getContext().clearRect(0, 0, this._width, this._height);
 		for (var i in this._gameObjects) {
