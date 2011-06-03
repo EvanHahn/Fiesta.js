@@ -43,7 +43,7 @@ Fiesta.Sprite = new JS.Class({
 		if (u.length < 1)
 			throw new TypeError("You cannot set sprites to nothing");
 		this._urls.length = 0;	// Empty it out
-		for (var i in u) {
+		for (var i = 0; i < u.length; i ++) {
 			if (typeof u[i] === typeof "")
 				this._urls[i] = u[i];
 			else
@@ -78,19 +78,3 @@ Fiesta.Sprite = new JS.Class({
 	}
 	
 });
-
-// Preload sprites (given a bunch of sprites)
-Fiesta.preloadSprites = function() {
-	if (arguments.length > 1) {
-		var preloader = new Image();
-		for (var i in arguments) {
-			var urls = arguments[i].getURLs();
-			for (var j in urls)
-				preloader.src = urls[j];
-		}
-	}
-	else
-	{
-		arguments[0].getImage();
-	}
-};

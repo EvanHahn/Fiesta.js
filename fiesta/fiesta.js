@@ -20,31 +20,49 @@ Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
 Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
 Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
 
-/*	Let's load everything that we need	*/
+/*	Load a file into the <head>	*/
 
-var JSCLASS_FOLDER = "jsclass-min-3.0";
-var JSCLASS_LOADER = "loader-browser.js";
-var jsClassPath = FIESTA_PATH + "/" + JSCLASS_FOLDER + "/";
-var jsClassLoader = document.createElement("script");
-jsClassLoader.setAttribute("src", FIESTA_PATH + "/" + JSCLASS_FOLDER + "/" + JSCLASS_LOADER);
-document.head.appendChild(jsClassLoader);
-jsClassLoader.onload = function() {
+Fiesta.loadScript = function(src, callback) {
+	var script = document.createElement("script");
+	script.setAttribute("src", src);
+	document.head.appendChild(script);
+	if (callback)
+		script.onload = callback;
+};
+
+/*	Fiesta is ready	*/
+
+Fiesta.ready = function(callback) {
 	
-	// Set up what's what
-	JS.Packages(function() { with(this) {
-		file(jsClassPath + "/core.js").provides("JS.Class");
-		file(FIESTA_PATH + "/fiesta.js").provides("Fiesta");
-		file(FIESTA_PATH + "/gameobject.js").provides("Fiesta.GameObject");
-		file(FIESTA_PATH + "/physicalgameobject.js").provides("Fiesta.PhysicalGameObject");
-		file(FIESTA_PATH + "/playground.js").provides("Fiesta.Playground");
-		file(FIESTA_PATH + "/sprite.js").provides("Fiesta.Sprite");
-		file(FIESTA_PATH + "/sound.js").provides("Fiesta.Sound");
-		file(FIESTA_PATH + "/commands.js").provides("Fiesta commands");
-		file(FIESTA_PATH + "/common.js").provides("Fiesta common functions");
-		file(FIESTA_PATH + "/browser-detect.js").provides("Fiesta browser detection");
-	}});
+	// A little cleanup time
+	var FIESTA_PATH = window.FIESTA_PATH;
+	window.FIESTA_PATH = undefined;
 	
-	// Require anything that's in the core
-	JS.require("JS.Class", "Fiesta browser detection", "Fiesta common functions", "Fiesta commands", "Fiesta.GameObject", "Fiesta.PhysicalGameObject", "Fiesta.Playground", "Fiesta.Sprite", "Fiesta.Sound");
+	// Let's load everything that we need
+	var JSCLASS_FOLDER = "jsclass-min-3.0";
+	var JSCLASS_LOADER = "loader-browser.js";
+	Fiesta.loadScript(FIESTA_PATH + "/" + JSCLASS_FOLDER + "/" + JSCLASS_LOADER, function() {
+		
+		// Set up what's what
+		JS.Packages(function() { with(this) {
+			file(FIESTA_PATH + "/" + JSCLASS_FOLDER + "/core.js").provides("JS.Class");
+			file(FIESTA_PATH + "/fiesta.js").provides("Fiesta");
+			file(FIESTA_PATH + "/gameobject.js").provides("Fiesta.GameObject").requires("JS.Class");
+			file(FIESTA_PATH + "/physicalgameobject.js").provides("Fiesta.PhysicalGameObject").requires("JS.Class");
+			file(FIESTA_PATH + "/playground.js").provides("Fiesta.Playground").requires("JS.Class");
+			file(FIESTA_PATH + "/sprite.js").provides("Fiesta.Sprite").requires("JS.Class");
+			file(FIESTA_PATH + "/sound.js").provides("Fiesta.Sound").requires("JS.Class");
+		}});
+		
+		// Load it all (unfortunately, this doesn't all seem to work with JS.Packages
+		Fiesta.loadScript(FIESTA_PATH + "/browser-detect.js", function() {
+			Fiesta.loadScript(FIESTA_PATH + "/common.js", function() {
+				Fiesta.loadScript(FIESTA_PATH + "/commands.js", function() {
+					JS.require("JS.Class", "Fiesta.GameObject", "Fiesta.PhysicalGameObject", "Fiesta.Playground", "Fiesta.Sprite", "Fiesta.Sound", callback);
+				});
+			});
+		});
+	
+	});
 
 };

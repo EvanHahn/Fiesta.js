@@ -151,7 +151,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 	getMomentum: function() { return this._mass * this.getVelocity(); },
 	
 	// Physics
-	onFrame: function(fps) {
+	onFrame: function() {
 		this.callSuper();
 		var fps = this.getPlayground().getFPS();
 		this._x += this._velocityX / fps;
@@ -160,7 +160,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 		this._velocityX += this._accelerationX / fps;
 		this._velocityY += this._accelerationY / fps;
 		this._velocityZ += this._accelerationZ / fps;
-		if (this._frictionX) {
+		if (this._frictionX !== 0) {
 			var frictX = this._frictionX / fps;
 			if (this._velocityX < 0)
 				frictX = frictX * -1;
@@ -169,7 +169,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 			else
 				this._velocityX = 0;
 		}
-		if (this._frictionY) {
+		if (this._frictionY !== 0) {
 			var frictY = this._frictionY / fps;
 			if (this._velocityY < 0)
 				frictY = frictY * -1;
@@ -178,7 +178,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 			else
 				this._velocityY = 0;
 		}
-		if (this._frictionZ) {
+		if (this._frictionZ !== 0) {
 			var frictZ = this._frictionZ / fps;
 			if (this.velocityZ < 0)
 				frictZ = frictZ * -1;
