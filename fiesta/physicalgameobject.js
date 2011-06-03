@@ -20,6 +20,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 		this._frictionX;
 		this._frictionY;
 		this._frictionZ;
+		this._mass;
 		
 		this.setCoordinates(0, 0, 0);
 		this.setVelocityX(0);
@@ -31,6 +32,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 		this.setFrictionX(0);
 		this.setFrictionY(0);
 		this.setFrictionZ(0);
+		this.setMass(1);
 	},
 	
 	// Get/set location
@@ -68,6 +70,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 	getVelocityX: function() { return this._velocityX; },
 	getVelocityY: function() { return this._velocityY; },
 	getVelocityZ: function() { return this._velocityZ; },
+	getVelocity: function() { return Fiesta.vectorLength(this._velocityX, this._velocityY, this._velocityZ); },
 	setVelocityX: function(v) {
 		if (typeof v === typeof 1.0)
 			this._velocityX = v;
@@ -91,6 +94,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 	getAccelerationX: function() { return this._accelerationX; },
 	getAccelerationY: function() { return this._accelerationY; },
 	getAccelerationZ: function() { return this._accelerationZ; },
+	getAcceleration: function() { return Fiesta.vectorLength(this._accelerationX, this._accelerationY, this._accelerationZ); },
 	setAccelerationX: function(a) {
 		if (typeof a === typeof 1.0)
 			this._accelerationX = a;
@@ -114,6 +118,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 	getFrictionX: function() { return this._frictionX; },
 	getFrictionY: function() { return this._frictionY; },
 	getFrictionZ: function() { return this._frictionZ; },
+	getFriction: function() { return Fiesta.vectorLength(this._frictionX, this._frictionY, this._frictionZ); },
 	setFrictionX: function(f) {
 		if (typeof f === typeof 1.0)
 			this._frictionX = f;
@@ -132,6 +137,18 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 		else
 			throw new TypeError(f + " is not a valid Z friction");
 	},
+	
+	// Get/set mass
+	getMass: function() { return this._mass; },
+	setMass: function(m) {
+		if (typeof m === typeof 1.0)
+			this._mass = m;
+		else
+			throw new TypeError(m + " is not a valid mass");
+	},
+	
+	// Extrapolated functions
+	getMomentum: function() { return this._mass * this.getVelocity(); },
 	
 	// Physics
 	onFrame: function(fps) {
