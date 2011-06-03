@@ -12,7 +12,7 @@ Fiesta.Playground = new JS.Class({
 		this._element;
 		this._fps;
 		this._context;
-		this._redraw = true;
+		this._redraw;
 		this._timePlaced;
 		
 		if (theContext)
@@ -27,6 +27,7 @@ Fiesta.Playground = new JS.Class({
 			this.setSize(theWidth, theHeight);
 		else
 			this.setSize(Fiesta.PLAYGROUND_DEFAULT_WIDTH, Fiesta.PLAYGROUND_DEFAULT_HEIGHT);
+		this.setRedraw(true);
 	},
 	
 	// Get/set my size
@@ -63,6 +64,15 @@ Fiesta.Playground = new JS.Class({
 		}
 		else
 			throw new TypeError(f + " is not a valid framerate");
+	},
+	
+	// Get/set redraw
+	getRedraw: function() { return this._redraw; },
+	setRedraw: function(r) {
+		if (typeof r === typeof true)
+			this._redraw = r;
+		else
+			throw new TypeError("Cannot set redrawing to " + r);
 	},
 	
 	// Place me inside the DOM; returns HTMLNode that was placed
