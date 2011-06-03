@@ -3,25 +3,27 @@
 	methods. bindCommands() should work on any object, Fiesta or not (though
 	it does depend on other Fiesta methods).	*/
 
-// Some config variables that probably don't change
-var leftButton = 0;
-if (Fiesta.getBrowser() === "Explorer")	leftButton = 1;
-var rightButton = 2;
-var middleButton = 1;
-if (Fiesta.getBrowser() === "Explorer")	middleButton = 4;
-
 // Bind commands to functions (works for any object)
-Fiesta._leftclicks = [];
-Fiesta._rightclicks = [];
-Fiesta._middleclicks = [];
-Fiesta._mousemoves = [];
-Fiesta._keydowns = [];
-Fiesta._keyups = [];
 Fiesta.bindCommands = function(object, binds) {
 	
 	// This is an object, right?
 	if (!(object instanceof Object))
 		throw new TypeError(object + " is not an object; I can't bind things to it");
+	
+	// Set up the list of variables
+	var leftclicks = [];
+	var rightclicks = [];
+	var middleclicks = [];
+	var mousemoves = [];
+	var keydowns = [];
+	var keyups = [];
+	
+	// Some mouse config variables that probably don't change
+	var leftButton = 0;
+	if (Fiesta.getBrowser() === "Explorer")	leftButton = 1;
+	var rightButton = 2;
+	var middleButton = 1;
+	if (Fiesta.getBrowser() === "Explorer")	middleButton = 4;
 	
 	// Are my modifiers all pressed (if I want them to be)?
 	var modifiersPressed = function(str, key) {
@@ -44,24 +46,24 @@ Fiesta.bindCommands = function(object, binds) {
 		try {
 			switch (Fiesta.getEventType(i)) {
 				case "leftclick":
-					Fiesta._leftclicks.push(i);
+					leftclicks.push(i);
 					break;
 				case "rightclick":
-					Fiesta._rightclicks.push(i);
+					rightclicks.push(i);
 					break;
 				case "middleclick":
-					Fiesta._middleclicks.push(i);
+					middleclicks.push(i);
 					break;
 				case "mousemove":
-					Fiesta._mousemoves.push(i);
+					mousemoves.push(i);
 					break;
 				case "keyup":
 					Fiesta.getKeyCode(i);	// Makes sure error will be thrown
-					Fiesta._keyups.push(i);
+					keyups.push(i);
 					break;
 				case "keydown":
 					Fiesta.getKeyCode(i);	// Makes sure error will be thrown
-					Fiesta._keydowns.push(i);
+					keydowns.push(i);
 					break;
 			}
 		} catch (e) {
@@ -88,46 +90,46 @@ Fiesta.bindCommands = function(object, binds) {
 	
 	// Do the bindings
 	addListener(mouseBindTo, "mousemove", function(mouse) {
-		for (var i in Fiesta._mousemoves) {
-			var modifiers = modifiersPressed(Fiesta._mousemoves[i], mouse);
+		for (var i in mousemoves) {
+			var modifiers = modifiersPressed(mousemoves[i], mouse);
 			if (modifiers)
-				binds[Fiesta._mousemoves[i]].call(object, mouse.clientX, mouse.clientY);
+				binds[mousemoves[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 	});
 	addListener(mouseBindTo, "click", function(mouse) {
-		for (var i in Fiesta._leftclicks) {
+		for (var i in leftclicks) {
 			var leftPressed = (mouse.button == leftButton);
-			var modifiers = modifiersPressed(Fiesta._leftclicks[i], mouse);
+			var modifiers = modifiersPressed(leftclicks[i], mouse);
 			if (leftPressed && modifiers)
-				binds[Fiesta._leftclicks[i]].call(object, mouse.clientX, mouse.clientY);
+				binds[leftclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
-		for (var i in Fiesta._rightclicks) {
+		for (var i in rightclicks) {
 			var rightPressed = (mouse.button == rightButton);
-			var modifiers = modifiersPressed(Fiesta._rightclicks[i], mouse);
+			var modifiers = modifiersPressed(rightclicks[i], mouse);
 			if (rightPressed && modifiers)
-				binds[Fiesta._rightclicks[i]].call(object, mouse.clientX, mouse.clientY);
+				binds[rightclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
-		for (var i in Fiesta._middleclicks) {
+		for (var i in middleclicks) {
 			var middlePressed = (mouse.button == middleButton);
-			var modifiers = modifiersPressed(Fiesta._middleclicks[i], mouse);
+			var modifiers = modifiersPressed(middleclicks[i], mouse);
 			if (middlePressed && modifiers)
-				binds[Fiesta._middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
+				binds[middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 	});
 	addListener(keyboardBindTo, "keydown", function(key) {
-		for (var i in Fiesta._keydowns) {
-			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keydowns[i]));
-			var modifiers = modifiersPressed(Fiesta._keydowns[i], key);
+		for (var i in keydowns) {
+			var keyPressed = (key.keyCode == Fiesta.getKeyCode(keydowns[i]));
+			var modifiers = modifiersPressed(keydowns[i], key);
 			if (keyPressed && modifiers)
-				binds[Fiesta._keydowns[i]].call(object);
+				binds[keydowns[i]].call(object);
 		}
 	});
 	addListener(keyboardBindTo, "keyup", function(key) {
-		for (var i in Fiesta._keyups) {
-			var keyPressed = (key.keyCode == Fiesta.getKeyCode(Fiesta._keyups[i]));
-			var modifiers = modifiersPressed(Fiesta._keyups[i], key);
+		for (var i in keyups) {
+			var keyPressed = (key.keyCode == Fiesta.getKeyCode(keyups[i]));
+			var modifiers = modifiersPressed(keyups[i], key);
 			if (keyPressed && modifiers)
-				binds[Fiesta._keyups[i]].call(object);
+				binds[keyups[i]].call(object);
 		}
 	});
 	

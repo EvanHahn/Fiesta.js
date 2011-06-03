@@ -5,14 +5,16 @@ Fiesta.Playground = new JS.Class({
 	
 	// Constructor
 	initialize: function(theWidth, theHeight, theContext, framerate) {
+		this._gameObjects = [];
+		
 		this._width;
 		this._height;
-		this._gameObjects = [];
 		this._element;
 		this._fps;
 		this._context;
 		this._redraw = true;
 		this._timePlaced;
+		
 		if (theContext)
 			this.setContext(theContext);
 		else

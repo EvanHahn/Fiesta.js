@@ -22,7 +22,7 @@
 	<script>
 	
 	// Config
-	var room_width = 400;
+	var room_width = 800;
 	var room_height = 300;
 	
 	window.onload = function() {
@@ -43,6 +43,7 @@
 				
 				// Config
 				this._friction = 100;
+				this._velocityBump = 200;
 				this._acceleration = 500;
 				this._gravity = 500;
 				this._jumpSpeed = 500;
@@ -55,8 +56,16 @@
 			},
 			
 			// Movement
-			moveLeft: function() { this.setAccelerationX(this._acceleration * -1); },
-			moveRight: function() { this.setAccelerationX(this._acceleration); },
+			moveLeft: function() {
+				if (this.getVelocityX() === 0)
+					this.setVelocityX(this._velocityBump * -1);
+				this.setAccelerationX(this._acceleration * -1);
+			},
+			moveRight: function() {
+				if (this.getVelocityX() === 0)
+					this.setVelocityX(this._velocityBump);
+				this.setAccelerationX(this._acceleration);
+			},
 			stopX: function() { this.setAccelerationX(0); },
 			jump: function() { this.setVelocityY(-this._jumpSpeed); },
 			sayPoint: function(x, y) {
