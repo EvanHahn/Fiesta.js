@@ -39,7 +39,7 @@ Fiesta.bindCommands = function(object, binds) {
 	};
 	
 	// Populate the different command types, find modifiers
-	// If there's an error, we should keep going
+	// If there's an error, we just should keep going, but dump error to log
 	for (var i in binds) {
 		try {
 			switch (Fiesta.getEventType(i)) {

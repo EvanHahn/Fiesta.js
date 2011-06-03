@@ -44,24 +44,21 @@
 				// Config
 				this._friction = 100;
 				this._acceleration = 500;
+				this._gravity = 500;
+				this._jumpSpeed = 500;
 				
 				// Go for it!
 				this.setFrictionX(this._friction);
 				this.setFrictionY(this._friction);
+				this.setAccelerationY(this._gravity);
 				
 			},
 			
 			// Movement
-			moveUp: function() { this.setAccelerationY(this._acceleration * -1); },
-			moveDown: function() { this.setAccelerationY(this._acceleration); },
 			moveLeft: function() { this.setAccelerationX(this._acceleration * -1); },
 			moveRight: function() { this.setAccelerationX(this._acceleration); },
-			stopY: function() { this.setAccelerationY(0); },
 			stopX: function() { this.setAccelerationX(0); },
-			stop: function() {
-				this.stopX();
-				this.stopY();
-			},
+			jump: function() { this.setVelocityY(-this._jumpSpeed); },
 			sayPoint: function(x, y) {
 				console.log(x, y);
 			},
@@ -72,13 +69,9 @@
 				Fiesta.bindCommands(this, {
 					"left": this.moveLeft,
 					"right keydown": this.moveRight,
-					"up keydown": this.moveUp,
-					"down keydown": this.moveDown,
 					"left keyup": this.stopX,
 					"right keyup": this.stopX,
-					"up keyup": this.stopY,
-					"down keyup": this.stopY,
-					"control+mousemove": this.sayPoint
+					"space": this.jump
 				});
 			},
 			
@@ -97,12 +90,10 @@
 		var playground = new Fiesta.Playground(room_width, room_height, "2d", 60);
 		playground.place(document.getElementsByTagName("body")[0]);
 		
-		// Spawn the objects
-		for (var i = 0; i < 4; i ++) {
-			var ball = new Ball();
-			ball.setCoordinates(room_width * Math.random(), room_height * Math.random());
-			playground.spawn(ball);
-		}
+		// Spawn the object
+		var ball = new Ball();
+		ball.setCoordinates((room_width - 32) * Math.random() + 16, (room_height - 32) * Math.random() + 16);
+		playground.spawn(ball);
 		
 	};
 	
