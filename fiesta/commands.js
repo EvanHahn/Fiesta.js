@@ -91,44 +91,38 @@ Fiesta.bindCommands = function(object, binds) {
 	// Do the bindings
 	addListener(mouseBindTo, "mousemove", function(mouse) {
 		for (var i in mousemoves) {
-			var modifiers = modifiersPressed(mousemoves[i], mouse);
-			if (modifiers)
+			if (modifiersPressed(mousemoves[i], mouse))
 				binds[mousemoves[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 	});
 	addListener(mouseBindTo, "click", function(mouse) {
 		for (var i in leftclicks) {
 			var leftPressed = (mouse.button == leftButton);
-			var modifiers = modifiersPressed(leftclicks[i], mouse);
-			if (leftPressed && modifiers)
+			if (leftPressed && modifiersPressed(leftclicks[i], mouse))
 				binds[leftclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in rightclicks) {
 			var rightPressed = (mouse.button == rightButton);
-			var modifiers = modifiersPressed(rightclicks[i], mouse);
-			if (rightPressed && modifiers)
+			if (rightPressed && modifiersPressed(rightclicks[i], mouse))
 				binds[rightclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in middleclicks) {
 			var middlePressed = (mouse.button == middleButton);
-			var modifiers = modifiersPressed(middleclicks[i], mouse);
-			if (middlePressed && modifiers)
+			if (middlePressed && modifiersPressed(middleclicks[i], mouse))
 				binds[middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 	});
 	addListener(keyboardBindTo, "keydown", function(key) {
 		for (var i in keydowns) {
 			var keyPressed = (key.keyCode == Fiesta.getKeyCode(keydowns[i]));
-			var modifiers = modifiersPressed(keydowns[i], key);
-			if (keyPressed && modifiers)
+			if (keyPressed && modifiersPressed(keydowns[i], key))
 				binds[keydowns[i]].call(object);
 		}
 	});
 	addListener(keyboardBindTo, "keyup", function(key) {
 		for (var i in keyups) {
 			var keyPressed = (key.keyCode == Fiesta.getKeyCode(keyups[i]));
-			var modifiers = modifiersPressed(keyups[i], key);
-			if (keyPressed && modifiers)
+			if (keyPressed && modifiersPressed(keyups[i], key))
 				binds[keyups[i]].call(object);
 		}
 	});
