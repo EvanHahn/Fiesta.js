@@ -25,7 +25,7 @@ Fiesta.bindCommands = function(object, binds) {
 	var middleButton = 1;
 	if (Fiesta.getBrowser() === "Explorer")	middleButton = 4;
 	
-	// Are my modifiers all pressed (if I want them to be)?
+	// Are all my desired modifiers pressed?
 	var modifiersPressed = function(str, key) {
 		var desires = {
 			shift: Fiesta.contains(str, "shift"),
