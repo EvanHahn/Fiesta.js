@@ -63,7 +63,7 @@ Fiesta.Sprite = new JS.Class({
 	},
 	getIndex: function() { return this._currentIndex; },
 	setIndex: function(i) {
-		if ((typeof i === typeof 1) && ((Math.ceil(i) !== i) || i === 0))
+		if ((typeof i === typeof 1) && (i < this._urls.length) && ((Math.ceil(i) !== i) || i === 0))
 			this._currentIndex = i;
 		else
 			throw new TypeError(i + " is not a valid index");
