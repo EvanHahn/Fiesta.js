@@ -10,6 +10,7 @@ Fiesta.Sprite = new JS.Class({
 		this._animateSpeed = 30;
 		this._originX;
 		this._originY;
+		
 		if (arguments)
 			this.setURLs(arguments);
 		this.setOrigin(0, 0);
