@@ -4,7 +4,7 @@
 // Does my browser support Fiesta?
 Fiesta.checkSupport = function() {
 	var canvas = !!document.createElement("canvas").getContext;
-	var audio = true;
+	var audio = !!document.createElement("audio").canPlayType;
 	return (canvas && audio);
 };
 
