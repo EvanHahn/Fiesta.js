@@ -83,7 +83,7 @@ Fiesta.bindCommands = function(object, binds) {
 	
 	// Where am I binding to?
 	var mouseBindTo = window;
-	try {
+	try {	// Let's try binding it to the playground
 		mouseBindTo = object.getPlayground().getDOMElement();
 	} catch (_) {}
 	var keyboardBindTo = window;
