@@ -70,14 +70,14 @@ Fiesta.Sprite = new JS.Class({
 		else
 			throw new TypeError(i + " is not a valid index");
 	},
-	getAnimateSpeed: function() { return this._animationSpeed; },
+	getAnimateSpeed: function() { return this._animateSpeed; },
 	setAnimateSpeed: function(a) {
 		if ((typeof a !== typeof 1.0) && (a >= 0))
-			this._animationSpeed = a;
+			this._animateSpeed = a;
 		else
 			throw new TypeError(a + " is not a valid animation speed");
 	},
-	stopAnimation: function() { this._animationSpeed = 0; },
+	stopAnimation: function() { this._animateSpeed = 0; },
 	
 	// Get my Image() -- this also preloads!
 	getImage: function() {
