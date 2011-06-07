@@ -60,7 +60,8 @@ Fiesta.Sprite = new JS.Class({
 		if (this._currentIndex >= this._urls.length)
 			this._currentIndex = 0;
 		var me = this;	// I have to do this for the setTimeout
-		setTimeout(function() { me.animate() }, this._animateSpeed);
+		if (this._animateSpeed > 0)
+			setTimeout(function() { me.animate() }, this._animateSpeed);
 	},
 	getIndex: function() { return this._currentIndex; },
 	setIndex: function(i) {
@@ -69,6 +70,14 @@ Fiesta.Sprite = new JS.Class({
 		else
 			throw new TypeError(i + " is not a valid index");
 	},
+	getAnimateSpeed: function() { return this._animationSpeed; },
+	setAnimateSpeed: function(a) {
+		if (typeof a !== typeof 1.0)
+			this._animationSpeed = a;
+		else
+			throw new TypeError(a + " is not a valid animation speed");
+	},
+	stopAnimation: function() { this._animationSpeed = 0; },
 	
 	// Get my Image() -- this also preloads!
 	getImage: function() {
