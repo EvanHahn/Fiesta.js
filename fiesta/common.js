@@ -26,7 +26,7 @@ Fiesta.getFileExtension = function(filename) {
 	if (extension === filename)	// No extension
 		return "";
 	else
-		return extension;
+		return extension.toLowerCase();
 };
 
 // Does a string contain another string?
