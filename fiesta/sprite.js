@@ -72,7 +72,7 @@ Fiesta.Sprite = new JS.Class({
 	},
 	getAnimateSpeed: function() { return this._animationSpeed; },
 	setAnimateSpeed: function(a) {
-		if (typeof a !== typeof 1.0)
+		if ((typeof a !== typeof 1.0) && (a >= 0))
 			this._animationSpeed = a;
 		else
 			throw new TypeError(a + " is not a valid animation speed");
