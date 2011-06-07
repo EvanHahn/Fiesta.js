@@ -152,9 +152,9 @@ Fiesta.getEventType = function(str) {
 	try {	// We don't know what it is, so maybe it's the default keyboard command?
 		Fiesta.getKeyCode(str);
 		return Fiesta.DEFAULT_KEYBOARD_COMMAND;
-	} catch (_) {
-		throw new Error("Cannot find event type from " + str);
-	}
+	} catch (_) {}
+	
+	throw new Error("Cannot find event type from " + str);
 	
 };
 
