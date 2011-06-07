@@ -45,6 +45,6 @@ Fiesta.pointDistance3D = function(x1, y1, z1, x2, y2, z2) { return Math.sqrt(Mat
 // Vector length
 Fiesta.vectorLength = function(i, j, k) {
 	if (!k)
-		k = 0;
+		return Fiesta.pointDistance2D(0, 0, i, j);
 	return Fiesta.pointDistance3D(0, 0, 0, i, j, k);
 };
