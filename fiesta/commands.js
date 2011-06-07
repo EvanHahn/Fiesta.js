@@ -71,7 +71,7 @@ Fiesta.bindCommands = function(object, binds) {
 		}
 	}
 	
-	// Get ready to bind! This function does cross-browser binding
+	// This function does cross-browser binding
 	function addListener(element, event, fn) {
 		if (element.addEventListener) {	// Everything else
 			bubble = true;
