@@ -21,6 +21,13 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 		this._frictionY;
 		this._frictionZ;
 		this._mass;
+		this._boundingBoxX1;
+		this._boundingBoxY1;
+		this._boundingBoxZ1;
+		this._boundingBoxX2;
+		this._boundingBoxY2;
+		this._boundingBoxZ2;
+		this._boundingBoxAuto = true;
 		
 		this.setCoordinates(0, 0, 0);
 		this.setVelocityX(0);
@@ -33,6 +40,7 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 		this.setFrictionY(0);
 		this.setFrictionZ(0);
 		this.setMass(1);
+		this.updateBoundingBox();
 	},
 	
 	// Get/set location
@@ -145,6 +153,66 @@ Fiesta.PhysicalGameObject = new JS.Class(Fiesta.GameObject, {
 			this._mass = m;
 		else
 			throw new TypeError(m + " is not a valid mass");
+	},
+	
+	// Get/set bounding box
+	getBoundingBoxX1: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return this._boundingBoxX1;
+	},
+	getBoundingBoxY1: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return this._boundingBoxY1;
+	},
+	getBoundingBoxZ1: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return this._boundingBoxZ1;
+	},
+	getBoundingBoxX2: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return this._boundingBoxX2;
+	},
+	getBoundingBoxY2: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return this._boundingBoxY2;
+	},
+	getBoundingBoxZ2: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return this._boundingBoxZ2;
+	},
+	getBoundingBox: function() {
+		if (this._boundingBoxAuto)
+			this.updateBoundingBox();
+		return [this._boundingBoxX1, this._boundingBoxY1, this._boundingBoxZ1, this._boundingBoxX2, this._boundingBoxY2, this._boundingBoxZ2];
+	},
+	updateBoundingBox: function() {
+		if (this._boundingBoxAuto) {
+			var context = "2d";	// temporary
+			if (context === "2d") {
+				if (this.getSprite()) {
+					this._boundingBoxX1 = this.getX() - this.getSprite().getOriginX();
+					this._boundingBoxY1 = this.getY() - this.getSprite().getOriginY();
+					this._boundingBoxZ1 = this.getZ();
+					this._boundingBoxX2 = this.getX() + this.getSprite().getOriginX();
+					this._boundingBoxY2 = this.getY() + this.getSprite().getOriginY();
+					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+				} else {
+					this._boundingBoxX1 = this.getX();
+					this._boundingBoxY1 = this.getY();
+					this._boundingBoxZ1 = this.getZ();
+					this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+					this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+				}
+				return [this._boundingBoxX1, this._boundingBoxY1, this._boundingBoxZ1, this._boundingBoxX2, this._boundingBoxY2, this._boundingBoxZ2];
+			}
+		}
 	},
 	
 	// Extrapolated functions
