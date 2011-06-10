@@ -50,9 +50,9 @@ if (!Fiesta.PLAYGROUND_DEFAULT_HEIGHT) Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
 if (!Fiesta.PLAYGROUND_DEFAULT_FPS) Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
 if (!Fiesta.PLAYGROUND_DEFAULT_CONTEXT) Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
 
-/*	**********************
-	* Classes (minified) *
-	**********************
+/*	***********
+	* Classes *
+	***********
 
 	JS.Class: Ruby-style JavaScript
 	http://jsclass.jcoglan.com
