@@ -13,6 +13,6 @@ Fiesta's goals
 --------------
 
 * Fiesta is aimed at those familiar with JavaScript and OOP.
-* Fiesta should be easy to learn and read.
-* Fiesta should support 2D and 3D games.
-* Fiesta should not rely on any plugins.
+* Fiesta should be easy to learn, read, and write.
+* Fiesta should support 2D and 3D games. Switching between the two should only be a matter of changing how the game is displayed.
+* Fiesta should not rely on any plugins and should work with standard browser technologies.
