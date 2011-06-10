@@ -1093,14 +1093,13 @@ Fiesta.Playground = new Fiesta.Class({
 	
 });
 
-/*	**********
-	2D Graphic
-	**********
+/*	*******
+	Graphic
+	*******
 	
-	This is the base class for 2D sprites, 2D text, 2D shapes, et cetera.
-	Note: You can't start JavaScript names with a 2, otherwise I would.	*/
+	This is the base class for graphics, both 2D and 3D.	*/
 
-Fiesta.Graphic2D = new Fiesta.Class({
+Fiesta.Graphic = new Fiesta.Class({
 	
 	// Empty constructor (needs to be here)
 	initialize: function() {},
@@ -1110,6 +1109,30 @@ Fiesta.Graphic2D = new Fiesta.Class({
 		throw new Error("This graphic must know how to draw itself.");
 	}
 	
+});
+
+/*	**********
+	2D Graphic
+	**********
+	
+	This is the base class for 2D sprites, 2D text, 2D shapes, et cetera.
+	Note: You can't start JavaScript names with a 2, otherwise I would.	*/
+
+Fiesta.Graphic2D = new Fiesta.Class(Fiesta.Graphic, {
+	// Empty constructor (needs to be here)
+	initialize: function() {},
+});
+
+/*	**********
+	3D Graphic
+	**********
+	
+	This is the base class for 3D graphics.
+	Note: You can't start JavaScript names with a 3, otherwise I would.	*/
+
+Fiesta.Graphic3D = new Fiesta.Class(Fiesta.Graphic, {
+	// Empty constructor (needs to be here)
+	initialize: function() {},
 });
 
 /*	******
