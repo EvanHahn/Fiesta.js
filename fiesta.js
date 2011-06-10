@@ -648,8 +648,7 @@ Fiesta.GameObject = new Fiesta.Class({
 	// Events
 	onSpawn: function() {},
 	onDestroy: function() {},
-	onFrame: function() {},
-	onDraw: function() {}
+	onFrame: function() {}
 	
 });
 
@@ -1285,7 +1284,6 @@ Fiesta.Playground = new Fiesta.Class({
 				var obj = this._gameObjects[i];
 				obj.getGraphic().draw(this, obj.getX(), obj.getY());
 				obj.onFrame();
-				obj.onDraw();
 			} catch (e) {
 				console.error(e);
 			}
