@@ -38,7 +38,7 @@ var Fiesta = {};
 	Config variables
 	****************
 
-	These aim to be user-friendly configuration variables.	*/
+	These aim to be user-friendly configuration variables.  */
 
 if (!Fiesta.DEFAULT_KEYBOARD_COMMAND) Fiesta.DEFAULT_KEYBOARD_COMMAND = "keydown";
 if (!Fiesta.DEFAULT_CLICK) Fiesta.DEFAULT_CLICK = "leftclick";
@@ -1093,16 +1093,37 @@ Fiesta.Playground = new Fiesta.Class({
 	
 });
 
+/*	**********
+	2D Graphic
+	**********
+	
+	This is the base class for 2D sprites, 2D text, 2D shapes, et cetera.
+	Note: You can't start JavaScript names with a 2, otherwise I would.	*/
+
+Fiesta.Graphic2D = new Fiesta.Class({
+	
+	// Empty constructor (needs to be here)
+	initialize: function() {},
+	
+	// This must be implemented or else!
+	draw: function() {
+		throw new Error("This graphic must know how to draw itself.");
+	}
+	
+});
+
 /*	******
 	Sprite
 	******
 	
 	A sprite is an image that can be displayed.	*/
 
-Fiesta.Sprite = new Fiesta.Class({
+Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	
 	// Constructor
 	initialize: function() {
+		this.callSuper();
+		
 		this._urls = [];
 		this._currentIndex = 0;
 		this._animateSpeed = 30;
