@@ -1,6 +1,6 @@
-/*	#########
-	FIESTA.JS
-	#########
+/*	###############
+	## FIESTA.JS ##
+	###############
 	
 	version 0.1.0
 	
@@ -34,9 +34,9 @@
 
 var Fiesta = {};
 
-/*	****************
-	Config variables
-	****************
+/*	********************
+	* Config variables *
+	********************
 
 	These aim to be user-friendly configuration variables.  */
 
@@ -50,9 +50,9 @@ if (!Fiesta.PLAYGROUND_DEFAULT_HEIGHT) Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
 if (!Fiesta.PLAYGROUND_DEFAULT_FPS) Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
 if (!Fiesta.PLAYGROUND_DEFAULT_CONTEXT) Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
 
-/*	******************
-	Classes (minified)
-	******************
+/*	**********************
+	* Classes (minified) *
+	**********************
 
 	JS.Class: Ruby-style JavaScript
 	http://jsclass.jcoglan.com
@@ -87,9 +87,9 @@ if (!Fiesta.PLAYGROUND_DEFAULT_CONTEXT) Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d"
 
 Fiesta.Class = JS.Class;	// Make me a Fiesta alias
 
-/*	*****************
-	Browser detection
-	*****************
+/*	*********************
+	* Browser detection *
+	*********************
 	
 	This is code to detect your browser. There is also some 
 	
@@ -236,9 +236,9 @@ Fiesta.checkSupport = function() {
 	return (canvas && audio);
 };
 
-/*	**************
-	Math functions
-	**************
+/*	******************
+	* Math functions *
+	******************
 	
 	These are a number of useful math-type functions.	*/
 
@@ -257,9 +257,9 @@ Fiesta.vectorLength = function(i, j, k) {
 	return Fiesta.pointDistance3D(0, 0, 0, i, j, k);
 };
 
-/*	****************
-	String functions
-	****************
+/*	********************
+	* String functions *
+	********************
 	
 	These are functions that deal with strings.	*/
 
@@ -277,9 +277,9 @@ Fiesta.contains = function(str, searching) {
 	return (str.indexOf(searching) !== -1);
 };
 
-/*	***************
-	Misc. functions
-	***************
+/*	*******************
+	* Misc. functions *
+	*******************
 	
 	These are miscellaneous functions that do random things.	*/
 
@@ -295,9 +295,9 @@ Fiesta.guid = function() {
 	return guid;
 };
 
-/*	********
-	Commands
-	********
+/*	************
+	* Commands *
+	************
 	
 	This is all the logic for binding user commands (key presses, clicks, etc) to methods.
 	This SHOULD work for any object, whether it's Fiesta or not.	*/
@@ -585,9 +585,9 @@ Fiesta.getKeyCode = function(str) {
 		throw new TypeError(str + " cannot be translated to a keycode");
 };
 
-/*	***********
-	Game Object
-	***********
+/*	***************
+	* Game Object *
+	***************
 	
 	A game object is pretty much anything. It is not physical; that is a Physical Game Object. */
 
@@ -639,9 +639,9 @@ Fiesta.GameObject = new Fiesta.Class({
 	
 });
 
-/*	********************
-	Physical Game Object
-	********************
+/*	************************
+	* Physical Game Object *
+	************************
 	
 	A physical game object can be seen; it has coordinates, speeds, momenta, and more.	*/
 
@@ -902,9 +902,9 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	
 });
 
-/*	**********
-	Playground
-	**********
+/*	**************
+	* Playground *
+	**************
 	
 	A playground is a place where Game Objects are.	*/
 
@@ -1093,9 +1093,9 @@ Fiesta.Playground = new Fiesta.Class({
 	
 });
 
-/*	*******
-	Graphic
-	*******
+/*	***********
+	* Graphic *
+	***********
 	
 	This is the base class for graphics, both 2D and 3D.	*/
 
@@ -1111,9 +1111,9 @@ Fiesta.Graphic = new Fiesta.Class({
 	
 });
 
-/*	**********
-	2D Graphic
-	**********
+/*	**************
+	* 2D Graphic *
+	**************
 	
 	This is the base class for 2D sprites, 2D text, 2D shapes, et cetera.
 	Note: You can't start JavaScript names with a 2, otherwise I would.	*/
@@ -1123,9 +1123,9 @@ Fiesta.Graphic2D = new Fiesta.Class(Fiesta.Graphic, {
 	initialize: function() {},
 });
 
-/*	**********
-	3D Graphic
-	**********
+/*	**************
+	* 3D Graphic *
+	**************
 	
 	This is the base class for 3D graphics.
 	Note: You can't start JavaScript names with a 3, otherwise I would.	*/
@@ -1135,9 +1135,9 @@ Fiesta.Graphic3D = new Fiesta.Class(Fiesta.Graphic, {
 	initialize: function() {},
 });
 
-/*	******
-	Sprite
-	******
+/*	**********
+	* Sprite *
+	**********
 	
 	A sprite is an image that can be displayed.	*/
 
@@ -1234,9 +1234,9 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	
 });
 
-/*	*****
-	Sound
-	*****
+/*	*********
+	* Sound *
+	*********
 	
 	A sound is...well, a sound.	*/
 
