@@ -7,7 +7,7 @@
 	Fiesta.js is a JavaScript game engine. It aims to support 2D and 3D games using only
 	modern browser technologies.
 	
-	Enjoy!
+	¡Disfruta!
 	
 	Fiesta.js copyright (c) 2011 Evan Hahn, http://www.evanhahn.com/
 	JS.Class copyright (c) 2007-2011 James Coglan and contributors
@@ -1207,6 +1207,8 @@ Fiesta.Playground = new Fiesta.Class({
 	
 	// Place me inside the DOM; returns HTMLNode that was placed
 	place: function(domElement) {
+		if (!(domElement instanceof HTMLElement))
+			throw new TypeError("Playground cannot be placed in " + domElement);
 		this._element = document.createElement("canvas");
 		this._element.setAttribute("class", "fiesta_playground");
 		this._element.style.overflow = "hidden";
