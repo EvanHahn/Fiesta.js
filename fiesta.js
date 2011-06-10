@@ -94,7 +94,7 @@ Fiesta.Class = JS.Class;	// Alias
 	This is code to detect your browser and things about it.
 	
 	Browser detection code is built on rsyring's browser-detect code.
-	https://github.com/rsyring/browser-detect	*/
+	http://github.com/rsyring/browser-detect	*/
 
 // All of this BrowserDetect stuff is just one-time setup
 var BrowserDetect = {
@@ -124,6 +124,11 @@ var BrowserDetect = {
 		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
 	},
 	dataBrowser: [
+		{
+			string: navigator.userAgent,
+			subString: "RockMelt",
+			identity: "RockMelt"
+		},
 		{
 			string: navigator.userAgent,
 			subString: "Chrome",
