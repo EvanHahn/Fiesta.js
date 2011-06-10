@@ -449,12 +449,16 @@ Fiesta.getEventType = function(str) {
 	if (Fiesta.contains(command, "mouse") && Fiesta.contains(command, "move")) return "mousemove";
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "left")) return "leftclick";
 	if (Fiesta.contains(command, "click") && Fiesta.contains(command, "right")) return "rightclick";
-	if (Fiesta.contains(command, "click")) return Fiesta.DEFAULT_CLICK;
+	if (Fiesta.contains(command, "click")) {
+		Fiesta.warn(str + " defaulted to a " + Fiesta.DEFAULT_CLICK + ", but it should be specified (\"" + str + " " + Fiesta.DEFAULT_CLICK + "\")");
+		return Fiesta.DEFAULT_CLICK;
+	}
 	if (Fiesta.contains(command, "keyup")) return "keyup";
 	if (Fiesta.contains(command, "keydown")) return "keydown";
 	
 	try {	// We don't know what it is, so maybe it's the default keyboard command?
 		Fiesta.getKeyCode(str);
+		Fiesta.warn(str + " defaulted to a " + Fiesta.DEFAULT_KEYBOARD_COMMAND + ", but it should be specified (\"" + str + " " + Fiesta.DEFAULT_CLICK + "\")");
 		return Fiesta.DEFAULT_KEYBOARD_COMMAND;
 	} catch (_) {}
 	
@@ -623,10 +627,14 @@ Fiesta.GameObject = new Fiesta.Class({
 	setSprite: function(spr) {
 		if (spr instanceof Fiesta.Sprite)
 			this._graphic = spr;
-		else if ((spr instanceof Image) && (spr.src))
+		else if ((spr instanceof Image) && (spr.src)) {
 			this._graphic = new Fiesta.Sprite(spr.src);
-		else if ((typeof spr === typeof "") && (spr !== ""))
+			Fiesta.warn("Was able to translate " + spr.src + " into a Sprite, but it should be a Sprite to begin with");
+		}
+		else if ((typeof spr === typeof "") && (spr !== "")) {
 			this._graphic = new Fiesta.Sprite(spr);
+			Fiesta.warn("Was able to translate \"" + spr + "\" into a Sprite, but it should be a Sprite to begin with");
+		}
 		else
 			throw new TypeError(spr + " is not a sprite (nor something I can turn into one)");
 	},
@@ -1037,8 +1045,14 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	},
 	getIndex: function() { return this._currentIndex; },
 	setIndex: function(i) {
-		if ((typeof i === typeof 1) && (i < this._urls.length) && ((Math.ceil(i) !== i) || i === 0))
-			this._currentIndex = i;
+		if ((typeof i === typeof 1) && ((Math.ceil(i) !== i) || i === 0)) {
+			if (i < this._urls.length)
+				this._currentIndex = i;
+			else {
+				setIndex(i - this._urls.length);
+				Fiesta.warn("Tried to set Sprite index to " + i + ", but the max is " + (this._urls.length - 1) + "; was able to wrap around.");
+			}
+		}
 		else
 			throw new TypeError(i + " is not a valid index");
 	},
