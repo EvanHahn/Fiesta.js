@@ -236,6 +236,11 @@ Fiesta.checkSupport = function() {
 	return (canvas && audio);
 };
 
+// Console logs, warnings, and errors
+Fiesta.log = function(l) { console.log(l); };
+Fiesta.warn = function(w) { console.warn(w); };
+Fiesta.error = function(e) { console.error(e); };
+
 /*	******************
 	* Math functions *
 	******************
@@ -366,7 +371,7 @@ Fiesta.bindCommands = function(object, binds) {
 					break;
 			}
 		} catch (e) {
-			console.error(e);
+			Fiesta.error(e);
 		}
 	}
 	
@@ -1287,7 +1292,7 @@ Fiesta.Playground = new Fiesta.Class({
 				obj.getGraphic().draw(this, obj.getX(), obj.getY());
 				obj.onFrame();
 			} catch (e) {
-				console.error(e);
+				Fiesta.error(e);
 			}
 		}
 	}
