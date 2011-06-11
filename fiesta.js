@@ -54,7 +54,7 @@ if (!Fiesta.PLAYGROUND_DEFAULT_CONTEXT) Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d"
 	* Classes *
 	***********
 
-	JS.Class: Ruby-style JavaScript
+	JS.Class: Ruby-style JavaScript (version 3.0.0)
 	http://jsclass.jcoglan.com
 	Copyright (c) 2007-2011 James Coglan and contributors
 
