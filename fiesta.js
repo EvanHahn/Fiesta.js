@@ -1227,7 +1227,7 @@ Fiesta.Playground = new Fiesta.Class({
 	// Get/set my frames per second
 	getDesiredFPS: function() { return this._desiredFPS; },
 	setDesiredFPS: function(f) {
-		if ((typeof f === typeof 1) && (f >= 0) && (Math.round(f) === f)) {
+		if ((typeof f === typeof 1) && (f >= 0)) {
 			this._desiredFPS = f;
 		}
 		else
