@@ -72,11 +72,11 @@
 		onSpawn: function() {
 			this.callSuper();
 			Fiesta.bindCommands(this, {
-				"left": this.moveLeft,
+				"left keydown": this.moveLeft,
 				"right keydown": this.moveRight,
 				"left keyup": this.stopX,
 				"right keyup": this.stopX,
-				"space": this.jump,
+				"space keydown": this.jump,
 				"right click": this.goTo
 			});
 		},
