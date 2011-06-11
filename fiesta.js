@@ -569,6 +569,7 @@ Fiesta.getKeyCode = function(str) {
 		"f11": 122,
 		"f12": 123,
 		"windows": 91,
+		"win": 91,
 		"meta": 91,
 		"apple": 91,
 		"command": 91,
