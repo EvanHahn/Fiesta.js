@@ -890,21 +890,6 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		}
 	},
 	
-	// Collision event
-	onCollide: function(other) {
-		var otherMass = other.getMass();
-		var myMass = this.getMass();
-		var myOldVX = this.getVelocityX();
-		var myOldVY = this.getVelocityY();
-		var myOldVZ = this.getVelocityZ();
-		this.setVelocityX(other.getVelocityX() * otherMass / myMass);
-		this.setVelocityY(other.getVelocityY() * otherMass / myMass);
-		this.setVelocityZ(other.getVelocityZ() * otherMass / myMass);
-		other.setVelocityX(myOldVX * myMass / otherMass);
-		other.setVelocityY(myOldVY * myMass / otherMass);
-		other.setVelocityZ(myOldVZ * myMass / otherMass);
-	},
-	
 	// Extrapolated functions
 	getMomentum: function() { return this._mass * this.getVelocity(); },
 	
@@ -948,6 +933,21 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	}
 	
 });
+
+// Colliding two physical objects
+Fiesta.collidePhysicalObjects = function(a, b) {
+	var aMass = a.getMass();
+	var bMass = b.getMass();
+	var bOldVX = b.getVelocityX();
+	var bOldVY = b.getVelocityY();
+	var bOldVZ = b.getVelocityZ();
+	b.setVelocityX(a.getVelocityX() * aMass / bMass);
+	b.setVelocityY(a.getVelocityY() * aMass / bMass);
+	b.setVelocityZ(a.getVelocityZ() * aMass / bMass);
+	a.setVelocityX(bOldVX * bMass / aMass);
+	a.setVelocityY(bOldVY * bMass / aMass);
+	a.setVelocityZ(bOldVZ * bMass / aMass);
+};
 
 /*	***********
 	* Graphic *
@@ -1350,7 +1350,7 @@ Fiesta.Playground = new Fiesta.Class({
 						||
 						obj2Bound[5] < objBound[2]
 					)) {
-						obj.onCollide(obj2);
+						Fiesta.collidePhysicalObjects(obj, obj2);
 					}
 				}
 				
