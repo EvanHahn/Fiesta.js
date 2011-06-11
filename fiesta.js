@@ -960,8 +960,7 @@ Fiesta.Graphic = new Fiesta.Class({
 	Note: You can't start JavaScript names with a 2, otherwise I would.	*/
 
 Fiesta.Graphic2D = new Fiesta.Class(Fiesta.Graphic, {
-	// Empty constructor (needs to be here)
-	initialize: function() {},
+	initialize: function() {}
 });
 
 /*	**************
@@ -972,8 +971,7 @@ Fiesta.Graphic2D = new Fiesta.Class(Fiesta.Graphic, {
 	Note: You can't start JavaScript names with a 3, otherwise I would.	*/
 
 Fiesta.Graphic3D = new Fiesta.Class(Fiesta.Graphic, {
-	// Empty constructor (needs to be here)
-	initialize: function() {},
+	initialize: function() {}
 });
 
 /*	**********
