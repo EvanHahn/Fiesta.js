@@ -463,7 +463,7 @@ Fiesta.getEventType = function(str) {
 	
 	try {	// We don't know what it is, so maybe it's the default keyboard command?
 		Fiesta.getKeyCode(str);
-		Fiesta.warn(str + " defaulted to a " + Fiesta.DEFAULT_KEYBOARD_COMMAND + ", but it should be specified (\"" + str + " " + Fiesta.DEFAULT_CLICK + "\")");
+		Fiesta.warn(str + " defaulted to a " + Fiesta.DEFAULT_KEYBOARD_COMMAND + ", but it should be specified (\"" + str + " " + Fiesta.DEFAULT_KEYBOARD_COMMAND + "\")");
 		return Fiesta.DEFAULT_KEYBOARD_COMMAND;
 	} catch (_) {}
 	
