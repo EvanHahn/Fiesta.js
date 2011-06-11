@@ -890,6 +890,21 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		}
 	},
 	
+	// Collision event
+	onCollide: function(other) {
+		var otherMass = other.getMass();
+		var myMass = this.getMass();
+		var myOldVX = this.getVelocityX();
+		var myOldVY = this.getVelocityY();
+		var myOldVZ = this.getVelocityZ();
+		this.setVelocityX(other.getVelocityX() * otherMass / myMass);
+		this.setVelocityY(other.getVelocityY() * otherMass / myMass);
+		this.setVelocityZ(other.getVelocityZ() * otherMass / myMass);
+		other.setVelocityX(myOldVX * myMass / otherMass);
+		other.setVelocityY(myOldVY * myMass / otherMass);
+		other.setVelocityZ(myOldVZ * myMass / otherMass);
+	},
+	
 	// Extrapolated functions
 	getMomentum: function() { return this._mass * this.getVelocity(); },
 	
@@ -1300,15 +1315,48 @@ Fiesta.Playground = new Fiesta.Class({
 	
 	// Do this every frame
 	frame: function() {
+		
+		// We're doing this again
 		var thisObject = this;	// Here so the next statement is ok
 		setTimeout(function() { thisObject.frame() }, 1000 / this.getDesiredFPS());
+		
+		// Redraw (if I should, of course)
 		if (this._redraw)
 			this.getContext().clearRect(0, 0, this._width, this._height);
-		for (var i in this._gameObjects) {
+		
+		// Deal with every object
+		for (var i = 0; i < this._gameObjects.length; i ++) {
 			try {
+				
+				// Draw me
 				var obj = this._gameObjects[i];
 				obj.getGraphic().draw(this, obj.getX(), obj.getY());
+				
+				// Collisions
+				var objBound = obj.getBoundingBox();
+				for (var j = i + 1; j < this._gameObjects.length; j ++) {
+					var obj2 = this._gameObjects[j];
+					var obj2Bound = obj2.getBoundingBox();
+					if (!(
+						obj2Bound[0] > objBound[3]
+						||
+						obj2Bound[3] < objBound[0]
+						||
+						obj2Bound[1] > objBound[4]
+						||
+						obj2Bound[4] < objBound[1]
+						||
+						obj2Bound[2] > objBound[5]
+						||
+						obj2Bound[5] < objBound[2]
+					)) {
+						obj.onCollide(obj2);
+					}
+				}
+				
+				// Do my onFrame stuff
 				obj.onFrame();
+				
 			} catch (e) {
 				Fiesta.error(e);
 			}

@@ -47,7 +47,7 @@
 			this.setFrictionX(this._friction);
 			this.setFrictionY(this._friction);
 			this.setAccelerationY(gravity);
-			
+			this.setMass(10);
 		},
 		
 		// Movement
@@ -118,7 +118,7 @@
 			this.setFrictionY(this._friction);
 			this.setAccelerationY(gravity);
 			this.setVelocityX(200);
-			
+			this.setMass(5);
 		},
 		
 		// On frame
@@ -139,7 +139,7 @@
 	// Spawn the objects
 	var ball = new Ball();
 	playground.spawn(ball);
-	ball.setCoordinates(100, 100);
+	ball.setCoordinates(100, room_height - 50);
 	var box = new Box();
 	playground.spawn(box);
 	box.setCoordinates(room_width - 100, 100);
