@@ -41,11 +41,10 @@
 			this._friction = 100;
 			this._velocityBump = 200;
 			this._acceleration = 500;
-			this._jumpSpeed = 500;
+			this._jumpSpeed = 300;
 			
 			// Go for it!
 			this.setFrictionX(this._friction);
-			this.setFrictionY(this._friction);
 			this.setAccelerationY(gravity);
 			this.setMass(10);
 		},
@@ -96,53 +95,40 @@
 		
 	});
 	
-	// Box
-	var Box = new Fiesta.Class(Fiesta.PhysicalGameObject, {
+	// Ball spawner
+	var BallSpawner = new Fiesta.Class(Fiesta.GameObject, {
 		
 		// Constructor
-		initialize: function() {
-			
-			// Call super
+		intialize: function() {
 			this.callSuper();
-			
-			// Sprites
-			this._spr_box = new Fiesta.Sprite("box.gif");
-			this._spr_box.setOrigin(16, 16);
-			this.setSprite(this._spr_box);
-			
-			// Config
-			this._friction = 100;
-			
-			// Go for it!
-			this.setFrictionX(this._friction);
-			this.setFrictionY(this._friction);
-			this.setAccelerationY(gravity);
-			this.setVelocityX(200);
-			this.setMass(5);
+			this.ballCount;
 		},
 		
-		// On frame
-		onFrame: function() {
+		// Spawn a ball
+		spawnBall: function(x, y) {
+			var ball = new Ball();
+			this.getPlayground().spawn(ball);
+			ball.setCoordinates(x, y);
+			this.ballCount = this.ballCount + 1;
+			Fiesta.log(this.ballCount);
+			ball.setMass(ballCount * 5);
+		},
+		
+		// Bind commmands
+		onSpawn: function() {
 			this.callSuper();
-			if ((this.getX() < (0 + this.getSprite().getOriginX())) || (this.getX() > (room_width - this.getSprite().getOriginX())))
-				this.setVelocityX(-this.getVelocityX())
-			if (this.getY() > (room_height - this.getSprite().getOriginY())) {
-				this.setVelocityY(this.getVelocityY() * -0.5);
-			}
+			Fiesta.bindCommands(this, {
+				"left click": this.spawnBall
+			});
+			this.ballCount = 0;
 		}
 		
 	});
 	
 	// Set up the playground
 	var playground = new Fiesta.Playground(room_width, room_height, "2d", 60);
-	
-	// Spawn the objects
-	var ball = new Ball();
-	playground.spawn(ball);
-	ball.setCoordinates(100, room_height - 50);
-	var box = new Box();
-	playground.spawn(box);
-	box.setCoordinates(room_width - 100, 100);
+	var ballSpawner = new BallSpawner();
+	playground.spawn(ballSpawner);
 	
 	// Let's go for it!
 	playground.place(document.body);

@@ -1330,27 +1330,32 @@ Fiesta.Playground = new Fiesta.Class({
 				
 				// Draw me
 				var obj = this._gameObjects[i];
-				obj.getGraphic().draw(this, obj.getX(), obj.getY());
+				if (obj instanceof Fiesta.PhysicalGameObject)
+					obj.getGraphic().draw(this, obj.getX(), obj.getY());
 				
 				// Collisions
-				var objBound = obj.getBoundingBox();
-				for (var j = i + 1; j < this._gameObjects.length; j ++) {
-					var obj2 = this._gameObjects[j];
-					var obj2Bound = obj2.getBoundingBox();
-					if (!(
-						obj2Bound[0] > objBound[3]
-						||
-						obj2Bound[3] < objBound[0]
-						||
-						obj2Bound[1] > objBound[4]
-						||
-						obj2Bound[4] < objBound[1]
-						||
-						obj2Bound[2] > objBound[5]
-						||
-						obj2Bound[5] < objBound[2]
-					)) {
-						Fiesta.collidePhysicalObjects(obj, obj2);
+				if (obj instanceof Fiesta.PhysicalGameObject) {
+					var objBound = obj.getBoundingBox();
+					for (var j = i + 1; j < this._gameObjects.length; j ++) {
+						var obj2 = this._gameObjects[j];
+						if (obj2 instanceof Fiesta.PhysicalGameObject) {
+							var obj2Bound = obj2.getBoundingBox();
+							if (!(
+								obj2Bound[0] > objBound[3]
+								||
+								obj2Bound[3] < objBound[0]
+								||
+								obj2Bound[1] > objBound[4]
+								||
+								obj2Bound[4] < objBound[1]
+								||
+								obj2Bound[2] > objBound[5]
+								||
+								obj2Bound[5] < objBound[2]
+							)) {
+								Fiesta.collidePhysicalObjects(obj, obj2);
+							}
+						}
 					}
 				}
 				
