@@ -748,6 +748,9 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		if (zCoord !== undefined)
 			this.setZ(zCoord);
 	},
+	addX: function(a) { this.setX(a + this.getX()) },
+	addY: function(a) { this.setY(a + this.getY()) },
+	addZ: function(a) { this.setZ(a + this.getZ()) },
 	
 	// Get/set velocity
 	getVelocityX: function() { return this._velocityX; },
@@ -772,6 +775,9 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		else
 			throw new TypeError(v + " is not a valid Z velocity");
 	},
+	addVelocityX: function(a) { this.setVelocityX(a + this.getVelocityX()) },
+	addVelocityY: function(a) { this.setVelocityY(a + this.getVelocityY()) },
+	addVelocityZ: function(a) { this.setVelocityZ(a + this.getVelocityZ()) },
 	
 	// Get/set acceleration
 	getAccelerationX: function() { return this._accelerationX; },
@@ -796,6 +802,9 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		else
 			throw new TypeError(a + " is not a valid Z acceleration");
 	},
+	addAccelerationX: function(a) { this.setAccelerationX(a + this.getAccelerationX()) },
+	addAccelerationY: function(a) { this.setAccelerationY(a + this.getAccelerationY()) },
+	addAccelerationZ: function(a) { this.setAccelerationZ(a + this.getAccelerationZ()) },
 	
 	// Get/set friction
 	getFrictionX: function() { return this._frictionX; },
@@ -820,6 +829,9 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		else
 			throw new TypeError(f + " is not a valid Z friction");
 	},
+	addFrictionX: function(a) { this.setFrictionX(a + this.getFrictionX()) },
+	addFrictionY: function(a) { this.setFrictionY(a + this.getFrictionY()) },
+	addFrictionZ: function(a) { this.setFrictionZ(a + this.getFrictionZ()) },
 	
 	// Get/set mass
 	getMass: function() { return this._mass; },
@@ -829,6 +841,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		else
 			throw new TypeError(m + " is not a valid mass");
 	},
+	addMass: function(a) { this.setMass(a + this.getMass()) },
 	
 	// Get/set bounding box
 	getBoundingBoxX1: function() {
