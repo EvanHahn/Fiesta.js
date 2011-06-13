@@ -79,6 +79,12 @@
 				"right click": this.goTo
 			});
 		},
+				
+		// Collide
+		onCollide: function() {
+			this.callSuper();
+			Fiesta.log('collision');
+		},
 		
 		// On frame
 		onFrame: function() {
@@ -101,7 +107,6 @@
 		// Constructor
 		intialize: function() {
 			this.callSuper();
-			this.ballCount;
 		},
 		
 		// Spawn a ball
@@ -110,8 +115,6 @@
 			this.getPlayground().spawn(ball);
 			ball.setCoordinates(x, y);
 			this.ballCount = this.ballCount + 1;
-			Fiesta.log(this.ballCount);
-			ball.setMass(ballCount * 5);
 		},
 		
 		// Bind commmands
@@ -120,7 +123,6 @@
 			Fiesta.bindCommands(this, {
 				"left click": this.spawnBall
 			});
-			this.ballCount = 0;
 		}
 		
 	});

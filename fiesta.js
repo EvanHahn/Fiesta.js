@@ -930,7 +930,10 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 			else
 				this._velocityZ = 0;
 		}
-	}
+	},
+	
+	// Some functions that can be overwritten
+	onCollide: function() {}
 	
 });
 
@@ -947,6 +950,8 @@ Fiesta.collidePhysicalObjects = function(a, b) {
 	a.setVelocityX(bOldVX * bMass / aMass);
 	a.setVelocityY(bOldVY * bMass / aMass);
 	a.setVelocityZ(bOldVZ * bMass / aMass);
+	a.onCollide(b);
+	b.onCollide(a);
 };
 
 /*	***********
