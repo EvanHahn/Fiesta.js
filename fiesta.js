@@ -1304,6 +1304,22 @@ Fiesta.Playground = new Fiesta.Class({
 		else
 			throw new Error("This playground has not yet been placed.");
 	},
+	getBackgroundColor: function() {
+		if (this.domElementExists())
+			return this.getDOMElement().style.backgroundColor;
+		else
+			return false;
+	},
+	setBackgroundColor: function(color) {
+		if (typeof color !== typeof "") {
+			throw new TypeError(color + " is not a valid color");
+		}
+		if (this.domElementExists()) {
+			if (color.substring(0, 1) !== "#")
+				color = "#" + color;
+			this.getDOMElement().style.backgroundColor = color;
+		}
+	},
 	
 	// Spawn a game object inside of this playground
 	spawn: function(object) {
