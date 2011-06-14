@@ -1278,33 +1278,29 @@ Fiesta.Playground = new Fiesta.Class({
 	place: function(domElement) {
 		if (!(domElement instanceof HTMLElement))
 			throw new TypeError("Playground cannot be placed in " + domElement);
+		
 		this._element = document.createElement("canvas");
 		this._element.setAttribute("class", "fiesta_playground");
 		this._element.style.overflow = "hidden";
 		this._element.setAttribute("width", this._width);
 		this._element.setAttribute("height", this._height);
 		domElement.appendChild(this._element);
+		
 		this.placeTime = Date.now();
 		this.frame();
+		
 		return this._element;
 	},
-	domElementExists: function() {
-		if (this._element)
-			return true;
-		else
-			return false;
-	},
+	domElementExists: function() { return !!this._element },
 	getDOMElement: function() {
 		if (this._element)
 			return this._element;
 		else
 			throw new Error("This playground is not yet in the DOM, so we can't talk to it");
 	},
-	getContext: function() {
-		return this._element.getContext(this._context);
-	},
+	getContext: function() { return this._element.getContext(this._context) },
 	setContext: function(c) {
-		if ((c == "2d") || (c === "3d"))
+		if ((typeof c === typeof "") && ((c.toLowerCase() === "2d") || (c.toLowerCase() === "3d")))
 			this._context = c;
 		else
 			throw new Error(c + " is not a valid context");
@@ -1313,7 +1309,7 @@ Fiesta.Playground = new Fiesta.Class({
 		if (this._timePlaced)
 			return this._timePlaced;
 		else
-			throw new Error("This playground has not yet been placed.");
+			return false;
 	},
 	getBackgroundColor: function() {
 		if (this.domElementExists())
@@ -1322,9 +1318,8 @@ Fiesta.Playground = new Fiesta.Class({
 			return false;
 	},
 	setBackgroundColor: function(color) {
-		if (typeof color !== typeof "") {
+		if (typeof color !== typeof "")
 			throw new TypeError(color + " is not a valid color");
-		}
 		if (this.domElementExists()) {
 			if (color.substring(0, 1) !== "#")
 				color = "#" + color;
@@ -1361,32 +1356,35 @@ Fiesta.Playground = new Fiesta.Class({
 	// Do this every frame
 	frame: function() {
 		
-		// We're doing this again
-		var thisObject = this;	// Here so the next statement is ok
+		// Prepare the next frame
+		var thisObject = this;	// So the next statement works
 		setTimeout(function() { thisObject.frame() }, 1000 / this.getDesiredFPS());
 		
 		// Redraw (if I should, of course)
-		if (this._redraw)
+		if (this.getRedraw())
 			this.getContext().clearRect(0, 0, this._width, this._height);
 		
 		// Deal with every object
+		// The pieces are in try/catch blocks so that one object doesn't break
+		// everything for everyone else
 		for (var i = 0; i < this._gameObjects.length; i ++) {
+			
+			// Draw the object
 			try {
-				
-				// Draw me
 				var obj = this._gameObjects[i];
 				if (obj instanceof Fiesta.PhysicalGameObject)
 					obj.getGraphic().draw(this, obj.getX(), obj.getY());
-				
-				// Collisions
+			} catch (e) { Fiesta.error(e) }
+			
+			// Collisions
+			try {
 				if (obj instanceof Fiesta.PhysicalGameObject) {
 					var objBound = obj.getBoundingBox();
 					for (var j = i + 1; j < this._gameObjects.length; j ++) {
 						var obj2 = this._gameObjects[j];
 						if (obj2 instanceof Fiesta.PhysicalGameObject) {
 							var obj2Bound = obj2.getBoundingBox();
-							if (!(
-								obj2Bound[0] > objBound[3]
+							if (!(obj2Bound[0] > objBound[3]
 								||
 								obj2Bound[3] < objBound[0]
 								||
@@ -1396,20 +1394,19 @@ Fiesta.Playground = new Fiesta.Class({
 								||
 								obj2Bound[2] > objBound[5]
 								||
-								obj2Bound[5] < objBound[2]
-							)) {
+								obj2Bound[5] < objBound[2])) {
 								Fiesta.collidePhysicalObjects(obj, obj2);
 							}
 						}
 					}
 				}
-				
-				// Do my onFrame stuff
+			} catch (e) { Fiesta.error(e) }
+			
+			// Do the onFrame stuff
+			try {
 				obj.onFrame();
-				
-			} catch (e) {
-				Fiesta.error(e);
-			}
+			} catch (e) { Fiesta.error(e) }
+			
 		}
 	}
 	
