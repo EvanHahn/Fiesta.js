@@ -1271,11 +1271,8 @@ Fiesta.Playground = new Fiesta.Class({
 	setBackgroundColor: function(color) {
 		if (typeof color !== typeof "")
 			throw new TypeError(color + " is not a valid color");
-		if (this.domElementExists()) {
-			if (color.substring(0, 1) !== "#")
-				color = "#" + color;
+		if (this.domElementExists())
 			this.getDOMElement().style.backgroundColor = color;
-		}
 	},
 	
 	// Object API
