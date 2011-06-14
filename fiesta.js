@@ -1157,16 +1157,8 @@ Fiesta.GameObject = new Fiesta.Class({
 	setSprite: function(spr) {
 		if (spr instanceof Fiesta.Sprite)
 			this._graphic = spr;
-		else if ((spr instanceof Image) && (spr.src)) {
-			this._graphic = new Fiesta.Sprite(spr.src);
-			Fiesta.warn("Was able to translate " + spr.src + " into a Sprite, but it should be a Sprite to begin with");
-		}
-		else if ((typeof spr === typeof "") && (spr !== "")) {
-			this._graphic = new Fiesta.Sprite(spr);
-			Fiesta.warn("Was able to translate \"" + spr + "\" into a Sprite, but it should be a Sprite to begin with");
-		}
 		else
-			throw new TypeError(spr + " is not a sprite (nor something I can turn into one)");
+			throw new TypeError(spr + " is not a sprite");
 	},
 	
 	// Playground API
