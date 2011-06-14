@@ -1161,8 +1161,7 @@ Fiesta.Sound = new Fiesta.Class({
 	// Sources API
 	setFiles: function(sources) {
 		if (typeof sources === typeof "") {
-			if (Fiesta.getFileExtension(sources) === "")
-			{
+			if (Fiesta.getFileExtension(sources) === "") {
 				var soundExtensions = ["ogg", "wav", "mp3"];
 				for (var i in soundExtensions)
 					this._files.push(sources + "." + soundExtensions[i]);
