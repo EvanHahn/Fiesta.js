@@ -1159,6 +1159,7 @@ Fiesta.Playground = new Fiesta.Class({
 		
 		this._width;
 		this._height;
+		this._backgroundColor;
 		this._element;
 		this._desiredFPS;
 		this._context;
@@ -1235,6 +1236,8 @@ Fiesta.Playground = new Fiesta.Class({
 		this._element.style.overflow = "hidden";
 		this._element.setAttribute("width", this._width);
 		this._element.setAttribute("height", this._height);
+		if (this._backgroundColor)
+			this._element.style.backgroundColor = this._backgroundColor;
 		domElement.appendChild(this._element);
 		
 		this.placeTime = Date.now();
@@ -1262,15 +1265,11 @@ Fiesta.Playground = new Fiesta.Class({
 		else
 			return false;
 	},
-	getBackgroundColor: function() {
-		if (this.domElementExists())
-			return this.getDOMElement().style.backgroundColor;
-		else
-			return false;
-	},
+	getBackgroundColor: function() { return this._backgroundColor },
 	setBackgroundColor: function(color) {
 		if (typeof color !== typeof "")
 			throw new TypeError(color + " is not a valid color");
+		this._backgroundColor = color;
 		if (this.domElementExists())
 			this.getDOMElement().style.backgroundColor = color;
 	},
