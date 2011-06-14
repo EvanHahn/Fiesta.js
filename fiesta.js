@@ -49,6 +49,7 @@ if (!Fiesta.PLAYGROUND_DEFAULT_WIDTH) Fiesta.PLAYGROUND_DEFAULT_WIDTH = 400;
 if (!Fiesta.PLAYGROUND_DEFAULT_HEIGHT) Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
 if (!Fiesta.PLAYGROUND_DEFAULT_FPS) Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
 if (!Fiesta.PLAYGROUND_DEFAULT_CONTEXT) Fiesta.PLAYGROUND_DEFAULT_CONTEXT = "2d";
+if (!Fiesta.PLAYGROUND_DEFAULT_REDRAW) Fiesta.PLAYGROUND_DEFAULT_REDRAW = true;
 
 /*	***********
 	* Classes *
@@ -696,6 +697,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this._frictionY;
 		this._frictionZ;
 		this._mass;
+		this._bounciness;
 		this._boundingBoxX1;
 		this._boundingBoxY1;
 		this._boundingBoxZ1;
@@ -715,6 +717,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this.setFrictionY(0);
 		this.setFrictionZ(0);
 		this.setMass(1);
+		this.setBounciness(1);
 		this.updateBoundingBox();
 	},
 	
@@ -842,6 +845,16 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 			throw new TypeError(m + " is not a valid mass");
 	},
 	addMass: function(a) { this.setMass(a + this.getMass()) },
+	
+	// Get/set bounciness
+	getBounciness: function() { return this._bounciness; },
+	setBounciness: function(b) {
+		if (typeof b === typeof 1.0)
+			this._bounciness = b;
+		else
+			throw new TypeError(b + " is not a valid bounciness");
+	},
+	addBounciness: function(a) { this.setBounciness(a + this.getBounciness()) },
 	
 	// Get/set bounding box
 	getBoundingBoxX1: function() {
@@ -1213,7 +1226,7 @@ Fiesta.Playground = new Fiesta.Class({
 			this.setSize(theWidth, theHeight);
 		else
 			this.setSize(Fiesta.PLAYGROUND_DEFAULT_WIDTH, Fiesta.PLAYGROUND_DEFAULT_HEIGHT);
-		this.setRedraw(true);
+		this.setRedraw(Fiesta.PLAYGROUND_DEFAULT_REDRAW);
 	},
 	
 	// Get/set my size
