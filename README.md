@@ -1,4 +1,4 @@
-Fiesta.js - version 0.1.0
+Fiesta.js - version 0.1.8
 =========================
 
 **Fiesta** is a JavaScript game engine. It aims to support 2D and 3D games using modern browser technologies. It is greatly inspired by [Game Maker](http://www.yoyogames.com/make).

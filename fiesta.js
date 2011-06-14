@@ -2,7 +2,7 @@
 	## FIESTA.JS ##
 	###############
 	
-	version 0.1.0
+	version 0.1.8
 	
 	Fiesta.js is a JavaScript game engine. It aims to support 2D and 3D
 	games using only modern browser technologies.
