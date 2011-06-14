@@ -205,6 +205,13 @@ Fiesta.error = function(e) { console.error(e); };
 	
 	These are a number of useful math-type functions.	*/
 
+// Sign of a number
+Fiesta.sign = function(d) {
+	if (d > 0) return 1;
+	if (d < 0) return -1;
+	return 0;
+}
+
 // Convert rotation measurements
 Fiesta.degreesToRadians = function(d) { return (d * Math.PI) / 180; };
 Fiesta.radiansToDegrees = function(r) { return (r * 180) / Math.PI; };
@@ -794,7 +801,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	// Mass API
 	getMass: function() { return this._mass; },
 	setMass: function(m) {
-		if (typeof m === typeof 1.0)
+		if ((typeof m === typeof 1.0) && (m > 0))
 			this._mass = m;
 		else
 			throw new TypeError(m + " is not a valid mass");
@@ -851,12 +858,13 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		if (this._boundingBoxAuto) {
 			var context = "2d";	// temporary
 			if (context === "2d") {
-				if (this.getSprite()) {
-					this._boundingBoxX1 = this.getX() - this.getSprite().getOriginX();
-					this._boundingBoxY1 = this.getY() - this.getSprite().getOriginY();
+				var sprite = this.getSprite();
+				if (sprite) {
+					this._boundingBoxX1 = this.getX() - sprite.getOriginX();
+					this._boundingBoxY1 = this.getY() - sprite.getOriginY();
 					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-					this._boundingBoxX2 = this.getX() + this.getSprite().getOriginX();
-					this._boundingBoxY2 = this.getY() + this.getSprite().getOriginY();
+					this._boundingBoxX2 = this.getX() - sprite.getOriginX() + sprite.getWidth();
+					this._boundingBoxY2 = this.getY() - sprite.getOriginY() + sprite.getHeight();
 					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 				} else {
 					this._boundingBoxX1 = this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
@@ -866,7 +874,6 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 					this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 				}
-				return [this._boundingBoxX1, this._boundingBoxY1, this._boundingBoxZ1, this._boundingBoxX2, this._boundingBoxY2, this._boundingBoxZ2];
 			}
 		}
 	},
@@ -922,15 +929,28 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 Fiesta.collidePhysicalObjects = function(a, b) {
 	var aMass = a.getMass();
 	var bMass = b.getMass();
+	var massRatio = aMass / bMass;
+	var massSum = aMass + bMass;
 	var bOldVX = b.getVelocityX();
 	var bOldVY = b.getVelocityY();
 	var bOldVZ = b.getVelocityZ();
-	b.setVelocityX(a.getVelocityX() * aMass / bMass);
-	b.setVelocityY(a.getVelocityY() * aMass / bMass);
-	b.setVelocityZ(a.getVelocityZ() * aMass / bMass);
-	a.setVelocityX(bOldVX * bMass / aMass);
-	a.setVelocityY(bOldVY * bMass / aMass);
-	a.setVelocityZ(bOldVZ * bMass / aMass);
+	var distanceXSign = Fiesta.sign(a.getX() - b.getX());
+	var distanceYSign = Fiesta.sign(a.getY() - b.getY());
+	var distanceZSign = Fiesta.sign(a.getZ() - b.getZ());
+	b.setVelocityX(a.getVelocityX() * massRatio);
+	b.setVelocityY(a.getVelocityY() * massRatio);
+	b.setVelocityZ(a.getVelocityZ() * massRatio);
+	a.setVelocityX(bOldVX / massRatio);
+	a.setVelocityY(bOldVY / massRatio);
+	a.setVelocityZ(bOldVZ / massRatio);
+	var aMoves = 1 - (aMass / massSum);
+	var bMoves = 1 - (bMass / massSum);
+	a.addX(distanceXSign * aMoves);
+	a.addY(distanceYSign * aMoves);
+	a.addZ(distanceZSign * aMoves);
+	b.addX(-distanceXSign * bMoves);
+	b.addY(-distanceYSign * bMoves);
+	b.addZ(-distanceZSign * bMoves);
 	a.onCollide(b);
 	b.onCollide(a);
 };
@@ -1076,6 +1096,12 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		if (this._urls)
 			img.src = this._urls[this._currentIndex];
 		return img;
+	},
+	getWidth: function() {
+		return this.getImage().width;
+	},
+	getHeight: function() {
+		return this.getImage().height;
 	},
 	
 	// Draw me
@@ -1358,6 +1384,11 @@ Fiesta.Playground = new Fiesta.Class({
 					obj.getGraphic().draw(this, obj.getX(), obj.getY());
 			} catch (e) { Fiesta.error(e) }
 			
+			// Do the onFrame stuff
+			try {
+				obj.onFrame();
+			} catch (e) { Fiesta.error(e) }
+			
 			// Collisions
 			try {
 				if (obj instanceof Fiesta.PhysicalGameObject) {
@@ -1382,11 +1413,6 @@ Fiesta.Playground = new Fiesta.Class({
 						}
 					}
 				}
-			} catch (e) { Fiesta.error(e) }
-			
-			// Do the onFrame stuff
-			try {
-				obj.onFrame();
 			} catch (e) { Fiesta.error(e) }
 			
 		}
