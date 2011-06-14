@@ -1327,7 +1327,7 @@ Fiesta.Playground = new Fiesta.Class({
 		}
 	},
 	
-	// Spawn a game object inside of this playground
+	// Object API
 	spawn: function(object) {
 		if (object instanceof Fiesta.GameObject) {
 			this._gameObjects.push(object);
@@ -1337,8 +1337,6 @@ Fiesta.Playground = new Fiesta.Class({
 		else
 			throw new TypeError(object + " is not something that can be spawned");
 	},
-	
-	// Destroy an object inside of this playground
 	destroy: function(object) {
 		if (object instanceof Fiesta.GameObject) {
 			var location = this._gameObjects.indexOf(object);
