@@ -1307,7 +1307,6 @@ Fiesta.Playground = new Fiesta.Class({
 		for (var i in this._gameObjects) {
 			if (this._gameObjects[i] instanceof Fiesta.PhysicalGameObject) {
 				var bound = this._gameObjects[i].getBoundingBox();
-				console.log(bound)
 				if ((x > bound[0])
 					&&
 					(x < bound[3])
@@ -1323,7 +1322,6 @@ Fiesta.Playground = new Fiesta.Class({
 				}
 			}
 		}
-		console.log(objects.length + " objects found at " + x + ", " + y);
 		if (objects.length === 0)
 			return false;
 		return objects;
