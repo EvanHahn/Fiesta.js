@@ -337,8 +337,9 @@ da,c,b),V=d)}function H(b,d){var c;b=="fragment"?c=h.createShader(h.FRAGMENT_SHA
 case THREE.ClampToEdgeWrapping:return h.CLAMP_TO_EDGE;case THREE.MirroredRepeatWrapping:return h.MIRRORED_REPEAT;case THREE.NearestFilter:return h.NEAREST;case THREE.NearestMipMapNearestFilter:return h.NEAREST_MIPMAP_NEAREST;case THREE.NearestMipMapLinearFilter:return h.NEAREST_MIPMAP_LINEAR;case THREE.LinearFilter:return h.LINEAR;case THREE.LinearMipMapNearestFilter:return h.LINEAR_MIPMAP_NEAREST;case THREE.LinearMipMapLinearFilter:return h.LINEAR_MIPMAP_LINEAR;case THREE.ByteType:return h.BYTE;
 case THREE.UnsignedByteType:return h.UNSIGNED_BYTE;case THREE.ShortType:return h.SHORT;case THREE.UnsignedShortType:return h.UNSIGNED_SHORT;case THREE.IntType:return h.INT;case THREE.UnsignedShortType:return h.UNSIGNED_INT;case THREE.FloatType:return h.FLOAT;case THREE.AlphaFormat:return h.ALPHA;case THREE.RGBFormat:return h.RGB;case THREE.RGBAFormat:return h.RGBA;case THREE.LuminanceFormat:return h.LUMINANCE;case THREE.LuminanceAlphaFormat:return h.LUMINANCE_ALPHA}return 0}var W=this,h,ca=[],O=null,
 V=null,J=!0,S=null,$=null,aa=null,P=null,Y=0,da=0,fa=0,ka=0,Z=[new THREE.Vector4,new THREE.Vector4,new THREE.Vector4,new THREE.Vector4,new THREE.Vector4,new THREE.Vector4],K=new THREE.Matrix4,ga=new Float32Array(16),X=new Float32Array(16),R=new THREE.Vector4,T={ambient:[0,0,0],directional:{length:0,colors:[],positions:[]},point:{length:0,colors:[],positions:[],distances:[]}},b=b||{},ha=b.canvas!==void 0?b.canvas:document.createElement("canvas"),Q=b.stencil!==void 0?b.stencil:!0,ma=b.antialias!==void 0?
-b.antialias:!1,ea=b.clearColor!==void 0?new THREE.Color(b.clearColor):new THREE.Color(0),ia=b.clearAlpha!==void 0?b.clearAlpha:0;this.data={vertices:0,faces:0,drawCalls:0};this.maxMorphTargets=8;this.domElement=ha;this.sortObjects=this.autoClear=!0;try{if(!(h=ha.getContext("experimental-webgl",{antialias:ma,stencil:Q})))throw"Error creating WebGL context.";}catch(ya){console.error(ya)}console.log(navigator.userAgent+" | "+h.getParameter(h.VERSION)+" | "+h.getParameter(h.VENDOR)+" | "+h.getParameter(h.RENDERER)+
-" | "+h.getParameter(h.SHADING_LANGUAGE_VERSION));h.clearColor(0,0,0,1);h.clearDepth(1);h.enable(h.DEPTH_TEST);h.depthFunc(h.LEQUAL);h.frontFace(h.CCW);h.cullFace(h.BACK);h.enable(h.CULL_FACE);h.enable(h.BLEND);h.blendEquation(h.FUNC_ADD);h.blendFunc(h.SRC_ALPHA,h.ONE_MINUS_SRC_ALPHA);h.clearColor(ea.r,ea.g,ea.b,ia);this.context=h;var va=h.getParameter(h.MAX_VERTEX_TEXTURE_IMAGE_UNITS)>0;if(Q){var U={};U.vertices=new Float32Array(12);U.faces=new Uint16Array(6);U.darkness=0.5;U.vertices[0]=-20;U.vertices[1]=
+b.antialias:!1,ea=b.clearColor!==void 0?new THREE.Color(b.clearColor):new THREE.Color(0),ia=b.clearAlpha!==void 0?b.clearAlpha:0;this.data={vertices:0,faces:0,drawCalls:0};this.maxMorphTargets=8;this.domElement=ha;this.sortObjects=this.autoClear=!0;try{if(!(h=ha.getContext("experimental-webgl",{antialias:ma,stencil:Q})))throw"Error creating WebGL context.";}catch(ya){console.error(ya)}
+//console.log(navigator.userAgent+" | "+h.getParameter(h.VERSION)+" | "+h.getParameter(h.VENDOR)+" | "+h.getParameter(h.RENDERER)+" | "+h.getParameter(h.SHADING_LANGUAGE_VERSION));
+h.clearColor(0,0,0,1);h.clearDepth(1);h.enable(h.DEPTH_TEST);h.depthFunc(h.LEQUAL);h.frontFace(h.CCW);h.cullFace(h.BACK);h.enable(h.CULL_FACE);h.enable(h.BLEND);h.blendEquation(h.FUNC_ADD);h.blendFunc(h.SRC_ALPHA,h.ONE_MINUS_SRC_ALPHA);h.clearColor(ea.r,ea.g,ea.b,ia);this.context=h;var va=h.getParameter(h.MAX_VERTEX_TEXTURE_IMAGE_UNITS)>0;if(Q){var U={};U.vertices=new Float32Array(12);U.faces=new Uint16Array(6);U.darkness=0.5;U.vertices[0]=-20;U.vertices[1]=
 -20;U.vertices[2]=-1;U.vertices[3]=20;U.vertices[4]=-20;U.vertices[5]=-1;U.vertices[6]=20;U.vertices[7]=20;U.vertices[8]=-1;U.vertices[9]=-20;U.vertices[10]=20;U.vertices[11]=-1;U.faces[0]=0;U.faces[1]=1;U.faces[2]=2;U.faces[3]=0;U.faces[4]=2;U.faces[5]=3;U.vertexBuffer=h.createBuffer();U.elementBuffer=h.createBuffer();h.bindBuffer(h.ARRAY_BUFFER,U.vertexBuffer);h.bufferData(h.ARRAY_BUFFER,U.vertices,h.STATIC_DRAW);h.bindBuffer(h.ELEMENT_ARRAY_BUFFER,U.elementBuffer);h.bufferData(h.ELEMENT_ARRAY_BUFFER,
 U.faces,h.STATIC_DRAW);U.program=h.createProgram();h.attachShader(U.program,H("fragment",THREE.ShaderLib.shadowPost.fragmentShader));h.attachShader(U.program,H("vertex",THREE.ShaderLib.shadowPost.vertexShader));h.linkProgram(U.program);U.vertexLocation=h.getAttribLocation(U.program,"position");U.projectionLocation=h.getUniformLocation(U.program,"projectionMatrix");U.darknessLocation=h.getUniformLocation(U.program,"darkness")}var M={};M.vertices=new Float32Array(16);M.faces=new Uint16Array(6);b=0;
 M.vertices[b++]=-1;M.vertices[b++]=-1;M.vertices[b++]=0;M.vertices[b++]=0;M.vertices[b++]=1;M.vertices[b++]=-1;M.vertices[b++]=1;M.vertices[b++]=0;M.vertices[b++]=1;M.vertices[b++]=1;M.vertices[b++]=1;M.vertices[b++]=1;M.vertices[b++]=-1;M.vertices[b++]=1;M.vertices[b++]=0;M.vertices[b++]=1;b=0;M.faces[b++]=0;M.faces[b++]=1;M.faces[b++]=2;M.faces[b++]=0;M.faces[b++]=2;M.faces[b++]=3;M.vertexBuffer=h.createBuffer();M.elementBuffer=h.createBuffer();M.tempTexture=h.createTexture();M.occlusionTexture=
@@ -601,11 +602,20 @@ function(b,d){g.projectionMatrix=d.projectionMatrix;g.position.copy(d.position);
 // All of this BrowserDetect stuff is just one-time setup
 var BrowserDetect = {
 	init: function () {
+		
+		// Store data
 		this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
 		this.version = this.searchVersion(navigator.userAgent)
 			|| this.searchVersion(navigator.appVersion)
 			|| "an unknown version";
 		this.OS = this.searchString(this.dataOS) || "an unknown OS";
+		
+		// Clear old functions
+		this.searchString = undefined;
+		this.searchVersion = undefined;
+		this.dataBrowser = undefined;
+		this.dataOS = undefined;
+		
 	},
 	searchString: function (data) {
 		for (var i=0;i<data.length;i++)	{
