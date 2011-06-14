@@ -1134,7 +1134,12 @@ Fiesta.GameObject = new Fiesta.Class({
 	},
 	
 	// Graphic API
-	getGraphic: function() { return this._graphic;	},
+	getGraphic: function() {
+		if (this._graphic)
+			return this._graphic;
+		else
+			return false;
+	},
 	setGraphic: function(g) {
 		if (g instanceof Fiesta.Graphic)
 			this._graphic = g;
