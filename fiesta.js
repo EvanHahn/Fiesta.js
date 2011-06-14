@@ -615,7 +615,7 @@ Fiesta.GameObject = new Fiesta.Class({
 		this._playground;
 	},
 	
-	// Get/set graphic
+	// Graphic API
 	getGraphic: function() { return this._graphic;	},
 	setGraphic: function(g) {
 		if (g instanceof Fiesta.Graphic)
@@ -624,7 +624,7 @@ Fiesta.GameObject = new Fiesta.Class({
 			throw new TypeError(g + " is not a graphic");
 	},
 	
-	// Get/set sprite
+	// Sprite API
 	getSprite: function() {
 		if (this._graphic instanceof Fiesta.Sprite)
 			return this._graphic;
@@ -646,7 +646,7 @@ Fiesta.GameObject = new Fiesta.Class({
 			throw new TypeError(spr + " is not a sprite (nor something I can turn into one)");
 	},
 	
-	// Get/set playground
+	// Playground API
 	getPlayground: function() {
 		if (this._playground)
 			return this._playground;
@@ -721,7 +721,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this.updateBoundingBox();
 	},
 	
-	// Get/set location
+	// Location API
 	getX: function() { return this._x; },
 	getY: function() { return this._y; },
 	getZ: function() { return this._z; },
@@ -755,7 +755,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	addY: function(a) { this.setY(a + this.getY()) },
 	addZ: function(a) { this.setZ(a + this.getZ()) },
 	
-	// Get/set velocity
+	// Velocity API
 	getVelocityX: function() { return this._velocityX; },
 	getVelocityY: function() { return this._velocityY; },
 	getVelocityZ: function() { return this._velocityZ; },
@@ -782,7 +782,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	addVelocityY: function(a) { this.setVelocityY(a + this.getVelocityY()) },
 	addVelocityZ: function(a) { this.setVelocityZ(a + this.getVelocityZ()) },
 	
-	// Get/set acceleration
+	// Acceleration API
 	getAccelerationX: function() { return this._accelerationX; },
 	getAccelerationY: function() { return this._accelerationY; },
 	getAccelerationZ: function() { return this._accelerationZ; },
@@ -809,7 +809,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	addAccelerationY: function(a) { this.setAccelerationY(a + this.getAccelerationY()) },
 	addAccelerationZ: function(a) { this.setAccelerationZ(a + this.getAccelerationZ()) },
 	
-	// Get/set friction
+	// Friction API
 	getFrictionX: function() { return this._frictionX; },
 	getFrictionY: function() { return this._frictionY; },
 	getFrictionZ: function() { return this._frictionZ; },
@@ -836,7 +836,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	addFrictionY: function(a) { this.setFrictionY(a + this.getFrictionY()) },
 	addFrictionZ: function(a) { this.setFrictionZ(a + this.getFrictionZ()) },
 	
-	// Get/set mass
+	// Mass API
 	getMass: function() { return this._mass; },
 	setMass: function(m) {
 		if (typeof m === typeof 1.0)
@@ -846,7 +846,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	},
 	addMass: function(a) { this.setMass(a + this.getMass()) },
 	
-	// Get/set bounciness
+	// Bounciness API
 	getBounciness: function() { return this._bounciness; },
 	setBounciness: function(b) {
 		if (typeof b === typeof 1.0)
@@ -856,7 +856,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	},
 	addBounciness: function(a) { this.setBounciness(a + this.getBounciness()) },
 	
-	// Get/set bounding box
+	// Bounding box API
 	getBoundingBoxX1: function() {
 		if (this._boundingBoxAuto)
 			this.updateBoundingBox();
@@ -916,10 +916,10 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		}
 	},
 	
-	// Extrapolated functions
+	// Physics API (extrapolated)
 	getMomentum: function() { return this._mass * this.getVelocity(); },
 	
-	// Physics
+	// Do physics stuff on each frame
 	onFrame: function() {
 		this.callSuper();
 		var fps = this.getPlayground().getDesiredFPS();
@@ -1044,7 +1044,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		this.setIndex(0);
 	},
 	
-	// Get/set my origin
+	// Origin API
 	getOriginX: function() { return this._originX; },
 	getOriginY: function() { return this._originY; },
 	setOriginX: function(coord) {
@@ -1064,7 +1064,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		this.setOriginY(yCoord);
 	},
 	
-	// Get/set my sprite URL
+	// Sprite URL(s) API
 	getURLs: function() { return this._urls; },
 	setURLs: function() {
 		var u = arguments[0];
@@ -1084,7 +1084,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 			this.animate();
 	},
 	
-	// Get and set which index I'm at, and my animation speed
+	// Animation API
 	animate: function() {
 		this._currentIndex ++;
 		if (this._currentIndex >= this._urls.length)
@@ -1158,7 +1158,7 @@ Fiesta.Sound = new Fiesta.Class({
 		this.setFiles(sources);
 	},
 	
-	// Set the sources
+	// Sources API
 	setFiles: function(sources) {
 		if (typeof sources === typeof "") {
 			if (Fiesta.getFileExtension(sources) === "")
@@ -1229,7 +1229,7 @@ Fiesta.Playground = new Fiesta.Class({
 		this.setRedraw(Fiesta.PLAYGROUND_DEFAULT_REDRAW);
 	},
 	
-	// Get/set my size
+	// Size API
 	getWidth: function() { return this._width; },
 	getHeight: function() { return this._height; },
 	setWidth: function(w) {
@@ -1255,7 +1255,7 @@ Fiesta.Playground = new Fiesta.Class({
 		this.setHeight(h);
 	},
 	
-	// Get/set my frames per second
+	// FPS API
 	getDesiredFPS: function() { return this._desiredFPS; },
 	setDesiredFPS: function(f) {
 		if ((typeof f === typeof 1) && (f >= 0)) {
@@ -1265,7 +1265,7 @@ Fiesta.Playground = new Fiesta.Class({
 			throw new TypeError(f + " is not a valid framerate");
 	},
 	
-	// Get/set redraw
+	// Redraw API
 	getRedraw: function() { return this._redraw; },
 	setRedraw: function(r) {
 		if (typeof r === typeof true)
@@ -1274,7 +1274,7 @@ Fiesta.Playground = new Fiesta.Class({
 			throw new TypeError("Cannot set redrawing to " + r);
 	},
 	
-	// Place me inside the DOM; returns HTMLNode that was placed
+	// DOM API
 	place: function(domElement) {
 		if (!(domElement instanceof HTMLElement))
 			throw new TypeError("Playground cannot be placed in " + domElement);
@@ -1288,8 +1288,6 @@ Fiesta.Playground = new Fiesta.Class({
 		this.frame();
 		return this._element;
 	},
-	
-	// Interact with DOM element
 	domElementExists: function() {
 		if (this._element)
 			return true;
