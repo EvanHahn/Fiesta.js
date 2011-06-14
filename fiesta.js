@@ -1070,7 +1070,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	},
 	stopAnimation: function() { this._animateSpeed = 0; },
 	
-	// Get my Image() -- this also preloads!
+	// Get my Image() (this also preloads)
 	getImage: function() {
 		var img = new Image();
 		if (this._urls)
