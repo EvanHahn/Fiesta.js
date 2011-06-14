@@ -1214,7 +1214,7 @@ Fiesta.Playground = new Fiesta.Class({
 			this._desiredFPS = f;
 		}
 		else
-			throw new TypeError(f + " is not a valid framerate");
+			throw new TypeError(f + " is not a valid desired FPS");
 	},
 	
 	// Redraw API
@@ -1275,10 +1275,16 @@ Fiesta.Playground = new Fiesta.Class({
 	},
 	
 	// Object API
-	spawn: function(object) {
+	spawn: function(object, x, y, z) {
 		if (object instanceof Fiesta.GameObject) {
 			this._gameObjects.push(object);
 			object._setPlayground(this);
+			if (x)
+				object.setX(x);
+			if (y)
+				object.setY(y);
+			if (z)
+				object.setZ(z);
 			object.onSpawn();
 		}
 		else
