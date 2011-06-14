@@ -696,6 +696,8 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 			throw new TypeError(coord + " is not a valid Z coordinate");
 	},
 	setCoordinates: function(xCoord, yCoord, zCoord) {
+		if ((xCoord === undefined) && (yCoord === undefined))
+			throw new TypeError("Cannot set coordinates to " + xCoord + ", " + yCoord + ", " + zCoord);
 		if (xCoord !== undefined)
 			this.setX(xCoord);
 		if (yCoord !== undefined)
