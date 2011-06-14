@@ -1169,7 +1169,7 @@ Fiesta.GameObject = new Fiesta.Class({
 		if (this._playground)
 			return this._playground;
 		else
-			throw new Error("This object is not yet in a playground");
+			return false;
 	},
 	_setPlayground: function(p) {
 		if (p instanceof Fiesta.Playground)
