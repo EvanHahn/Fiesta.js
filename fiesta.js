@@ -851,14 +851,14 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 				if (this.getSprite()) {
 					this._boundingBoxX1 = this.getX() - this.getSprite().getOriginX();
 					this._boundingBoxY1 = this.getY() - this.getSprite().getOriginY();
-					this._boundingBoxZ1 = this.getZ();
+					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
 					this._boundingBoxX2 = this.getX() + this.getSprite().getOriginX();
 					this._boundingBoxY2 = this.getY() + this.getSprite().getOriginY();
 					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 				} else {
-					this._boundingBoxX1 = this.getX();
-					this._boundingBoxY1 = this.getY();
-					this._boundingBoxZ1 = this.getZ();
+					this._boundingBoxX1 = this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
+					this._boundingBoxY1 = this.getY() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
+					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
 					this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 					this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
@@ -1300,6 +1300,36 @@ Fiesta.Playground = new Fiesta.Class({
 		}
 		else
 			throw new TypeError(object + " is not something that can be destroyed");
+	},
+	objectsAt: function(x, y, z) {
+		if (z === undefined)
+			z = 0;
+		if ((typeof x !== typeof 1.0) || (typeof y !== typeof 1.0) || (typeof z !== typeof 1.0))
+			throw new TypeError("Cannot look for objects at " + x + ", " + y + ", and " + z);
+		var objects = [];
+		for (var i in this._gameObjects) {
+			if (this._gameObjects[i] instanceof Fiesta.PhysicalGameObject) {
+				var bound = this._gameObjects[i].getBoundingBox();
+				console.log(bound)
+				if ((x > bound[0])
+					&&
+					(x < bound[3])
+					&&
+					(y > bound[1])
+					&&
+					(y < bound[4])
+					&&
+					(z > bound[2])
+					&&
+					(z < bound[5])) {
+					objects.push(this._gameObjects[i]);
+				}
+			}
+		}
+		console.log(objects.length + " objects found at " + x + ", " + y);
+		if (objects.length === 0)
+			return false;
+		return objects;
 	},
 	
 	// Do this every frame

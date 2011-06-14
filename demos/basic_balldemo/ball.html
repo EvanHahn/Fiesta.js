@@ -5,6 +5,14 @@
 	<!-- Fiesta -->
 	<script src="../../fiesta.js"></script>
 	
+	<!-- Temporary styles -->
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	</style>
+	
 </head>
 <body>
 
@@ -54,10 +62,6 @@
 		},
 		stopX: function() { this.setAccelerationX(0); },
 		jump: function() { this.setVelocityY(-this._jumpSpeed); },
-		goTo: function(x, y) {
-			this.setCoordinates(x, y);
-			this.setVelocityY(0);
-		},
 		
 		// On spawn
 		onSpawn: function() {
@@ -67,8 +71,7 @@
 				"right keydown": this.moveRight,
 				"left keyup": this.stopX,
 				"right keyup": this.stopX,
-				"space keydown": this.jump,
-				"right click": this.goTo
+				"space keydown": this.jump
 			});
 		},
 		
@@ -102,11 +105,21 @@
 			ball.setCoordinates(x, y);
 		},
 		
+		// Delete a ball
+		deleteBall: function(x, y) {
+			var object = this.getPlayground().objectsAt(x, y);
+			if (object) {
+				for (var i in object)
+					object[i].destroy();
+			}
+		},
+		
 		// Bind commmands
 		onSpawn: function() {
 			this.callSuper();
 			Fiesta.bindCommands(this, {
-				"left click": this.spawnBall
+				"left click": this.spawnBall,
+				"right click": this.deleteBall
 			});
 		}
 		
