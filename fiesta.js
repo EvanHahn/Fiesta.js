@@ -677,6 +677,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	getX: function() { return this._x; },
 	getY: function() { return this._y; },
 	getZ: function() { return this._z; },
+	getCoordinates: function() { return [this._x, this._y, this._z] },
 	setX: function(coord) {
 		if (typeof coord === typeof 1.0)
 			this._x = coord;
