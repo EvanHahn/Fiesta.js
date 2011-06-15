@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script src="../../fiesta.js"></script>
+	
+	<style type="text/css">
+	
+	body {
+		text-align: center;
+		background-color: #999;
+	}
+	
+	.fiesta_playground {
+		border: 1px solid #000;
+		box-shadow: 0 5px 10px #000;
+	}
+	
+	</style>
+
+</head>
+<body>
+
+<script type="text/javascript">
+
+/*	*************************
+	* Config for everything *
+	*************************	*/
+
+var gravity = 600;
+
+/*	**********
+	* Person *
+	**********	*/
+
+var Person = new Fiesta.Class(Fiesta.PhysicalGameObject, {
+	
+	// Constructor
+	initialize: function() {
+		
+		// Call super
+		this.callSuper();
+		
+		// Configuration variables
+		this._sideToSideAcceleration = 1000;
+		this._jumpSpeed = 250;
+		
+		// Add sprites
+		this._mySprite = new Fiesta.Sprite("redplayer.png");
+		this._mySprite.setOrigin(18, 103);
+		this.setGraphic(this._mySprite);
+		
+		// Gravity
+		this.setAccelerationY(gravity);
+		
+	},
+	
+	// Movement
+	moveLeft: function() {
+		this.setAccelerationX(-this._sideToSideAcceleration);
+	},
+	moveRight: function() {
+		this.setAccelerationX(this._sideToSideAcceleration);
+	},
+	stopX: function() {
+		this.setAccelerationX(0);
+	},
+	jump: function() {
+		this.setVelocityY(-this._jumpSpeed);
+	},
+	
+	// Bind commands
+	onSpawn: function() {
+		this.callSuper();
+		Fiesta.bindCommands(this, {
+			"left keydown": this.moveLeft,
+			"right keydown": this.moveRight,
+			"left keyup": this.stopX,
+			"right keyup": this.stopX,
+			"space keydown": this.jump
+		});
+	}
+	
+});
+
+/*	********
+	* Wall *
+	********	*/
+
+var Wall = new Fiesta.Class(Fiesta.PhysicalGameObject, {
+	
+	// Constructor
+	initialize: function() {
+		this.callSuper();
+		this.setMass(10000000000);
+		var spr = new Fiesta.Sprite("wall.gif");
+		spr.setOrigin(16, 16);
+		this.setGraphic(spr);
+	},
+	
+});
+
+// Set up the playground
+var playground = new Fiesta.Playground(900, 400, "2d", 60);
+playground.setBackgroundColor("#fff");
+playground.place(document.body);
+
+// Place the player
+var player = new Person();
+playground.spawn(player, 100, 100);
+player.setCoordinates(100, 100);
+
+// Place a floor
+var wallSprite = new Fiesta.Sprite("wall.gif");
+var wall;
+for (var i = 0; i < playground.getWidth(); i += 32) {
+	wall = new Wall();
+	playground.spawn(wall, i, playground.getHeight() - 64);
+}
+
+</script>
+
+</body>
+</html>
