@@ -1250,7 +1250,6 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this.setFrictionZ(Fiesta.DEFAULT_Z_FRICTION);
 		this.setMass(Fiesta.DEFAULT_MASS);
 		this.setBounciness(Fiesta.DEFAULT_BOUNCINESS);
-		this.updateBoundingBox();
 	},
 	
 	// Location API
