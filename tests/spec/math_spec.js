@@ -81,4 +81,28 @@ describe("Math API", function() {
 		expect(Fiesta.radians(Math.PI * -5)).toEqual(Math.PI);
 	});
 	
+	it("converts degrees to radians", function() {
+		expect(Fiesta.degreesToRadians(180)).toEqual(Math.PI);
+	});
+	
+	it("converts radians to degrees", function() {
+		expect(Fiesta.radiansToDegrees(Math.PI)).toEqual(180);
+	});
+	
+	it("finds the distance between two 2D points", function() {
+		expect(Fiesta.pointDistance2D(0, 0, 3, 4)).toEqual(5);
+	});
+	
+	it("finds the distance between two 3D points", function() {
+		expect(Fiesta.pointDistance3D(0, 0, 0, 3, 4, 0)).toEqual(5);
+	});
+	
+	it("finds 2D vector length", function() {
+		expect(Fiesta.vectorLength(3, 4)).toEqual(5);
+	});
+	
+	it("finds 3D vector length", function() {
+		expect(Fiesta.vectorLength(3, 4, 0)).toEqual(5);
+	});
+	
 });
