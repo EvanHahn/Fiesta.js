@@ -57,16 +57,28 @@ describe("Math API", function() {
 		}).toThrow("FOO is not a valid value");
 	});
 	
-	it("can wrap degrees when it doesn't need to be wrapped", function() {
+	it("wraps degrees when it doesn't need to be wrapped", function() {
 		expect(Fiesta.degrees(100)).toEqual(100);
 	});
 	
-	it("can wrap degrees when it exceeds 360 degrees", function() {
+	it("wraps degrees when it exceeds 360 degrees", function() {
 		expect(Fiesta.degrees(730)).toEqual(10);
 	});
 	
-	it("can wrap degrees when it is lower than 0 degrees", function() {
+	it("wraps degrees when it is lower than 0 degrees", function() {
 		expect(Fiesta.degrees(-730)).toEqual(350);
+	});
+	
+	it("wraps radians when it doesn't need to be wrapped", function() {
+		expect(Fiesta.radians(Math.PI / 4)).toEqual(Math.PI / 4);
+	});
+	
+	it("wraps radians when it exceeds 360 degrees", function() {
+		expect(Fiesta.radians(Math.PI * 5)).toEqual(Math.PI);
+	});
+	
+	it("wraps radians when it is lower than 0 degrees", function() {
+		expect(Fiesta.radians(Math.PI * -5)).toEqual(Math.PI);
 	});
 	
 });
