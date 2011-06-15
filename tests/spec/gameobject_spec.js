@@ -96,7 +96,7 @@ describe("Game object", function() {
 		play.place(document.body);
 		waits(500);
 		runs(function() {
-			expect(obj.value).toBeGreaterThan(5);
+			expect(obj.value).toBeGreaterThan(4);
 			expect(obj.value).toBeLessThan(10);
 		});
 	});
