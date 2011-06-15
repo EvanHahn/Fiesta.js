@@ -36,6 +36,7 @@ if (!Fiesta.DEFAULT_Y_FRICTION) Fiesta.DEFAULT_Y_FRICTION = 0;
 if (!Fiesta.DEFAULT_Z_FRICTION) Fiesta.DEFAULT_Z_FRICTION = 0;
 if (!Fiesta.DEFAULT_MASS) Fiesta.DEFAULT_MASS = 1;
 if (!Fiesta.DEFAULT_BOUNCINESS) Fiesta.DEFAULT_BOUNCINESS = 1;
+if (!Fiesta.DEFAULT_BOUNDING_BOX_AUTO) Fiesta.DEFAULT_BOUNDING_BOX_AUTO = true;
 if (!Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION) Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION = 1;
 
 // Playground defaults
@@ -1235,7 +1236,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this._boundingBoxX2;
 		this._boundingBoxY2;
 		this._boundingBoxZ2;
-		this._boundingBoxAuto = true;
+		this._boundingBoxAuto = Fiesta.DEFAULT_BOUNDING_BOX_AUTO;
 		
 		this.setCoordinates(Fiesta.DEFAULT_X, Fiesta.DEFAULT_Y, Fiesta.DEFAULT_Z);
 		this.setVelocityX(Fiesta.DEFAULT_X_VELOCITY);
