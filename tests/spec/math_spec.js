@@ -27,4 +27,46 @@ describe("Math API", function() {
 		}).toThrow("Cannot find sign of string 10");
 	});
 	
+	it("wraps a value that doesn't need wrapping", function() {
+		expect(Fiesta.wrap(10, 20, 15)).toEqual(15);
+	});
+	
+	it("wraps a value that exceeds the maximum", function() {
+		expect(Fiesta.wrap(10, 20, 53)).toEqual(13);
+	});
+	
+	it("wraps a value that is below the minimum", function() {
+		expect(Fiesta.wrap(10, 20, -44)).toEqual(16);
+	});
+	
+	it("throws errors when trying to wrap a non-number as a minimum", function() {
+		expect(function() {
+			Fiesta.wrap("foo", 10, 5);
+		}).toThrow("foo is not a valid minimum");
+	});
+	
+	it("throws errors when trying to wrap a non-number as a maximum", function() {
+		expect(function() {
+			Fiesta.wrap(0, "bar", 5);
+		}).toThrow("bar is not a valid maximum");
+	});
+	
+	it("throws errors when trying to wrap a non-number as a value", function() {
+		expect(function() {
+			Fiesta.wrap(0, 10, "FOO");
+		}).toThrow("FOO is not a valid value");
+	});
+	
+	it("can wrap degrees when it doesn't need to be wrapped", function() {
+		expect(Fiesta.degrees(100)).toEqual(100);
+	});
+	
+	it("can wrap degrees when it exceeds 360 degrees", function() {
+		expect(Fiesta.degrees(730)).toEqual(10);
+	});
+	
+	it("can wrap degrees when it is lower than 0 degrees", function() {
+		expect(Fiesta.degrees(-730)).toEqual(350);
+	});
+	
 });
