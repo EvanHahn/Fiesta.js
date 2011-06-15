@@ -772,6 +772,8 @@ Fiesta.error = function(e) { console.error(e); };
 
 // Sign of a number
 Fiesta.sign = function(d) {
+	if (typeof d !== typeof 1.0)
+		throw new TypeError("Cannot find sign of " + typeof d + " " + d);
 	if (d > 0) return 1;
 	if (d < 0) return -1;
 	return 0;
