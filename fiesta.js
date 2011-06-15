@@ -779,6 +779,24 @@ Fiesta.sign = function(d) {
 	return 0;
 }
 
+// Wrap a value around (examples below make the most sense)
+Fiesta.wrap = function(min, max, value) {
+	if (typeof min !== typeof 1.0) throw new TypeError(min + " is not a valid minimum");
+	if (typeof max !== typeof 1.0) throw new TypeError(max + " is not a valid maximum");
+	if (typeof value !== typeof 1.0) throw new TypeError(value + " is not a valid value");
+	if (min > max) throw new Error("Cannot wrap if the minimum (" + min + ") is greater than the maximum (" + max + ")");
+		
+	if (value > max)
+		return Fiesta.wrap(min, max, value - (max - min));
+	if (value < min)
+		return Fiesta.wrap(min, max, value + (max - min));
+	return value;
+}
+
+// Angle wrapping (ie, change 370º to 10º)
+Fiesta.degrees = function(d) { return Fiesta.wrap(0, 360, d) };
+Fiesta.radians = function(d) { return Fiesta.wrap(0, 2 * Math.PI, d) };
+
 // Convert rotation measurements
 Fiesta.degreesToRadians = function(d) { return (d * Math.PI) / 180; };
 Fiesta.radiansToDegrees = function(r) { return (r * 180) / Math.PI; };
