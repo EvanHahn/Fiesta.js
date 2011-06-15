@@ -836,8 +836,8 @@ Fiesta.guid = function() {
 	* Commands *
 	************
 	
-	This is all the logic for binding user commands (key presses, clicks, etc) to
-	methods. This SHOULD work for any object, whether it's Fiesta or not.	*/
+	This is all the logic for binding user commands (key presses, clicks, etc)
+	to methods. This SHOULD work for any object, whether it's Fiesta or not. */
 
 // Bind commands to functions (works for any object)
 Fiesta.bindCommands = function(object, binds) {
