@@ -35,7 +35,7 @@
 			// Sprites
 			this._spr_ball = new Fiesta.Sprite("ball.gif");
 			this._spr_ball.setOrigin(16, 16);
-			this.setSprite(this._spr_ball);
+			this.setGraphic(this._spr_ball);
 			
 			// Config
 			this._friction = 100;
@@ -78,11 +78,11 @@
 		// On frame
 		onFrame: function() {
 			this.callSuper();
-			if ((this.getX() < (0 + this.getSprite().getOriginX())) || (this.getX() > (room_width - this.getSprite().getOriginX())))
+			if ((this.getX() < (0 + this.getGraphic().getOriginX())) || (this.getX() > (room_width - this.getGraphic().getOriginX())))
 				this.setVelocityX(-this.getVelocityX())
-			if (this.getY() > (room_height - this.getSprite().getOriginY())) {
+			if (this.getY() > (room_height - this.getGraphic().getOriginY())) {
 				this.setVelocityY(this.getVelocityY() * -0.9);
-				this.setY(room_height - this.getSprite().getOriginY());
+				this.setY(room_height - this.getGraphic().getOriginY());
 				if (Math.abs(this.getVelocityY()) < 45)
 					this.setVelocityY(0);
 			}

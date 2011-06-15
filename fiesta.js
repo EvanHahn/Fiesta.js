@@ -1145,20 +1145,6 @@ Fiesta.GameObject = new Fiesta.Class({
 			throw new TypeError(g + " is not a graphic");
 	},
 	
-	// Sprite API
-	getSprite: function() {
-		if (this._graphic instanceof Fiesta.Sprite)
-			return this._graphic;
-		else
-			return false;
-	},
-	setSprite: function(spr) {
-		if (spr instanceof Fiesta.Sprite)
-			this._graphic = spr;
-		else
-			throw new TypeError(spr + " is not a sprite");
-	},
-	
 	// Playground API
 	getPlayground: function() {
 		if (this._playground)
@@ -1410,24 +1396,22 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	},
 	updateBoundingBox: function() {
 		if (this._boundingBoxAuto) {
-			var context = "2d";	// temporary
-			if (context === "2d") {
-				var sprite = this.getSprite();
-				if (sprite) {
-					this._boundingBoxX1 = this.getX() - sprite.getOriginX();
-					this._boundingBoxY1 = this.getY() - sprite.getOriginY();
-					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-					this._boundingBoxX2 = this.getX() - sprite.getOriginX() + sprite.getWidth();
-					this._boundingBoxY2 = this.getY() - sprite.getOriginY() + sprite.getHeight();
-					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-				} else {
-					this._boundingBoxX1 = this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-					this._boundingBoxY1 = this.getY() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-					this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-					this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-				}
+			var graphic = this.getGraphic();
+			if (graphic) {
+				var bounding = graphic.getBoundingBox(this.getX(), this.getY(), this.getZ());
+				this._boundingBoxX1 = bounding[0];
+				this._boundingBoxY1 = bounding[1];
+				this._boundingBoxZ1 = bounding[2];
+				this._boundingBoxX2 = bounding[3];
+				this._boundingBoxY2 = bounding[4];
+				this._boundingBoxZ2 = bounding[5];
+			} else {
+				this._boundingBoxX1 = this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
+				this._boundingBoxY1 = this.getY() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
+				this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
+				this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+				this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+				this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
 			}
 		}
 	},
@@ -1520,10 +1504,9 @@ Fiesta.Graphic = new Fiesta.Class({
 	// Empty constructor (needs to be here)
 	initialize: function() {},
 	
-	// This must be implemented or else!
-	draw: function() {
-		throw new Error("This graphic must know how to draw itself.");
-	}
+	// "Abstract" functions
+	draw: function() { throw new Error("This graphic must know how to draw itself") },
+	getBoundingBox: function() { throw new Error("This graphic must know how to get a bounding box") }
 	
 });
 
@@ -1673,6 +1656,18 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 			spriteHeight = image.height;
 		var context = playground.getContext();
 		context.drawImage(image, xCoord - this.getOriginX(), yCoord - this.getOriginY(), spriteWidth, spriteHeight);	
+	},
+	
+	// Get my bounding box
+	getBoundingBox: function(x, y, z) {
+		var bounding = [];
+		bounding[0] = x - this.getOriginX();
+		bounding[1] = y - this.getOriginY();
+		bounding[2] = z - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
+		bounding[3] = bounding[0] + this.getWidth();
+		bounding[4] = bounding[1] + this.getHeight();
+		bounding[5] = bounding[2] + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+		return bounding;
 	}
 	
 });
