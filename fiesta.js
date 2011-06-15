@@ -747,20 +747,10 @@ var _BrowserDetect = {
 };
 _BrowserDetect.init();
 
-// Get the current browser
-Fiesta.getBrowser = function() {
-	return _BrowserDetect.browser;
-};
-
-// Get the browser's version
-Fiesta.getBrowserVersion = function() {
-	return _BrowserDetect.version;
-};
-
-// Get the user's OS
-Fiesta.getOS = function() {
-	return _BrowserDetect.OS;
-};
+// Get the current browser, version, or OS
+Fiesta.getBrowser = function() { return _BrowserDetect.browser };
+Fiesta.getBrowserVersion = function() { return _BrowserDetect.version };
+Fiesta.getOS = function() { return _BrowserDetect.OS };
 
 // Does my browser support Fiesta?
 Fiesta.checkSupport = function() {
