@@ -798,8 +798,8 @@ Fiesta.degrees = function(d) { return Fiesta.wrap(0, 360, d) };
 Fiesta.radians = function(d) { return Fiesta.wrap(0, 2 * Math.PI, d) };
 
 // Convert rotation measurements
-Fiesta.degreesToRadians = function(d) { return (d * Math.PI) / 180; };
-Fiesta.radiansToDegrees = function(r) { return (r * 180) / Math.PI; };
+Fiesta.degreesToRadians = function(d) { return (Fiesta.degrees(d) * Math.PI) / 180; };
+Fiesta.radiansToDegrees = function(r) { return (Fiesta.radians(r) * 180) / Math.PI; };
 
 // Distances between points (2 and 3 dimensions)
 Fiesta.pointDistance2D = function(x1, y1, x2, y2) { return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)); };
