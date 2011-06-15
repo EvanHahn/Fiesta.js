@@ -1174,6 +1174,7 @@ Fiesta.GameObject = new Fiesta.Class({
 		else
 			throw new TypeError(p + " is not a valid playground");
 	},
+	_resetPlayground: function() { this._playground = undefined },
 	
 	// Remove me from the playground
 	destroy: function() {
@@ -1880,6 +1881,7 @@ Fiesta.Playground = new Fiesta.Class({
 			var location = this._gameObjects.indexOf(object);
 			if (location !== -1) {
 				this._gameObjects.splice(location, 1);
+				object._resetPlayground(undefined);
 				object.onDestroy();
 			}
 			else
