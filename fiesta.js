@@ -802,11 +802,14 @@ Fiesta.vectorLength = function(i, j, k) {
 	return Fiesta.pointDistance3D(0, 0, 0, i, j, k);
 };
 
-/*	********************
-	* String functions *
-	********************
+/*	*******************
+	* Misc. functions *
+	*******************
 	
-	These are functions that deal with strings.	*/
+	These are miscellaneous functions that do random things.	*/
+
+// Does this string/array contain this element?
+Fiesta.contains = function(searchIn, searchFor) { return !!~searchIn.indexOf(searchFor) };
 
 // Get the file extension
 Fiesta.getFileExtension = function(filename) {
@@ -816,17 +819,6 @@ Fiesta.getFileExtension = function(filename) {
 	else
 		return extension.toLowerCase();
 };
-
-// Does a string contain another string?
-Fiesta.contains = function(str, searching) {
-	return (str.indexOf(searching) !== -1);
-};
-
-/*	*******************
-	* Misc. functions *
-	*******************
-	
-	These are miscellaneous functions that do random things.	*/
 
 // Make a sorta-GUID
 Fiesta._guids = [];
