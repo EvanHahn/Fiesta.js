@@ -1396,8 +1396,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	},
 	updateBoundingBox: function() {
 		if (this._boundingBoxAuto) {
-			var graphic = this.getGraphic();
-			if (graphic) {
+			if (graphic = this.getGraphic()) {
 				var bounding = graphic.getBoundingBox(this.getX(), this.getY(), this.getZ());
 				this._boundingBoxX1 = bounding[0];
 				this._boundingBoxY1 = bounding[1];
