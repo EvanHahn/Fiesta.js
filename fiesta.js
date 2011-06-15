@@ -13,17 +13,32 @@
 
 var Fiesta = {};
 
-/*	********************
-	* Config variables *
-	********************
+/*	************
+	* Defaults *
+	************	*/
 
-	These aim to be user-friendly configuration variables.  */
-
+// Commands defaults
 if (!Fiesta.DEFAULT_KEYBOARD_COMMAND) Fiesta.DEFAULT_KEYBOARD_COMMAND = "keydown";
 if (!Fiesta.DEFAULT_CLICK) Fiesta.DEFAULT_CLICK = "leftclick";
 
+// Physical game objects defaults
+if (!Fiesta.DEFAULT_X) Fiesta.DEFAULT_X = 0;
+if (!Fiesta.DEFAULT_Y) Fiesta.DEFAULT_Y = 0;
+if (!Fiesta.DEFAULT_Z) Fiesta.DEFAULT_Z = 0;
+if (!Fiesta.DEFAULT_X_VELOCITY) Fiesta.DEFAULT_X_VELOCITY = 0;
+if (!Fiesta.DEFAULT_Y_VELOCITY) Fiesta.DEFAULT_Y_VELOCITY = 0;
+if (!Fiesta.DEFAULT_Z_VELOCITY) Fiesta.DEFAULT_Z_VELOCITY = 0;
+if (!Fiesta.DEFAULT_X_ACCELERATION) Fiesta.DEFAULT_X_ACCELERATION = 0;
+if (!Fiesta.DEFAULT_Y_ACCELERATION) Fiesta.DEFAULT_Y_ACCELERATION = 0;
+if (!Fiesta.DEFAULT_Z_ACCELERATION) Fiesta.DEFAULT_Z_ACCELERATION = 0;
+if (!Fiesta.DEFAULT_X_FRICTION) Fiesta.DEFAULT_X_FRICTION = 0;
+if (!Fiesta.DEFAULT_Y_FRICTION) Fiesta.DEFAULT_Y_FRICTION = 0;
+if (!Fiesta.DEFAULT_Z_FRICTION) Fiesta.DEFAULT_Z_FRICTION = 0;
+if (!Fiesta.DEFAULT_MASS) Fiesta.DEFAULT_MASS = 1;
+if (!Fiesta.DEFAULT_BOUNCINESS) Fiesta.DEFAULT_BOUNCINESS = 1;
 if (!Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION) Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION = 1;
 
+// Playground defaults
 if (!Fiesta.PLAYGROUND_DEFAULT_WIDTH) Fiesta.PLAYGROUND_DEFAULT_WIDTH = 400;
 if (!Fiesta.PLAYGROUND_DEFAULT_HEIGHT) Fiesta.PLAYGROUND_DEFAULT_HEIGHT = 300;
 if (!Fiesta.PLAYGROUND_DEFAULT_FPS) Fiesta.PLAYGROUND_DEFAULT_FPS = 60;
@@ -1222,18 +1237,18 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this._boundingBoxZ2;
 		this._boundingBoxAuto = true;
 		
-		this.setCoordinates(0, 0, 0);
-		this.setVelocityX(0);
-		this.setVelocityY(0);
-		this.setVelocityZ(0);
-		this.setAccelerationX(0);
-		this.setAccelerationY(0);
-		this.setAccelerationZ(0);
-		this.setFrictionX(0);
-		this.setFrictionY(0);
-		this.setFrictionZ(0);
-		this.setMass(1);
-		this.setBounciness(1);
+		this.setCoordinates(Fiesta.DEFAULT_X, Fiesta.DEFAULT_Y, Fiesta.DEFAULT_Z);
+		this.setVelocityX(Fiesta.DEFAULT_X_VELOCITY);
+		this.setVelocityY(Fiesta.DEFAULT_Y_VELOCITY);
+		this.setVelocityZ(Fiesta.DEFAULT_Z_VELOCITY);
+		this.setAccelerationX(Fiesta.DEFAULT_X_ACCELERATION);
+		this.setAccelerationY(Fiesta.DEFAULT_Y_ACCELERATION);
+		this.setAccelerationZ(Fiesta.DEFAULT_Z_ACCELERATION);
+		this.setFrictionX(Fiesta.DEFAULT_X_FRICTION);
+		this.setFrictionY(Fiesta.DEFAULT_Y_FRICTION);
+		this.setFrictionZ(Fiesta.DEFAULT_Z_FRICTION);
+		this.setMass(Fiesta.DEFAULT_MASS);
+		this.setBounciness(Fiesta.DEFAULT_BOUNCINESS);
 		this.updateBoundingBox();
 	},
 	
