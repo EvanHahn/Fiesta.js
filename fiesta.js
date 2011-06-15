@@ -616,7 +616,7 @@ function(b,d){g.projectionMatrix=d.projectionMatrix;g.position.copy(d.position);
 	http://github.com/rsyring/browser-detect	*/
 
 // All of this BrowserDetect stuff is just one-time setup
-var BrowserDetect = {
+var _BrowserDetect = {
 	init: function () {
 		
 		// Store data
@@ -745,21 +745,21 @@ var BrowserDetect = {
 	]
 
 };
-BrowserDetect.init();
+_BrowserDetect.init();
 
 // Get the current browser
 Fiesta.getBrowser = function() {
-	return BrowserDetect.browser;
+	return _BrowserDetect.browser;
 };
 
 // Get the browser's version
 Fiesta.getBrowserVersion = function() {
-	return BrowserDetect.version;
+	return _BrowserDetect.version;
 };
 
 // Get the user's OS
 Fiesta.getOS = function() {
-	return BrowserDetect.OS;
+	return _BrowserDetect.OS;
 };
 
 // Does my browser support Fiesta?
