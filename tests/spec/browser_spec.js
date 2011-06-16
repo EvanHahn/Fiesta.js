@@ -1,8 +1,7 @@
 describe("Browser API", function() {
 	
 	it("tells me what browser I'm using", function() {
-		var possibilities = ["Firefox", "Chrome", "Safari", "Opera", "Explorer", "Opera", "RockMelt", "OmniWeb", "iCab", "KDE", "Camino", "Netscape"];
-		expect(possibilities).toContain(Fiesta.getBrowser());
+		expect(navigator.userAgent).toContain(Fiesta.getBrowser());
 	});
 	
 	it("tells me the browser's version", function() {
