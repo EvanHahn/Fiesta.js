@@ -1,4 +1,6 @@
-Fiesta.js copyright (c) 2011 Evan Hahn, http://www.evanhahn.com/
+Fiesta.js
+http://github.com/EvanHahn/Fiesta.js
+Copyright (c) 2011 Evan Hahn
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
@@ -55,23 +57,15 @@ open-source Ruby libraries:
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-three.js
-Copyright (c) 2010-2011 three.js Authors. All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
+browser-detect
+https://github.com/rsyring/browser-detect
+No licensing info added; assumed free license.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-Jasmine copyright (c) 2008-2010 Pivotal Labs
+Jasmine
+http://pivotal.github.com/jasmine/
+Copyright (c) 2008-2010 Pivotal Labs
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
