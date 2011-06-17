@@ -1504,9 +1504,9 @@ Fiesta.collidePhysicalObjects = function(a, b) {
 	var distanceXSign = Fiesta.sign(a.getX() - b.getX());
 	var distanceYSign = Fiesta.sign(a.getY() - b.getY());
 	var distanceZSign = Fiesta.sign(a.getZ() - b.getZ());
-	b.setVelocityX((a.getVelocityX() * massRatio) || 0);
-	b.setVelocityY((a.getVelocityY() * massRatio) || 0);
-	b.setVelocityZ((a.getVelocityZ() * massRatio) || 0);
+	b.setVelocityX((a.getVelocityX() * massRatio) || 0);	// NaN shows up if either
+	b.setVelocityY((a.getVelocityY() * massRatio) || 0);	// mass is Infinity; the
+	b.setVelocityZ((a.getVelocityZ() * massRatio) || 0);	// || 0 fixes that
 	a.setVelocityX((bOldVX / massRatio) || 0);
 	a.setVelocityY((bOldVY / massRatio) || 0);
 	a.setVelocityZ((bOldVZ / massRatio) || 0);
