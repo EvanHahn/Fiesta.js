@@ -67,6 +67,14 @@ var Person = new Fiesta.Class(Fiesta.PhysicalGameObject, {
 	},
 	jump: function() {
 		this.setVelocityY(-this._jumpSpeed);
+		this.setAccelerationY(gravity);
+	},
+	
+	// Hit the floor
+	onCollide: function(other) {
+		if (other instanceof Wall) {
+			this.setAccelerationY(0);
+		}
 	},
 	
 	// Bind commands
