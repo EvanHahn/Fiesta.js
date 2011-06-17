@@ -1249,12 +1249,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		this._frictionZ;
 		this._mass;
 		this._bounciness;
-		this._boundingBoxX1;
-		this._boundingBoxY1;
-		this._boundingBoxZ1;
-		this._boundingBoxX2;
-		this._boundingBoxY2;
-		this._boundingBoxZ2;
+		this._boundingBox = [];
 		this._boundingBoxAuto = Fiesta.DEFAULT_BOUNDING_BOX_AUTO;
 		
 		this.setCoordinates(Fiesta.DEFAULT_X, Fiesta.DEFAULT_Y, Fiesta.DEFAULT_Z);
@@ -1410,58 +1405,39 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	addBounciness: function(a) { this.setBounciness(a + this.getBounciness()) },
 	
 	// Bounding box API
-	getBoundingBoxX1: function() {
-		if (this._boundingBoxAuto)
-			this.updateBoundingBox();
-		return this._boundingBoxX1;
-	},
-	getBoundingBoxY1: function() {
-		if (this._boundingBoxAuto)
-			this.updateBoundingBox();
-		return this._boundingBoxY1;
-	},
-	getBoundingBoxZ1: function() {
-		if (this._boundingBoxAuto)
-			this.updateBoundingBox();
-		return this._boundingBoxZ1;
-	},
-	getBoundingBoxX2: function() {
-		if (this._boundingBoxAuto)
-			this.updateBoundingBox();
-		return this._boundingBoxX2;
-	},
-	getBoundingBoxY2: function() {
-		if (this._boundingBoxAuto)
-			this.updateBoundingBox();
-		return this._boundingBoxY2;
-	},
-	getBoundingBoxZ2: function() {
-		if (this._boundingBoxAuto)
-			this.updateBoundingBox();
-		return this._boundingBoxZ2;
-	},
 	getBoundingBox: function() {
 		if (this._boundingBoxAuto)
 			this.updateBoundingBox();
-		return [this._boundingBoxX1, this._boundingBoxY1, this._boundingBoxZ1, this._boundingBoxX2, this._boundingBoxY2, this._boundingBoxZ2];
+		return this._boundingBox;
+	},
+	setBoundingBox: function(b) {
+		for (var i in b) {
+			if (typeof b[i] !== typeof 1.0)
+				throw new TypeError(b[i] + " is not a valid bounding box value");
+		}
+		this._boundingBox = b;
 	},
 	updateBoundingBox: function() {
 		if (this._boundingBoxAuto) {
 			if (graphic = this.getGraphic()) {
-				var bounding = graphic.getBoundingBox(this.getX(), this.getY(), this.getZ());
-				this._boundingBoxX1 = bounding[0];
-				this._boundingBoxY1 = bounding[1];
-				this._boundingBoxZ1 = bounding[2];
-				this._boundingBoxX2 = bounding[3];
-				this._boundingBoxY2 = bounding[4];
-				this._boundingBoxZ2 = bounding[5];
+				var bounding = graphic.getBoundingBox();
+				this.setBoundingBox([
+					this.getX() + bounding[0],
+					this.getY() + bounding[1],
+					this.getZ() + bounding[2],
+					this.getX() + bounding[3],
+					this.getY() + bounding[4],
+					this.getZ() + bounding[5],
+				]);
 			} else {
-				this._boundingBoxX1 = this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-				this._boundingBoxY1 = this.getY() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-				this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-				this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-				this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-				this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+				this.setBoundingBox([
+					this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2),
+					this._boundingBoxY1 = this.getY() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2),
+					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2),
+					this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION,
+					this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION,
+					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION
+				]);
 			}
 		}
 	},
@@ -1551,8 +1527,11 @@ Fiesta.collidePhysicalObjects = function(a, b) {
 
 Fiesta.Graphic = new Fiesta.Class({
 	
-	// Empty constructor (needs to be here)
-	initialize: function() {},
+	// Constructor
+	initialize: function() {
+		this._boundingBox = [];
+		this._boundingBoxChanged = true;
+	},
 	
 	// "Abstract" functions
 	draw: function() { throw new Error("This graphic must know how to draw itself") },
@@ -1568,7 +1547,9 @@ Fiesta.Graphic = new Fiesta.Class({
 	Note: You can't start JavaScript names with a 2, otherwise I would.	*/
 
 Fiesta.Graphic2D = new Fiesta.Class(Fiesta.Graphic, {
-	initialize: function() {}
+	initialize: function() {
+		this.callSuper();
+	}
 });
 
 /*	**************
@@ -1579,7 +1560,9 @@ Fiesta.Graphic2D = new Fiesta.Class(Fiesta.Graphic, {
 	Note: You can't start JavaScript names with a 3, otherwise I would.	*/
 
 Fiesta.Graphic3D = new Fiesta.Class(Fiesta.Graphic, {
-	initialize: function() {}
+	initialize: function() {
+		this.callSuper();
+	}
 });
 
 /*	**********
@@ -1652,8 +1635,11 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		if (this._currentIndex >= this._urls.length)
 			this._currentIndex = 0;
 		var me = this;	// I have to do this for the setTimeout
-		if (this._animateSpeed > 0)
+		if (this._animateSpeed > 0) {
+			if (this._urls.length)
+				this._boundingBoxChanged = true;
 			setTimeout(function() { me.animate() }, this._animateSpeed);
+		}
 	},
 	getIndex: function() { return this._currentIndex; },
 	setIndex: function(i) {
@@ -1709,15 +1695,17 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	},
 	
 	// Get my bounding box
-	getBoundingBox: function(x, y, z) {
-		var bounding = [];
-		bounding[0] = x - this.getOriginX();
-		bounding[1] = y - this.getOriginY();
-		bounding[2] = z - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2);
-		bounding[3] = bounding[0] + this.getWidth();
-		bounding[4] = bounding[1] + this.getHeight();
-		bounding[5] = bounding[2] + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
-		return bounding;
+	getBoundingBox: function() {
+		if (this._boundingBoxChanged) {
+			this._boundingBox[0] = -this.getOriginX();
+			this._boundingBox[1] = -this.getOriginY();
+			this._boundingBox[2] = -Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2;
+			this._boundingBox[3] = this._boundingBox[0] + this.getWidth();
+			this._boundingBox[4] = this._boundingBox[1] + this.getHeight();
+			this._boundingBox[5] = this._boundingBox[2] + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION;
+			this._boundingBoxChanged = false;
+		}
+		return this._boundingBox;
 	}
 	
 });
