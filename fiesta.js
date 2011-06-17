@@ -895,9 +895,6 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		}
 	},
 	
-	// Physics API (extrapolated)
-	getMomentum: function() { return this._mass * this.getVelocity(); },
-	
 	// Do physics stuff on each frame
 	onFrame: function() {
 		this.callSuper();
