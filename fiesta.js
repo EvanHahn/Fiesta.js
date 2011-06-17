@@ -1593,14 +1593,18 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	getOriginX: function() { return this._originX; },
 	getOriginY: function() { return this._originY; },
 	setOriginX: function(coord) {
-		if (typeof coord === typeof 1.0)
+		if (typeof coord === typeof 1.0) {
 			this._originX = coord;
+			this._boundingBoxChanged = true;
+		}
 		else
 			throw new TypeError(coord + " is not a valid X coordinate");
 	},
 	setOriginY: function(coord) {
-		if (typeof coord === typeof 1.0)
+		if (typeof coord === typeof 1.0) {
 			this._originY = coord;
+			this._boundingBoxChanged = true;
+		}
 		else
 			throw new TypeError(coord + " is not a valid Y coordinate");
 	},
