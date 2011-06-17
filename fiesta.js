@@ -1425,23 +1425,23 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		if (this._boundingBoxAuto) {
 			if (graphic = this.getGraphic()) {
 				var bounding = graphic.getBoundingBox();
-				this.setBoundingBox([
+				this._boundingBox = [
 					this.getX() + bounding[0],
 					this.getY() + bounding[1],
 					this.getZ() + bounding[2],
 					this.getX() + bounding[3],
 					this.getY() + bounding[4],
 					this.getZ() + bounding[5]
-				]);
+				];
 			} else {
-				this.setBoundingBox([
+				this._boundingBox = [
 					this.getX() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2),
 					this._boundingBoxY1 = this.getY() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2),
 					this._boundingBoxZ1 = this.getZ() - (Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION / 2),
 					this._boundingBoxX2 = this._boundingBoxX1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION,
 					this._boundingBoxY2 = this._boundingBoxY1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION,
 					this._boundingBoxZ2 = this._boundingBoxZ1 + Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION
-				]);
+				];
 			}
 		}
 	},
