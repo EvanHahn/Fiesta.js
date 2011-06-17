@@ -1627,6 +1627,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		}
 		if (this._urls.length > 1)
 			this.animate();
+		this._boundingBoxChanged = true;
 	},
 	
 	// Animation API
@@ -1650,6 +1651,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 				setIndex(i - this._urls.length);
 				Fiesta.warn("Tried to set Sprite index to " + i + ", but the max is " + (this._urls.length - 1) + "; was able to wrap around.");
 			}
+			this._boundingBoxChanged = true;
 		}
 		else
 			throw new TypeError(i + " is not a valid index");
