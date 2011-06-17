@@ -2,12 +2,12 @@
 	## FIESTA.JS ##
 	###############
 	
-	version 0.1.8
+	version 0.2.0
 	
-	Fiesta.js is a JavaScript game engine. It aims to support 2D and 3D
-	games using only modern browser technologies.
+	Fiesta.js is a JavaScript game engine. It aims to be SUPER BADASS.
 	
-	See LICENSE.txt for legal info.
+	For licensing info:
+	https://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt
 	
 	¡Disfruta!	*/
 
@@ -1419,6 +1419,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 				throw new TypeError(b[i] + " is not a valid bounding box value");
 		}
 		this._boundingBox = b;
+		this._boundingBoxAuto = false;
 	},
 	updateBoundingBox: function() {
 		if (this._boundingBoxAuto) {
