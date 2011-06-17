@@ -1431,7 +1431,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 					this.getZ() + bounding[2],
 					this.getX() + bounding[3],
 					this.getY() + bounding[4],
-					this.getZ() + bounding[5],
+					this.getZ() + bounding[5]
 				]);
 			} else {
 				this.setBoundingBox([
