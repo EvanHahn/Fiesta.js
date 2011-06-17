@@ -92,7 +92,7 @@ var Wall = new Fiesta.Class(Fiesta.PhysicalGameObject, {
 	// Constructor
 	initialize: function() {
 		this.callSuper();
-		this.setMass(10000000000);
+		this.setMass(Infinity);
 		var spr = new Fiesta.Sprite("wall.gif");
 		spr.setOrigin(16, 16);
 		this.setGraphic(spr);
