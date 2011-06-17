@@ -75,7 +75,7 @@ included in all copies or substantial portions of the Software.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 browser-detect
-https://github.com/rsyring/browser-detect
+http://github.com/rsyring/browser-detect
 No licensing info added; assumed free license.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

@@ -627,14 +627,12 @@ m=a.getContext("2d");m.fillStyle="rgb("+b.fps.bg.r+","+b.fps.bg.g+","+b.fps.bg.b
 h.appendChild(i);a=document.createElement("canvas");a.width=74;a.height=30;a.style.display="block";a.style.marginLeft="3px";h.appendChild(a);q=a.getContext("2d");q.fillStyle="#301010";q.fillRect(0,0,a.width,a.height);E=q.getImageData(0,0,a.width,a.height);return{domElement:g,update:function(){u++;j=(new Date).getTime();n=j-F;z=Math.min(z,n);A=Math.max(A,n);s(B.data,Math.min(30,30-n/200*30),"ms");c.innerHTML='<span style="font-weight:bold">'+n+" MS</span> ("+z+"-"+A+")";o.putImageData(B,0,0);F=j;if(j>
 v+1E3){l=Math.round(u*1E3/(j-v));w=Math.min(w,l);x=Math.max(x,l);s(y.data,Math.min(30,30-l/100*30),"fps");d.innerHTML='<span style="font-weight:bold">'+l+" FPS</span> ("+w+"-"+x+")";m.putImageData(y,0,0);if(t==3)p=performance.memory.usedJSHeapSize*9.54E-7,C=Math.min(C,p),D=Math.max(D,p),s(E.data,Math.min(30,30-p/2),"mb"),i.innerHTML='<span style="font-weight:bold">'+Math.round(p)+" MB</span> ("+Math.round(C)+"-"+Math.round(D)+")",q.putImageData(E,0,0);v=j;u=0}}}};
 
-/*	***********
-	* Browser *
-	***********
+/*	****************************
+	* Browser detection object *
+	****************************
 	
-	This is code to detect your browser and things about it. Built on rsyring's browser-detect.
-	http://github.com/rsyring/browser-detect	*/
+	This is built on browser-detect. See LICENSE.txt for more info. */
 
-// All of this BrowserDetect stuff is just one-time setup
 var _BrowserDetect = {
 	init: function () {
 		
@@ -652,13 +650,13 @@ var _BrowserDetect = {
 		this.dataOS = undefined;
 		
 	},
-	searchString: function (data) {
-		for (var i=0;i<data.length;i++)	{
+	searchString: function(data) {
+		for (var i = 0; i < data.length; i++) {
 			var dataString = data[i].string;
 			var dataProp = data[i].prop;
 			this.versionSearchString = data[i].versionSearch || data[i].identity;
 			if (dataString) {
-				if (dataString.indexOf(data[i].subString) != -1)
+				if (dataString.indexOf(data[i].subString) !== -1)
 					return data[i].identity;
 			}
 			else if (dataProp)
@@ -667,7 +665,7 @@ var _BrowserDetect = {
 	},
 	searchVersion: function (dataString) {
 		var index = dataString.indexOf(this.versionSearchString);
-		if (index == -1) return;
+		if (index === -1) return;
 		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
 	},
 	dataBrowser: [
@@ -716,7 +714,7 @@ var _BrowserDetect = {
 			subString: "Camino",
 			identity: "Camino"
 		},
-		{		// for newer Netscapes (6+)
+		{		// Newer Netscapes (6+)
 			string: navigator.userAgent,
 			subString: "Netscape",
 			identity: "Netscape"
@@ -733,14 +731,14 @@ var _BrowserDetect = {
 			identity: "Mozilla",
 			versionSearch: "rv"
 		},
-		{ 		// for older Netscapes (4-)
+		{ 		// Older Netscapes (4-)
 			string: navigator.userAgent,
 			subString: "Mozilla",
 			identity: "Netscape",
 			versionSearch: "Mozilla"
 		}
 	],
-	dataOS : [
+	dataOS: [
 		{
 			string: navigator.platform,
 			subString: "Win",
@@ -762,9 +760,14 @@ var _BrowserDetect = {
 			identity: "Linux"
 		}
 	]
-
 };
 _BrowserDetect.init();
+
+/*	***********
+	* Browser *
+	***********
+	
+	This is code to detect your browser and things about it.	*/
 
 // Get the current browser, version, or OS
 Fiesta.getBrowser = function() { return _BrowserDetect.browser };
