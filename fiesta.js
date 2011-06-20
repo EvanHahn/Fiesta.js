@@ -1384,7 +1384,7 @@ Fiesta.Playground = new Fiesta.Class({
 			var location = this._gameObjects.indexOf(object);
 			if (location !== -1) {
 				this._gameObjects.splice(location, 1);
-				object._resetPlayground(undefined);
+				object._resetPlayground();
 				object.onDestroy();
 			}
 			else
