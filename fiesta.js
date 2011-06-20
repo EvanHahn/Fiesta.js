@@ -591,7 +591,6 @@ Fiesta.bindCommands = function(object, binds) {
 
 // Extract event from command string
 Fiesta.getEventType = function(str) {
-	
 	var command = str.split(" ").join("").toLowerCase();
 	
 	if (Fiesta.contains(command, "mouse") && Fiesta.contains(command, "move")) return "mousemove";
@@ -611,7 +610,6 @@ Fiesta.getEventType = function(str) {
 	} catch (_) {}
 	
 	throw new Error("Cannot find event type from " + str);
-	
 };
 
 // Change command name to keycode (simple)
