@@ -460,7 +460,7 @@ Fiesta.bindCommands = function(object, binds) {
 	
 	// This is an object, right?
 	if (!(object instanceof Object))
-		throw new TypeError(object + " is not an object; I can't bind things to it");
+		throw new TypeError("Cannot bind commands to " + object);
 	
 	// Set up the list of variables
 	var leftclicks = [];
