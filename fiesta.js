@@ -1146,12 +1146,8 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 			img.src = this._urls[this._currentIndex];
 		return img;
 	},
-	getWidth: function() {
-		return this.getImage().width;
-	},
-	getHeight: function() {
-		return this.getImage().height;
-	},
+	getWidth: function() { return this.getImage().width },
+	getHeight: function() { return this.getImage().height },
 	
 	// Draw me
 	draw: function(playground, xCoord, yCoord, spriteWidth, spriteHeight) {
