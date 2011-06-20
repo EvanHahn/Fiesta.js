@@ -676,8 +676,8 @@ Fiesta.GameObject = new Fiesta.Class({
 			throw new TypeError(p + " is not a valid playground");
 	},
 	_resetPlayground: function() {
-		var undef;
-		this._playground = undef;
+		var undefined;
+		this._playground = undefined;
 	},
 	
 	// Remove me from the playground
