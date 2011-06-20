@@ -39,6 +39,9 @@ Fiesta.DEFAULT_BOUNCINESS = Fiesta.DEFAULT_BOUNCINESS || 1;
 Fiesta.DEFAULT_BOUNDING_BOX_AUTO = Fiesta.DEFAULT_BOUNDING_BOX_AUTO || true;
 Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION = Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION || 1;
 
+// Sounds
+Fiesta.SOUND_EXTENSIONS = ["ogg", "wav", "mp3"];
+
 // Playground defaults
 Fiesta.PLAYGROUND_DEFAULT_WIDTH = Fiesta.PLAYGROUND_DEFAULT_WIDTH || 400;
 Fiesta.PLAYGROUND_DEFAULT_HEIGHT = Fiesta.PLAYGROUND_DEFAULT_HEIGHT || 300;
@@ -1192,8 +1195,7 @@ Fiesta.Sound = new Fiesta.Class({
 	setFiles: function(sources) {
 		if (typeof sources === typeof "") {
 			if (Fiesta.getFileExtension(sources) === "") {
-				var soundExtensions = ["ogg", "wav", "mp3"];
-				var i = soundExtensions.length;
+				var i = Fiesta.SOUND_EXTENSIONS.length;
 				while (i --) {
 					this._files.push(sources + "." + soundExtensions[i]);
 				}
