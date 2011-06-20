@@ -13,9 +13,9 @@
 
 var Fiesta = {};
 
-/*	************
-	* Defaults *
-	************	*/
+/*	**********
+	* Config *
+	**********	*/
 
 // Stats defaults
 Fiesta.DEFAULT_STATS_LEFT_POSITION = Fiesta.DEFAULT_STATS_LEFT_POSITION || "10px";
@@ -1309,6 +1309,8 @@ Fiesta.Playground = new Fiesta.Class({
 	
 	// DOM API
 	place: function(domElement) {
+		if (!domElement)
+			domElement = document.body;
 		if (!(domElement instanceof HTMLElement))
 			throw new TypeError("Playground cannot be placed in " + domElement);
 		
