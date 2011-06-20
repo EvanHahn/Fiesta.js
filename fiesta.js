@@ -49,7 +49,7 @@ Fiesta.PLAYGROUND_DEFAULT_REDRAW = Fiesta.PLAYGROUND_DEFAULT_REDRAW || true;
 // Commands defaults
 Fiesta.DEFAULT_KEYBOARD_COMMAND = Fiesta.DEFAULT_KEYBOARD_COMMAND || "keydown";
 Fiesta.DEFAULT_CLICK = Fiesta.DEFAULT_CLICK || "leftclick";
-Fiesta.DEFAULT_KEYCODE_TRANSLATIONS = Fiesta.DEFAULT_KEYCODE_TRANSLATIONS || {
+Fiesta.KEYCODE_TRANSLATIONS = Fiesta.KEYCODE_TRANSLATIONS || {
 	"backspace": 8,
 	"tab": 9,
 	"enter": 13,
@@ -616,8 +616,8 @@ Fiesta.getKeyCode = function(str) {
 	var command = str.split(" ")[0].toLowerCase();
 	if (Fiesta.contains(command, "+"))
 		return Fiesta.getKeyCode(str.split("+")[1]);
-	if (Fiesta.DEFAULT_KEYCODE_TRANSLATIONS[command])
-		return Fiesta.DEFAULT_KEYCODE_TRANSLATIONS[command];
+	if (Fiesta.KEYCODE_TRANSLATIONS[command])
+		return Fiesta.KEYCODE_TRANSLATIONS[command];
 	else
 		throw new TypeError(str + " cannot be translated to a keycode");
 };
