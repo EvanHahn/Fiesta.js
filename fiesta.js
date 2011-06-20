@@ -1162,10 +1162,8 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		if (!Fiesta.isNumber(yCoord))
 			throw new TypeError(yCoord + " is not a valid Y coordinate");
 		var image = this.getImage();
-		if (!spriteWidth)
-			spriteWidth = image.width;
-		if (!spriteHeight)
-			spriteHeight = image.height;
+		spriteWidth = spriteWidth || image.width;
+		spriteHeight = spriteHeight || image.height;
 		var context = playground.getContext();
 		context.drawImage(image, xCoord - this.getOriginX(), yCoord - this.getOriginY(), spriteWidth, spriteHeight);	
 	},
