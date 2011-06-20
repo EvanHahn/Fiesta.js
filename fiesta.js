@@ -1394,6 +1394,7 @@ Fiesta.Playground = new Fiesta.Class({
 			throw new TypeError(object + " is not something that can be destroyed");
 	},
 	objectsAt: function(x, y, z) {
+		var undefined;
 		if (z === undefined)
 			z = 0;
 		if ((typeof x !== typeof 1.0) || (typeof y !== typeof 1.0) || (typeof z !== typeof 1.0))
