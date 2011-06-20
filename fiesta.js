@@ -218,7 +218,8 @@ var _BrowserDetect = {
 		
 	},
 	searchString: function(data) {
-		for (var i = 0; i < data.length; i++) {
+		var i = data.length;
+		while (i --) {
 			var dataString = data[i].string;
 			var dataProp = data[i].prop;
 			this.versionSearchString = data[i].versionSearch || data[i].identity;
@@ -422,7 +423,8 @@ Fiesta.getFileExtension = function(filename) {
 Fiesta._guids = [];
 Fiesta.guid = function() {
 	var guid = Math.floor(Math.random() * Date.now());
-	for (var i in this._guids) {
+	var i = this._guids.length;
+	while (i --) {
 		if (this._guids[i] === guid)
 			return this.guid();	// Start over; we already have this GUID
 	}
@@ -863,7 +865,10 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		return this._boundingBox;
 	},
 	setBoundingBox: function(b) {
-		for (var i in b) {
+		var i = b.length;
+		if (i !== 6)
+			throw new Error("Not enough values passed to make a bounding box");
+		while (i --) {
 			if (typeof b[i] !== typeof 1.0)
 				throw new TypeError(b[i] + " is not a valid bounding box value");
 		}
@@ -1070,7 +1075,8 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		if (u.length < 1)
 			throw new TypeError("You cannot set sprites to nothing");
 		this._urls.length = 0;	// Empty it out
-		for (var i = 0; i < u.length; i ++) {
+		var i = u.length;
+		while (i --) {
 			if (typeof u[i] === typeof "") {
 				this._urls[i] = u[i];
 				var img = new Image();	// Preloadin'
@@ -1187,8 +1193,10 @@ Fiesta.Sound = new Fiesta.Class({
 		if (typeof sources === typeof "") {
 			if (Fiesta.getFileExtension(sources) === "") {
 				var soundExtensions = ["ogg", "wav", "mp3"];
-				for (var i in soundExtensions)
+				var i = soundExtensions.length;
+				while (i --) {
 					this._files.push(sources + "." + soundExtensions[i]);
+				}
 			} else
 				this._files = [sources];
 		}
@@ -1206,7 +1214,8 @@ Fiesta.Sound = new Fiesta.Class({
 			document.getElementsByTagName("body")[0].removeChild(this._element);
 		var audio = document.createElement("audio");
 		audio.setAttribute("autoplay", "autoplay");
-		for (var i in this._files) {
+		var i = this._files.length;
+		while (i --) {
 			var source = document.createElement("source");
 			source.setAttribute("src", this._files[i]);
 			audio.appendChild(source);
@@ -1382,7 +1391,8 @@ Fiesta.Playground = new Fiesta.Class({
 		if ((typeof x !== typeof 1.0) || (typeof y !== typeof 1.0) || (typeof z !== typeof 1.0))
 			throw new TypeError("Cannot look for objects at " + x + ", " + y + ", and " + z);
 		var objects = [];
-		for (var i in this._gameObjects) {
+		var i = this._gameObjects.length;
+		while (i --) {
 			if (this._gameObjects[i] instanceof Fiesta.PhysicalGameObject) {
 				var bound = this._gameObjects[i].getBoundingBox();
 				if ((x > bound[0])
@@ -1419,7 +1429,9 @@ Fiesta.Playground = new Fiesta.Class({
 		// Deal with every object
 		// The pieces are in try/catch blocks so that one object doesn't break
 		// everything for everyone else
-		for (var i = 0; i < this._gameObjects.length; i ++) {
+		var size = this._gameObjects.length;	// This is for a bit later
+		var i = size;
+		while (i --) {
 			
 			// Draw the object
 			try {
@@ -1437,7 +1449,7 @@ Fiesta.Playground = new Fiesta.Class({
 			try {
 				if (obj instanceof Fiesta.PhysicalGameObject) {
 					var objBound = obj.getBoundingBox();
-					for (var j = i + 1; j < this._gameObjects.length; j ++) {
+					for (var j = i + 1; j < size; j ++) {
 						var obj2 = this._gameObjects[j];
 						if (obj2 instanceof Fiesta.PhysicalGameObject) {
 							var obj2Bound = obj2.getBoundingBox();
