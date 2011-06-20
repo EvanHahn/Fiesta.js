@@ -365,7 +365,7 @@ Fiesta.error = function(e) { console.error(e); };
 
 // Sign of a number
 Fiesta.sign = function(d) {
-	if (typeof d !== typeof 1.0)
+	if (!Fiesta.isNumber(d))
 		throw new TypeError("Cannot find sign of " + typeof d + " " + d);
 	if (d > 0) return 1;
 	if (d < 0) return -1;
@@ -374,9 +374,9 @@ Fiesta.sign = function(d) {
 
 // Wrap a value around (examples below make the most sense)
 Fiesta.wrap = function(min, max, value) {
-	if (typeof min !== typeof 1.0) throw new TypeError(min + " is not a valid minimum");
-	if (typeof max !== typeof 1.0) throw new TypeError(max + " is not a valid maximum");
-	if (typeof value !== typeof 1.0) throw new TypeError(value + " is not a valid value");
+	if (!Fiesta.isNumber(min)) throw new TypeError(min + " is not a valid minimum");
+	if (!Fiesta.isNumber(max)) throw new TypeError(max + " is not a valid maximum");
+	if (!Fiesta.isNumber(value)) throw new TypeError(value + " is not a valid value");
 	if (min > max) throw new Error("Cannot wrap if the minimum (" + min + ") is greater than the maximum (" + max + ")");
 		
 	if (value > max)
@@ -409,6 +409,13 @@ Fiesta.vectorLength = function(i, j, k) {
 	*******************
 	
 	These are miscellaneous functions that do random things.	*/
+
+// Check values
+Fiesta.isNumber = function(n) { return (((typeof n === typeof 1.0) || (n instanceof Number)) && (!isNaN(n))) };
+Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) === i)) };
+Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };
+Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
+Fiesta.isArray = function(a) { return a.constructor == Array };
 
 // Does this string/array contain this element?
 Fiesta.contains = function(searchIn, searchFor) { return !!~searchIn.indexOf(searchFor) };
@@ -730,19 +737,19 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	getZ: function() { return this._z; },
 	getCoordinates: function() { return [this._x, this._y, this._z] },
 	setX: function(coord) {
-		if (typeof coord === typeof 1.0)
+		if (Fiesta.isNumber(coord))
 			this._x = coord;
 		else
 			throw new TypeError(coord + " is not a valid X coordinate");
 	},
 	setY: function(coord) {
-		if (typeof coord === typeof 1.0)
+		if (Fiesta.isNumber(coord))
 			this._y = coord;
 		else
 			throw new TypeError(coord + " is not a valid Y coordinate");
 	},
 	setZ: function(coord) {
-		if (typeof coord === typeof 1.0)
+		if (Fiesta.isNumber(coord))
 			this._z = coord;
 		else
 			throw new TypeError(coord + " is not a valid Z coordinate");
@@ -768,19 +775,19 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	getVelocityZ: function() { return this._velocityZ; },
 	getVelocity: function() { return Fiesta.vectorLength(this._velocityX, this._velocityY, this._velocityZ); },
 	setVelocityX: function(v) {
-		if (typeof v === typeof 1.0)
+		if (Fiesta.isNumber(v))
 			this._velocityX = v;
 		else
 			throw new TypeError(v + " is not a valid X velocity");
 	},
 	setVelocityY: function(v) {
-		if (typeof v === typeof 1.0)
+		if (Fiesta.isNumber(v))
 			this._velocityY = v;
 		else
 			throw new TypeError(v + " is not a valid Y velocity");
 	},
 	setVelocityZ: function(v) {
-		if (typeof v === typeof 1.0)
+		if (Fiesta.isNumber(v))
 			this._velocityZ = v;
 		else
 			throw new TypeError(v + " is not a valid Z velocity");
@@ -795,19 +802,19 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	getAccelerationZ: function() { return this._accelerationZ; },
 	getAcceleration: function() { return Fiesta.vectorLength(this._accelerationX, this._accelerationY, this._accelerationZ); },
 	setAccelerationX: function(a) {
-		if (typeof a === typeof 1.0)
+		if (Fiesta.isNumber(a))
 			this._accelerationX = a;
 		else
 			throw new TypeError(a + " is not a valid X acceleration");
 	},
 	setAccelerationY: function(a) {
-		if (typeof a === typeof 1.0)
+		if (Fiesta.isNumber(a))
 			this._accelerationY = a;
 		else
 			throw new TypeError(a + " is not a valid Y acceleration");
 	},
 	setAccelerationZ: function(a) {
-		if (typeof a === typeof 1.0)
+		if (Fiesta.isNumber(a))
 			this._accelerationZ = a;
 		else
 			throw new TypeError(a + " is not a valid Z acceleration");
@@ -822,19 +829,19 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	getFrictionZ: function() { return this._frictionZ; },
 	getFriction: function() { return Fiesta.vectorLength(this._frictionX, this._frictionY, this._frictionZ); },
 	setFrictionX: function(f) {
-		if (typeof f === typeof 1.0)
+		if (Fiesta.isNumber(f))
 			this._frictionX = f;
 		else
 			throw new TypeError(f + " is not a valid X friction");
 	},
 	setFrictionY: function(f) {
-		if (typeof f === typeof 1.0)
+		if (Fiesta.isNumber(f))
 			this._frictionY = f;
 		else
 			throw new TypeError(f + " is not a valid Y friction");
 	},
 	setFrictionZ: function(f) {
-		if (typeof f === typeof 1.0)
+		if (Fiesta.isNumber(f))
 			this._frictionZ = f;
 		else
 			throw new TypeError(f + " is not a valid Z friction");
@@ -846,7 +853,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	// Mass API
 	getMass: function() { return this._mass; },
 	setMass: function(m) {
-		if ((typeof m === typeof 1.0) && (m > 0))
+		if ((Fiesta.isNumber(m)) && (m > 0))
 			this._mass = m;
 		else
 			throw new TypeError(m + " is not a valid mass");
@@ -856,7 +863,7 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 	// Bounciness API
 	getBounciness: function() { return this._bounciness; },
 	setBounciness: function(b) {
-		if (typeof b === typeof 1.0)
+		if (Fiesta.isNumber(b))
 			this._bounciness = b;
 		else
 			throw new TypeError(b + " is not a valid bounciness");
@@ -870,11 +877,13 @@ Fiesta.PhysicalGameObject = new Fiesta.Class(Fiesta.GameObject, {
 		return this._boundingBox;
 	},
 	setBoundingBox: function(b) {
+		if (!Fiesta.isArray(b))
+			throw new TypeError("Cannot make a bounding box out of " + b);
 		var i = b.length;
 		if (i !== 6)
 			throw new Error("Not enough values passed to make a bounding box");
 		while (i --) {
-			if (typeof b[i] !== typeof 1.0)
+			if (!Fiesta.isNumber(b[i]))
 				throw new TypeError(b[i] + " is not a valid bounding box value");
 		}
 		this._boundingBox = b;
@@ -1053,7 +1062,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	getOriginX: function() { return this._originX; },
 	getOriginY: function() { return this._originY; },
 	setOriginX: function(coord) {
-		if (typeof coord === typeof 1.0) {
+		if (Fiesta.isNumber(coord)) {
 			this._originX = coord;
 			this._boundingBoxChanged = true;
 		}
@@ -1061,7 +1070,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 			throw new TypeError(coord + " is not a valid X coordinate");
 	},
 	setOriginY: function(coord) {
-		if (typeof coord === typeof 1.0) {
+		if (Fiesta.isNumber(coord)) {
 			this._originY = coord;
 			this._boundingBoxChanged = true;
 		}
@@ -1082,7 +1091,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		this._urls.length = 0;	// Empty it out
 		var i = u.length;
 		while (i --) {
-			if (typeof u[i] === typeof "") {
+			if (Fiesta.isString(u[i])) {
 				this._urls[i] = u[i];
 				var img = new Image();	// Preloadin'
 				img.src = u[i];
@@ -1109,7 +1118,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	},
 	getIndex: function() { return this._currentIndex; },
 	setIndex: function(i) {
-		if ((typeof i === typeof 1) && ((Math.ceil(i) !== i) || i === 0)) {
+		if (Fiesta.isInteger(i)) {
 			if (i < this._urls.length)
 				this._currentIndex = i;
 			else {
@@ -1123,7 +1132,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	},
 	getAnimateSpeed: function() { return this._animateSpeed; },
 	setAnimateSpeed: function(a) {
-		if ((typeof a !== typeof 1.0) && (a >= 0))
+		if ((Fiesta.isNumber(a)) && (a >= 0))
 			this._animateSpeed = a;
 		else
 			throw new TypeError(a + " is not a valid animation speed");
@@ -1148,9 +1157,9 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	draw: function(playground, xCoord, yCoord, spriteWidth, spriteHeight) {
 		if (!(playground instanceof Fiesta.Playground))
 			throw new TypeError(playground + " is not a playground that I can draw sprites on");
-		if (typeof xCoord !== typeof 1.0)
+		if (!Fiesta.isNumber(xCoord))
 			throw new TypeError(xCoord + " is not a valid X coordinate");
-		if (typeof yCoord !== typeof 1.0)
+		if (!Fiesta.isNumber(yCoord))
 			throw new TypeError(yCoord + " is not a valid Y coordinate");
 		var image = this.getImage();
 		if (!spriteWidth)
@@ -1195,7 +1204,7 @@ Fiesta.Sound = new Fiesta.Class({
 	
 	// Sources API
 	setFiles: function(sources) {
-		if (typeof sources === typeof "") {
+		if (Fiesta.isString(sources)) {
 			if (Fiesta.getFileExtension(sources) === "") {
 				var i = Fiesta.SOUND_EXTENSIONS.length;
 				while (i --) {
@@ -1204,7 +1213,7 @@ Fiesta.Sound = new Fiesta.Class({
 			} else
 				this._files = [sources];
 		}
-		else if (typeof sources === typeof [])
+		else if (Fiesta.isArray(sources))
 			this._files = sources;
 		else
 			throw new Error(sources + " isn't something I can make a sound out of.");
@@ -1270,7 +1279,7 @@ Fiesta.Playground = new Fiesta.Class({
 	getWidth: function() { return this._width; },
 	getHeight: function() { return this._height; },
 	setWidth: function(w) {
-		if ((typeof w === typeof 1) && (w >= 0)) {
+		if ((Fiesta.isNumber(w)) && (w >= 0)) {
 			this._width = w;
 			if (this._element)
 				this._element.setAttribute("width", this._width);
@@ -1279,7 +1288,7 @@ Fiesta.Playground = new Fiesta.Class({
 			throw new TypeError(w + " is not a valid playground width");
 	},
 	setHeight: function(h) {
-		if ((typeof h === typeof 1) && (h >= 0)) {
+		if ((Fiesta.isNumber(h)) && (h >= 0)) {
 			this._height = h;
 			if (this._element)
 				this._element.setAttribute("height", this._height);
@@ -1295,7 +1304,7 @@ Fiesta.Playground = new Fiesta.Class({
 	// FPS API
 	getDesiredFPS: function() { return this._desiredFPS; },
 	setDesiredFPS: function(f) {
-		if ((typeof f === typeof 1) && (f >= 0)) {
+		if ((Fiesta.isNumber(f)) && (f >= 0)) {
 			this._desiredFPS = f;
 		}
 		else
@@ -1305,7 +1314,7 @@ Fiesta.Playground = new Fiesta.Class({
 	// Redraw API
 	getRedraw: function() { return this._redraw; },
 	setRedraw: function(r) {
-		if (typeof r === typeof true)
+		if (Fiesta.isBoolean(r))
 			this._redraw = r;
 		else
 			throw new TypeError("Cannot set redrawing to " + r);
@@ -1341,7 +1350,7 @@ Fiesta.Playground = new Fiesta.Class({
 	},
 	getContext: function() { return this._element.getContext(this._context) },
 	setContext: function(c) {
-		if ((typeof c === typeof "") && ((c.toLowerCase() === "2d") || (c.toLowerCase() === "3d")))
+		if ((Fiesta.isString(c)) && ((c.toLowerCase() === "2d") || (c.toLowerCase() === "3d")))
 			this._context = c;
 		else
 			throw new Error(c + " is not a valid context");
@@ -1354,7 +1363,7 @@ Fiesta.Playground = new Fiesta.Class({
 	},
 	getBackgroundColor: function() { return this._backgroundColor },
 	setBackgroundColor: function(color) {
-		if (typeof color !== typeof "")
+		if (!Fiesta.isString(color))
 			throw new TypeError(color + " is not a valid color");
 		this._backgroundColor = color;
 		if (this.domElementExists())
@@ -1384,8 +1393,7 @@ Fiesta.Playground = new Fiesta.Class({
 				this._gameObjects.splice(location, 1);
 				object._resetPlayground();
 				object.onDestroy();
-			}
-			else
+			} else
 				throw new Error("Looks like there is no object " + object + " to destroy");
 		}
 		else
@@ -1395,7 +1403,7 @@ Fiesta.Playground = new Fiesta.Class({
 		var undefined;
 		if (z === undefined)
 			z = 0;
-		if ((typeof x !== typeof 1.0) || (typeof y !== typeof 1.0) || (typeof z !== typeof 1.0))
+		if ((!Fiesta.isNumber(x)) || (!Fiesta.isNumber(y)) || (!Fiesta.isNumber(z)))
 			throw new TypeError("Cannot look for objects at " + x + ", " + y + ", and " + z);
 		var objects = [];
 		var i = this._gameObjects.length;
