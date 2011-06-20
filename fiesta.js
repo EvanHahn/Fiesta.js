@@ -39,6 +39,10 @@ Fiesta.DEFAULT_BOUNCINESS = Fiesta.DEFAULT_BOUNCINESS || 1;
 Fiesta.DEFAULT_BOUNDING_BOX_AUTO = Fiesta.DEFAULT_BOUNDING_BOX_AUTO || true;
 Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION = Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION || 1;
 
+// Sprites
+Fiesta.DEFAULT_SPRITE_STARTING_INDEX = Fiesta.DEFAULT_SPRITE_STARTING_INDEX || 0;
+Fiesta.DEFAULT_SPRITE_ANIMATE_SPEED = Fiesta.DEFAULT_SPRITE_ANIMATE_SPEED || 30;
+
 // Sounds
 Fiesta.SOUND_EXTENSIONS = ["ogg", "wav", "mp3"];
 
@@ -1047,8 +1051,8 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 		this.callSuper();
 		
 		this._urls = [];
-		this._currentIndex = 0;
-		this._animateSpeed = 30;
+		this._currentIndex = Fiesta.DEFAULT_SPRITE_STARTING_INDEX;
+		this._animateSpeed = Fiesta.DEFAULT_SPRITE_ANIMATE_SPEED;
 		this._originX;
 		this._originY;
 		
