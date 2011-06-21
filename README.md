@@ -10,7 +10,7 @@ Fiesta's goals
 * _Damn_ easy to write a game
 * Object-oriented like crazy
 * No plugins allowed!
-* Pretty much little difference between 2D and 3D games
+* Little difference between 2D and 3D games
 * No compiling
 
 What is Fiesta made of?
