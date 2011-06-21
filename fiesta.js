@@ -1110,14 +1110,14 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	
 	// Animation API
 	animate: function() {
-		this._currentIndex ++;
+		this._currentIndex += Fiesta.sign(this._animateSpeed);	// Forward/backwards animation
 		if (this._currentIndex >= this._urls.length)
 			this._currentIndex = 0;
 		var me = this;	// I have to do this for the setTimeout
 		if (this._animateSpeed > 0) {
 			if (this._urls.length)
 				this._boundingBoxChanged = true;
-			setTimeout(function() { me.animate() }, this._animateSpeed);
+			setTimeout(function() { me.animate() }, Math.abs(this._animateSpeed));
 		}
 	},
 	getIndex: function() { return this._currentIndex; },
@@ -1136,7 +1136,7 @@ Fiesta.Sprite = new Fiesta.Class(Fiesta.Graphic2D, {
 	},
 	getAnimateSpeed: function() { return this._animateSpeed; },
 	setAnimateSpeed: function(a) {
-		if ((Fiesta.isNumber(a)) && (a >= 0))
+		if (Fiesta.isNumber(a))
 			this._animateSpeed = a;
 		else
 			throw new TypeError(a + " is not a valid animation speed");
