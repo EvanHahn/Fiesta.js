@@ -344,10 +344,21 @@ _BrowserDetect.init();
 	
 	This is code to detect your browser and things about it.	*/
 
-// Get the current browser, version, or OS
+// Get the current browser, version, OS
 Fiesta.getBrowser = function() { return _BrowserDetect.browser };
 Fiesta.getBrowserVersion = function() { return _BrowserDetect.version };
 Fiesta.getOS = function() { return _BrowserDetect.OS };
+
+// Get PPI
+Fiesta.calculatePPI = function() {
+	var ruler = document.createElement("div");
+	ruler.style.width = "1in";
+	document.body.appendChild(ruler);
+	_BrowserDetect.ppi = parseInt(document.defaultView.getComputedStyle(ruler, null).getPropertyValue("width"));
+	document.body.removeChild(ruler);
+	return _BrowserDetect.ppi;
+};
+Fiesta.getPPI = function() { return _BrowserDetect.ppi || Fiesta.calculatePPI() };
 
 // Does my browser support Fiesta?
 Fiesta.checkSupport = function() {
