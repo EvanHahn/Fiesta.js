@@ -414,7 +414,7 @@ Fiesta.vectorLength = function(i, j, k) {
 	
 	These are miscellaneous functions that do random things.	*/
 
-// Check values
+// Check value types
 Fiesta.isNumber = function(n) { return (((typeof n === typeof 1.0) || (n instanceof Number)) && (!isNaN(n))) };
 Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) === i)) };
 Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };

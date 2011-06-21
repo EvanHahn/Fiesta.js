@@ -5,7 +5,7 @@ describe("Browser API", function() {
 	});
 	
 	it("tells me the browser's version", function() {
-		expect(typeof Fiesta.getBrowserVersion()).toEqual(typeof 1);
+		expect(typeof Fiesta.getBrowserVersion()).toEqual(typeof 1.0);
 	});
 	
 	it("tells me what OS I'm using", function() {
