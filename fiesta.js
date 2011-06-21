@@ -1457,9 +1457,11 @@ Fiesta.Playground = new Fiesta.Class({
 		var i = size;
 		while (i --) {
 			
+			// Assign a local object variable
+			var obj = this._gameObjects[i];
+			
 			// Draw the object
 			try {
-				var obj = this._gameObjects[i];
 				if (obj instanceof Fiesta.PhysicalGameObject)
 					obj.getGraphic().draw(this, obj.getX(), obj.getY());
 			} catch (e) { Fiesta.error(e) }
