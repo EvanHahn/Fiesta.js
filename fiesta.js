@@ -1359,8 +1359,9 @@ Fiesta.Playground = new Fiesta.Class({
 	},
 	getContext: function() { return this._element.getContext(this._context) },
 	setContext: function(c) {
-		if ((Fiesta.isString(c)) && ((c.toLowerCase() === "2d") || (c.toLowerCase() === "3d")))
-			this._context = c;
+		var context = c.toLowerCase();
+		if ((Fiesta.isString(context)) && ((context === "2d") || (context === "3d")))
+			this._context = context;
 		else
 			throw new Error(c + " is not a valid context");
 	},
