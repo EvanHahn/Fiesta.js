@@ -1365,12 +1365,7 @@ Fiesta.Playground = new Fiesta.Class({
 		else
 			throw new Error(c + " is not a valid context");
 	},
-	getTimePlaced: function() {
-		if (this._timePlaced)
-			return this._timePlaced;
-		else
-			return false;
-	},
+	getTimePlaced: function() { return this._timePlaced || false },
 	getBackgroundColor: function() { return this._backgroundColor },
 	setBackgroundColor: function(color) {
 		if (!Fiesta.isString(color))
