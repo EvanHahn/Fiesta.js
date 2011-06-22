@@ -7,7 +7,7 @@
 	Fiesta.js is a JavaScript game engine. It aims to be SUPER BADASS.
 	
 	For licensing info:
-	https://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt
+	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt
 	
 	¡Disfruta!	*/
 
