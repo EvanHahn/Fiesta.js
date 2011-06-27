@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!-- Fiesta -->
+	<script src="../../src/namespace.js"></script>
+	<script src="../../src/jsclass_core.js"></script>
+	<script src="../../src/three.js"></script>
+	<script src="../../src/stats.js"></script>
+	<script src="../../src/math.js"></script>
+	<script src="../../src/config.js"></script>
+	<script src="../../src/commands.js"></script>
+	<script src="../../src/misc.js"></script>
+	<script src="../../src/browser.js"></script>
+	<script src="../../src/baseobject.js"></script>
+	<script src="../../src/entity.js"></script>
+	<script src="../../src/locatable.js"></script>
+	<script src="../../src/physical.js"></script>
+	<script src="../../src/graphic.js"></script>
+	<script src="../../src/graphic2d.js"></script>
+	<script src="../../src/graphic3d.js"></script>
+	<script src="../../src/sprite2d.js"></script>
+	<script src="../../src/box3d.js"></script>
+	<script src="../../src/camera3d.js"></script>
+	<script src="../../src/playground.js"></script>
+	
+</head>
+<body>
+
+<script>
+
+/*	*******
+	* Box *
+	*******	*/
+
+var Box = new Fiesta.Class(Fiesta.PhysicalEntity, {
+	
+	// Constructor
+	initialize: function() {
+		
+		// Assign 3D model
+		var model = new Fiesta.Box3D(100);
+		model.setColor(0xFF0000);
+		this.setGraphic(model);
+		
+		// Assign some physics
+		this.setMass(10);
+		
+	}
+	
+});
+
+/*	*********************
+	* Set everything up *
+	*********************	*/
+
+var playground = new Fiesta.Playground(400, 300, "3d");
+
+var box = new Box();
+playground.spawn(box, 0, 0, 0);
+
+playground.place(document.body);
+playground.setBackgroundColor("#000");
+
+
+</script>
+
+</body>
+</html>

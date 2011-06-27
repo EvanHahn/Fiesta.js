@@ -1,4 +1,4 @@
-Fiesta.js - version 0.2.0
+Fiesta.js - version 0.3.0
 =========================
 
 Fiesta is a JavaScript game library. It aims to be **super badass**.
@@ -7,10 +7,11 @@ Fiesta's goals
 --------------
 
 * Be **super badass**.
-* _Damn_ easy to write a game
+* Damn easy to write a game
 * Object-oriented like crazy
-* No plugins allowed!
 * Little difference between 2D and 3D games
+* Physics engine is built-in
+* No plugins allowed!
 * No compiling
 
 What is Fiesta made of?

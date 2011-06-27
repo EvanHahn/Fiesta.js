@@ -3,7 +3,23 @@
 <head>
 	
 	<!-- Fiesta -->
-	<script src="../../fiesta.js"></script>
+	<script src="../../src/namespace.js"></script>
+	<script src="../../src/jsclass_core.js"></script>
+	<script src="../../src/three.js"></script>
+	<script src="../../src/stats.js"></script>
+	<script src="../../src/config.js"></script>
+	<script src="../../src/browser.js"></script>
+	<script src="../../src/commands.js"></script>
+	<script src="../../src/misc.js"></script>
+	<script src="../../src/math.js"></script>
+	<script src="../../src/baseobject.js"></script>
+	<script src="../../src/entity.js"></script>
+	<script src="../../src/locatable.js"></script>
+	<script src="../../src/physical.js"></script>
+	<script src="../../src/graphic.js"></script>
+	<script src="../../src/graphic2d.js"></script>
+	<script src="../../src/sprite2d.js"></script>
+	<script src="../../src/playground.js"></script>
 	
 </head>
 <body>
@@ -16,7 +32,7 @@
 	var gravity = 500;
 		
 	// Ballin'
-	var Ball = new Fiesta.Class(Fiesta.PhysicalGameObject, {
+	var Ball = new Fiesta.Class(Fiesta.PhysicalEntity, {
 		
 		// Constructor
 		initialize: function() {
@@ -25,7 +41,7 @@
 			this.callSuper();
 			
 			// Sprites
-			this._spr_ball = new Fiesta.Sprite("ball.gif");
+			this._spr_ball = new Fiesta.Sprite2D("ball.gif");
 			this._spr_ball.setOrigin(16, 16);
 			this.setGraphic(this._spr_ball);
 			
@@ -83,7 +99,7 @@
 	});
 	
 	// Ball spawner
-	var BallSpawner = new Fiesta.Class(Fiesta.GameObject, {
+	var BallSpawner = new Fiesta.Class(Fiesta.Entity, {
 		
 		// Constructor
 		intialize: function() {
