@@ -6,8 +6,6 @@ Fiesta.Camera3D = new Fiesta.Class(Fiesta.LocatableEntity, {
 	
 	// Constructor
 	initialize: function() {
-		this.callSuper();
-		
 		this._viewAngle = 70;	// this is temporary
 		this._aspect = 4 / 3;
 		this._near = 1;
@@ -15,11 +13,45 @@ Fiesta.Camera3D = new Fiesta.Class(Fiesta.LocatableEntity, {
 		
 		this._threeCamera = new THREE.Camera(this._viewAngle, this._aspect, this._near, this._far);
 		
-		this._threeCamera.position.x = 300;
-		this._threeCamera.position.z = 300;	// this is temporary
+		this.callSuper();
 	},
 	
 	// THREE API
-	getThreeCamera: function() { return this._threeCamera }
+	getThreeCamera: function() { return this._threeCamera },
+	
+	// Position API
+	setX: function(coord) {
+		this.callSuper(coord);
+		if (Fiesta.isNumber(coord))
+			this._threeCamera.position.x = coord;
+		else
+			throw new TypeError(coord + " is not a valid X coordinate for the camera");
+	},
+	setY: function(coord) {
+		this.callSuper(coord);
+		if (Fiesta.isNumber(coord))
+			this._threeCamera.position.y = coord;
+		else
+			throw new TypeError(coord + " is not a valid Y coordinate for the camera");
+	},
+	setZ: function(coord) {
+		this.callSuper(coord);
+		if (Fiesta.isNumber(coord))
+			this._threeCamera.position.z = coord;
+		else
+			throw new TypeError(coord + " is not a valid Z coordinate for the camera");
+	},
+	setCoordinates: function(xCoord, yCoord, zCoord) {
+		var undefined;
+		if (xCoord !== undefined)
+			this.setX(xCoord);
+		if (yCoord !== undefined)
+			this.setY(yCoord);
+		if (zCoord !== undefined)
+			this.setZ(zCoord);
+	},
+	addX: function(a) { this.setX(a + this.getX()) },
+	addY: function(a) { this.setY(a + this.getY()) },
+	addZ: function(a) { this.setZ(a + this.getZ()) }
 	
 });

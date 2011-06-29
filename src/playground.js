@@ -199,6 +199,9 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 		return objects;
 	},
 	
+	// 3D API
+	getCamera: function() { return this._camera3D },
+	
 	// Do this every frame
 	frame: function() {
 		
