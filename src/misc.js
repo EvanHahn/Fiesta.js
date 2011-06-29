@@ -8,6 +8,7 @@ Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) 
 Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };
 Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
 Fiesta.isArray = function(a) { return a.constructor == Array };
+Fiesta.isUndefined = function(u) { return a === void(0) };
 
 // "Create" undefined (nicer-looking version of void())
 Fiesta.undefined = function() { return void(0) };
