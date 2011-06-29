@@ -9,6 +9,9 @@ Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceo
 Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
 Fiesta.isArray = function(a) { return a.constructor == Array };
 
+// "Create" undefined (nicer-looking version of void())
+Fiesta.undefined = function() { return void(0) };
+
 // Does this string/array contain this element?
 Fiesta.contains = function(searchIn, searchFor) { return !!~searchIn.indexOf(searchFor) };
 
