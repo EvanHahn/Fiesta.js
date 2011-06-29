@@ -40,8 +40,6 @@ Fiesta.LocatableEntity = new Fiesta.Class(Fiesta.Entity, {
 	},
 	setCoordinates: function(xCoord, yCoord, zCoord) {
 		var undefined;
-		if ((xCoord === undefined) && (yCoord === undefined))
-			throw new TypeError("Cannot set coordinates to " + xCoord + ", " + yCoord + ", " + zCoord);
 		if (xCoord !== undefined)
 			this.setX(xCoord);
 		if (yCoord !== undefined)
