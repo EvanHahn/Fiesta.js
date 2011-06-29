@@ -1,35 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-
+<!DOCTYPE html> 
+<html> 
+<head> 
+ 
 <!-- Jasmine --> 
-<link rel="stylesheet" type="text/css" href="jasmine-1.0.2/jasmine.css" />
-<script src="jasmine-1.0.2/jasmine.js"></script>
-<script src="jasmine-1.0.2/jasmine-html.js"></script>
-
-<!-- Source -->
-<script type="text/javascript" src="../fiesta.js"></script>
-
-<!-- Spec files -->
-<script type="text/javascript" src="spec/browser_spec.js"></script>
-<script type="text/javascript" src="spec/commands_spec.js"></script>
-<script type="text/javascript" src="spec/gameobject_spec.js"></script>
-<script type="text/javascript" src="spec/graphics_spec.js"></script>
-<script type="text/javascript" src="spec/math_spec.js"></script>
-<script type="text/javascript" src="spec/misc_spec.js"></script>
-<script type="text/javascript" src="spec/physicalgameobject_spec.js"></script>
-<script type="text/javascript" src="spec/playground_spec.js"></script>
-<script type="text/javascript" src="spec/sound_spec.js"></script>
-<script type="text/javascript" src="spec/string_spec.js"></script>
-
-</head>
-<body>
-
-<!-- Jasmine execution -->
-<script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="jasmine-1.0.2/jasmine.css" /> 
+<script src="jasmine-1.0.2/jasmine.js"></script> 
+<script src="jasmine-1.0.2/jasmine-html.js"></script> 
+ 
+<!-- Source --> 
+<script src="../build/fiesta_0.3.0.js"></script> 
+ 
+<!-- Spec files --> 
+<script src="spec/baseobject_spec.js"></script>
+<script src="spec/graphic2d_spec.js"></script>
+<script src="spec/physical_spec.js"></script>
+<script src="spec/box3d_spec.js"></script>
+<script src="spec/graphic3d_spec.js"></script>
+<script src="spec/playground_spec.js"></script>
+<script src="spec/browser_spec.js"></script>
+<script src="spec/graphics_spec.js"></script>
+<script src="spec/sound_spec.js"></script>
+<script src="spec/camera3d_spec.js"></script>
+<script src="spec/locatable_spec.js"></script>
+<script src="spec/sprite2d_spec.js"></script>
+<script src="spec/commands_spec.js"></script>
+<script src="spec/math_spec.js"></script>
+<script src="spec/entity_spec.js"></script>
+<script src="spec/misc_spec.js"></script>
+ 
+</head> 
+<body> 
+ 
+<!-- Jasmine execution --> 
+<script type="text/javascript"> 
 jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 jasmine.getEnv().execute();
-</script>
-
-</body>
-</html>
+</script> 
+ 
+</body> 
+</html> 

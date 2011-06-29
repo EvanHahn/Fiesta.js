@@ -12,7 +12,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 		this._ySize;
 		this._zSize;
 		
-		xSize = xSize || 0;
+		xSize = xSize || Fiesta.DEFAULT_BOX3D_SIZE;
 		this.setSize(xSize, ySize, zSize);
 		this.setThreeModel(new THREE.Mesh(
 			new THREE.CubeGeometry(this._xSize, this._ySize, this._zSize),
@@ -66,8 +66,8 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 	getBoundingBox: function() {
 		if (this._boundingBoxChanged) {
 			this._boundingBox = [
-				0, 0, 0,
-				this.getXSize(), this.getYSize(), this.getZSize()
+				-this.getOriginX(), -this.getOriginY(), -this.getOriginZ(),
+				this.getXSize() - this.getOriginX(), this.getYSize() - this.getOriginY(), this.getZSize() - this.getOriginZ()
 			];
 			this._boundingBoxChanged = false;
 		}

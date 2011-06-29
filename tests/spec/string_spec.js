@@ -1,2 +1,0 @@
-describe("String API", function() {
-});

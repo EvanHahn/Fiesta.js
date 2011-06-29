@@ -14,7 +14,7 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 		this._boundingBox = [];
 		this._boundingBoxChanged = true;
 		
-		this.setOrigin(0, 0, 0);
+		this.setOrigin(Fiesta.DEFAULT_GRAPHIC_ORIGIN_X, Fiesta.DEFAULT_GRAPHIC_ORIGIN_Y, Fiesta.DEFAULT_GRAPHIC_ORIGIN_Z);
 	},
 	
 	// Origin API
@@ -48,7 +48,7 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 	setOrigin: function(xCoord, yCoord, zCoord) {
 		this.setOriginX(xCoord);
 		this.setOriginY(yCoord);
-		if (zCoord) this.setOriginY(zCoord);
+		if (!Fiesta.isUndefined(zCoord)) this.setOriginZ(zCoord);
 	},
 	
 	// "Abstract" functions

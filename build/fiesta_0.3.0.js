@@ -1,6 +1,3 @@
-//	Fiesta.js, version 0.3.0
-//	THIS SHOULD BE MINIFIED, BUT I'M OFFLINE AND I DON'T HAVE A MINIFIER
-
 /*	Fiesta.js namespace
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
@@ -11,7 +8,8 @@ var Fiesta = Fiesta || {};
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
 (function(){var a=(typeof this.global==='object')?this.global:this;a.JS=a.JS||{};JS.ENV=a})();JS.END_WITHOUT_DOT=/([^\.])$/;JS.array=function(a){var b=[],c=a.length;while(c--)b[c]=a[c];return b};JS.bind=function(a,b){return function(){return a.apply(b,arguments)}};JS.extend=function(a,b,c){if(!a||!b)return a;for(var d in b){if(a[d]===b[d])continue;if(c===false&&a.hasOwnProperty(d))continue;a[d]=b[d]}return a};JS.indexOf=function(a,b){if(a.indexOf)return a.indexOf(b);var c=a.length;while(c--){if(a[c]===b)return c}return-1};JS.isType=function(a,b){if(typeof b==='string')return typeof a===b;if(a===null||a===undefined)return false;return(typeof b==='function'&&a instanceof b)||(a.isA&&a.isA(b))||a.constructor===b};JS.makeBridge=function(a){var b=function(){};b.prototype=a.prototype;return new b()};JS.makeClass=function(a){a=a||Object;var b=function(){return this.initialize?this.initialize.apply(this,arguments)||this:this};b.prototype=JS.makeBridge(a);b.superclass=a;b.subclasses=[];if(a.subclasses)a.subclasses.push(b);return b};JS.match=function(a,b){if(b===undefined)return false;return typeof a.test==='function'?a.test(b):a.match(b)};JS.Method=JS.makeClass();JS.extend(JS.Method.prototype,{initialize:function(a,b,c){this.module=a;this.name=b;this.callable=c;this._1={};if(typeof c!=='function')return;this.arity=c.length;var d=c.toString().match(/\b[a-z\_\$][a-z0-9\_\$]*\b/ig),e=d.length;while(e--)this._1[d[e]]=true},setName:function(a){this.callable.displayName=this.displayName=a},contains:function(a){return this._1.hasOwnProperty(a)},call:function(){return this.callable.call.apply(this.callable,arguments)},apply:function(a,b){return this.callable.apply(a,b)},compile:function(h){var i=this,j=i.module.__trace__||h.__trace__,k=i.callable,q=i._1,n=JS.Method._3,o=n.length,l=[],m;while(o--){m=n[o];if(q[m.name])l.push(m)}if(l.length===0&&!j)return k;var p=function(){var a=l.length,b=a,c={},d,e,f;while(b--){d=l[b];e=this[d.name];if(e&&!e.__kwd__)continue;c[d.name]={_2:e,_4:this.hasOwnProperty(d.name)};f=d.filter(i,h,this,arguments);f.__kwd__=true;this[d.name]=f}var g=k.apply(this,arguments),b=a;while(b--){d=l[b];if(!c[d.name])continue;if(c[d.name]._4)this[d.name]=c[d.name]._2;else delete this[d.name]}return g};if(j)return JS.StackTrace.wrap(p,i,h);return p},toString:function(){var a=this.displayName||(this.module.toString()+'#'+this.name);return'#<Method:'+a+'>'}});JS.Method.create=function(a,b,c){if(c&&c.__inc__&&c.__fns__)return c;var d=(typeof c!=='function')?c:new this(a,b,c);this.notify(d);return d};JS.Method.compile=function(a,b){return a&&a.compile?a.compile(b):a};JS.Method.__listeners__=[];JS.Method.added=function(a,b){this.__listeners__.push([a,b])};JS.Method.notify=function(a){var b=this.__listeners__,c=b.length,d;while(c--){d=b[c];d[0].call(d[1],a)}};JS.Method._3=[];JS.Method.keyword=function(a,b){this._3.push({name:a,filter:b})};JS.Method.tracing=function(c,d,e){JS.require('JS.StackTrace',function(){var a=JS.StackTrace.logger,b=a.active;c=[].concat(c);this.trace(c);a.active=true;d.call(e);this.untrace(c);a.active=b},this)};JS.Method.trace=function(a){var b=a.length;while(b--){a[b].__trace__=true;a[b].resolve()}};JS.Method.untrace=function(a){var b=a.length;while(b--){a[b].__trace__=false;a[b].resolve()}};JS.Module=JS.makeClass();JS.Module.__queue__=[];JS.extend(JS.Module.prototype,{initialize:function(a,b,c){if(typeof a!=='string'){c=arguments[1];b=arguments[0];a=undefined}c=c||{};this.__inc__=[];this.__dep__=[];this.__fns__={};this.__tgt__=c._5;this.__anc__=null;this.__mct__={};this.setName(a);this.include(b,{_0:false});if(JS.Module.__queue__)JS.Module.__queue__.push(this)},setName:function(a){this.displayName=a||'';for(var b in this.__fns__)this.__name__(b);if(a&&this.__meta__)this.__meta__.setName(a+'.')},__name__:function(a){if(!this.displayName)return;var b=this.__fns__[a];if(!b)return;a=this.displayName.replace(JS.END_WITHOUT_DOT,'$1#')+a;if(typeof b.setName==='function')return b.setName(a);if(typeof b==='function')b.displayName=a},define:function(a,b,c){var d=JS.Method.create(this,a,b),e=(c||{})._0;this.__fns__[a]=d;this.__name__(a);if(e!==false)this.resolve()},include:function(a,b){if(!a)return this;var b=b||{},c=b._0!==false,d=a.extend,e=a.include,f,g,h,i,j,k;if(a.__fns__&&a.__inc__){this.__inc__.push(a);if((a.__dep__||{}).push)a.__dep__.push(this);if(f=b._6){if(typeof a.extended==='function')a.extended(f)}else{if(typeof a.included==='function')a.included(this)}}else{if(this.shouldIgnore('extend',d)){i=[].concat(d);for(j=0,k=i.length;j<k;j++)this.extend(i[j])}if(this.shouldIgnore('include',e)){i=[].concat(e);for(j=0,k=i.length;j<k;j++)this.include(i[j],{_0:false})}for(g in a){if(!a.hasOwnProperty(g))continue;h=a[g];if(this.shouldIgnore(g,h))continue;this.define(g,h,{_0:false})}if(a.hasOwnProperty('toString'))this.define('toString',a.toString,{_0:false})}if(c)this.resolve();return this},alias:function(a){for(var b in a){if(!a.hasOwnProperty(b))continue;this.define(b,this.instanceMethod(a[b]),{_0:false})}this.resolve()},resolve:function(a){var a=a||this,b=a.__tgt__,c=this.__inc__,d=this.__fns__,e,f,g,h;if(a===this){this.__anc__=null;this.__mct__={};e=this.__dep__.length;while(e--)this.__dep__[e].resolve()}if(!b)return;for(e=0,f=c.length;e<f;e++)c[e].resolve(a);for(g in d){h=JS.Method.compile(d[g],a);if(b[g]!==h)b[g]=h}if(d.hasOwnProperty('toString'))b.toString=JS.Method.compile(d.toString,a)},shouldIgnore:function(a,b){return(a==='extend'||a==='include')&&(typeof b!=='function'||(b.__fns__&&b.__inc__))},ancestors:function(a){var b=!a,a=a||[],c=this.__inc__;if(b&&this.__anc__)return this.__anc__.slice();for(var d=0,e=c.length;d<e;d++)c[d].ancestors(a);if(JS.indexOf(a,this)<0)a.push(this);if(b)this.__anc__=a.slice();return a},lookup:function(a){var b=this.__mct__[a];if(b&&b.slice)return b.slice();var c=this.ancestors(),d=[],e;for(var f=0,g=c.length;f<g;f++){e=c[f].__fns__;if(e.hasOwnProperty(a))d.push(e[a])}this.__mct__[a]=d.slice();return d},includes:function(a){if(a===this)return true;var b=this.__inc__;for(var c=0,d=b.length;c<d;c++){if(b[c].includes(a))return true}return false},instanceMethod:function(a){return this.lookup(a).pop()},instanceMethods:function(a,b){var c=b||[],d=this.__fns__,e;for(e in d){if(!JS.isType(this.__fns__[e],JS.Method))continue;if(JS.indexOf(c,e)>=0)continue;c.push(e)}if(a!==false){var f=this.ancestors(),g=f.length;while(g--)f[g].instanceMethods(false,c)}return c},match:function(a){return a&&a.isA&&a.isA(this)},toString:function(){return this.displayName}});JS.Kernel=new JS.Module('Kernel',{__eigen__:function(){if(this.__meta__)return this.__meta__;var a=this.toString()+'.';this.__meta__=new JS.Module(a,null,{_5:this});return this.__meta__.include(this.klass,{_0:false})},equals:function(a){return this===a},extend:function(a,b){var c=(b||{})._0;this.__eigen__().include(a,{_6:this,_0:c});return this},hash:function(){return JS.Kernel.hashFor(this)},isA:function(a){return(typeof a==='function'&&this instanceof a)||this.__eigen__().includes(a)},method:function(a){var b=this.__mct__=this.__mct__||{},c=b[a],d=this[a];if(typeof d!=='function')return d;if(c&&d===c._2)return c._7;var e=JS.bind(d,this);b[a]={_2:d,_7:e};return e},methods:function(){return this.__eigen__().instanceMethods()},tap:function(a,b){a.call(b||null,this);return this},toString:function(){if(this.displayName)return this.displayName;var a=this.klass.displayName||this.klass.toString();return'#<'+a+':'+this.hash()+'>'}});(function(){var b=1;JS.Kernel.hashFor=function(a){if(a.__hash__!==undefined)return a.__hash__;a.__hash__=(new Date().getTime()+b).toString(16);b+=1;return a.__hash__}})();JS.Class=JS.makeClass(JS.Module);JS.extend(JS.Class.prototype,{initialize:function(a,b,c,d){if(typeof a!=='string'){d=arguments[2];c=arguments[1];b=arguments[0];a=undefined}if(typeof b!=='function'){d=c;c=b;b=Object}JS.Module.prototype.initialize.call(this,a);d=d||{};var e=JS.makeClass(b);JS.extend(e,this);e.prototype.constructor=e.prototype.klass=e;e.__eigen__().include(b.__meta__,{_0:d._0});e.setName(a);e.__tgt__=e.prototype;var f=(b===Object)?{}:(b.__fns__?b:new JS.Module(b.prototype,{_0:false}));e.include(JS.Kernel,{_0:false}).include(f,{_0:false}).include(c,{_0:false});if(d._0!==false)e.resolve();if(typeof b.inherited==='function')b.inherited(e);return e}});(function(){var e=function(a){var b={},c=a.prototype;for(var d in c){if(!c.hasOwnProperty(d))continue;b[d]=JS.Method.create(a,d,c[d])}return b};var f=function(a,b){var c=JS[a],d=JS[b];c.__inc__=[];c.__dep__=[];c.__fns__=e(c);c.__tgt__=c.prototype;c.prototype.constructor=c.prototype.klass=c;JS.extend(c,JS.Class.prototype);c.include(d||JS.Kernel);c.setName(a);c.constructor=c.klass=JS.Class};f('Method');f('Module');f('Class','Module');var g=JS.Kernel.instanceMethod('__eigen__');g.call(JS.Method);g.call(JS.Module);g.call(JS.Class).include(JS.Module.__meta__)})();JS.NotImplementedError=new JS.Class('NotImplementedError',Error);JS.Method.keyword('callSuper',function(c,d,e,f){var g=d.lookup(c.name),h=g.length-1,i=JS.array(f);return function(){var a=arguments.length;while(a--)i[a]=arguments[a];h-=1;var b=g[h].apply(e,i);h+=1;return b}});JS.Method.keyword('blockGiven',function(a,b,c,d){var e=Array.prototype.slice.call(d,a.arity),f=(typeof e[0]==='function');return function(){return f}});JS.Method.keyword('yieldWith',function(a,b,c,d){var e=Array.prototype.slice.call(d,a.arity);return function(){if(typeof e[0]!=='function')return;return e[0].apply(e[1]||null,arguments)}});JS.Interface=new JS.Class('Interface',{initialize:function(d){this.test=function(a,b){var c=d.length;while(c--){if(typeof a[d[c]]!=='function')return b?d[c]:false}return true}},extend:{ensure:function(){var a=JS.array(arguments),b=a.shift(),c,d;while(c=a.shift()){d=c.test(b,true);if(d!==true)throw new Error('object does not implement '+d+'()');}}}});JS.Singleton=new JS.Class('Singleton',{initialize:function(a,b,c){return new(new JS.Class(a,b,c))}});
-Fiesta.Class = JS.Class;	// Alias/*	Three.js r41/ROME, modified for Fiesta
+Fiesta.Class = JS.Class;	// Alias
+/*	Three.js r41/ROME, modified for Fiesta
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
@@ -644,12 +642,18 @@ Fiesta.DEFAULT_BOUNCINESS = Fiesta.DEFAULT_BOUNCINESS || 1;
 Fiesta.DEFAULT_BOUNDING_BOX_AUTO = Fiesta.DEFAULT_BOUNDING_BOX_AUTO || true;
 Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION = Fiesta.BOUNDING_BOX_DEFAULT_DIMENSION || 1;
 
+// Graphics
+Fiesta.DEFAULT_GRAPHIC_ORIGIN_X = Fiesta.DEFAULT_GRAPHIC_ORIGIN_X || 0;
+Fiesta.DEFAULT_GRAPHIC_ORIGIN_Y = Fiesta.DEFAULT_GRAPHIC_ORIGIN_Y || 0;
+Fiesta.DEFAULT_GRAPHIC_ORIGIN_Z = Fiesta.DEFAULT_GRAPHIC_ORIGIN_Z || 0;
+
 // Sprites
 Fiesta.DEFAULT_SPRITE_STARTING_INDEX = Fiesta.DEFAULT_SPRITE_STARTING_INDEX || 0;
 Fiesta.DEFAULT_SPRITE_ANIMATE_SPEED = Fiesta.DEFAULT_SPRITE_ANIMATE_SPEED || 30;
 
 // 3D graphics
 Fiesta.DEFAULT_3D_MATERIAL = Fiesta.DEFAULT_3D_MATERIAL || new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+Fiesta.DEFAULT_BOX3D_SIZE = Fiesta.DEFAULT_BOX3D_SIZE || 0;
 
 // Sounds
 Fiesta.SOUND_EXTENSIONS = ["ogg", "wav", "mp3"];
@@ -1123,6 +1127,52 @@ Fiesta.getKeyCode = function(str) {
 	else
 		throw new TypeError(str + " cannot be translated to a keycode");
 };
+/*	Fiesta.js math
+	License info:
+	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
+
+// Sign of a number
+Fiesta.sign = function(d) {
+	if (!Fiesta.isNumber(d))
+		throw new TypeError("Cannot find sign of " + typeof d + " " + d);
+	if (d > 0) return 1;
+	if (d < 0) return -1;
+	return 0;
+}
+
+// Wrap a value around (examples below are good examples)
+Fiesta.wrap = function(min, max, value) {
+	if (!Fiesta.isNumber(min)) throw new TypeError(min + " is not a valid minimum");
+	if (!Fiesta.isNumber(max)) throw new TypeError(max + " is not a valid maximum");
+	if (!Fiesta.isNumber(value)) throw new TypeError(value + " is not a valid value");
+	if (min > max) throw new Error("Cannot wrap if the minimum (" + min + ") is greater than the maximum (" + max + ")");
+	
+	var diff = max - min;
+	if (value > max)
+		return Fiesta.wrap(min, max, value - diff);
+	if (value < min)
+		return Fiesta.wrap(min, max, value + diff);
+	return value;
+}
+
+// Angle wrapping (ie, change 370º to 10º)
+Fiesta.degrees = function(d) { return Fiesta.wrap(0, 360, d) };
+Fiesta.radians = function(d) { return Fiesta.wrap(0, 2 * Math.PI, d) };
+
+// Convert rotation measurements
+Fiesta.degreesToRadians = function(d) { return (Fiesta.degrees(d) * Math.PI) / 180; };
+Fiesta.radiansToDegrees = function(r) { return (Fiesta.radians(r) * 180) / Math.PI; };
+
+// Distances between points (2 and 3 dimensions)
+Fiesta.pointDistance2D = function(x1, y1, x2, y2) { return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)); };
+Fiesta.pointDistance3D = function(x1, y1, z1, x2, y2, z2) { return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2)); };
+
+// Vector length
+Fiesta.vectorLength = function(i, j, k) {
+	if (!k) return Fiesta.pointDistance2D(0, 0, i, j);
+	return Fiesta.pointDistance3D(0, 0, 0, i, j, k);
+};
+
 /*	Fiesta.js misc. function
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
@@ -1133,7 +1183,7 @@ Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) 
 Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };
 Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
 Fiesta.isArray = function(a) { return a.constructor == Array };
-Fiesta.isUndefined = function(u) { return a === void(0) };
+Fiesta.isUndefined = function(u) { return u === void(0) };
 
 // "Create" undefined (nicer-looking version of void())
 Fiesta.undefined = function() { return void(0) };
@@ -1549,7 +1599,7 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 		this._boundingBox = [];
 		this._boundingBoxChanged = true;
 		
-		this.setOrigin(0, 0, 0);
+		this.setOrigin(Fiesta.DEFAULT_GRAPHIC_ORIGIN_X, Fiesta.DEFAULT_GRAPHIC_ORIGIN_Y, Fiesta.DEFAULT_GRAPHIC_ORIGIN_Z);
 	},
 	
 	// Origin API
@@ -1583,7 +1633,7 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 	setOrigin: function(xCoord, yCoord, zCoord) {
 		this.setOriginX(xCoord);
 		this.setOriginY(yCoord);
-		if (zCoord) this.setOriginY(zCoord);
+		if (!Fiesta.isUndefined(zCoord)) this.setOriginZ(zCoord);
 	},
 	
 	// "Abstract" functions
@@ -1766,7 +1816,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 		this._ySize;
 		this._zSize;
 		
-		xSize = xSize || 0;
+		xSize = xSize || Fiesta.DEFAULT_BOX3D_SIZE;
 		this.setSize(xSize, ySize, zSize);
 		this.setThreeModel(new THREE.Mesh(
 			new THREE.CubeGeometry(this._xSize, this._ySize, this._zSize),
@@ -1820,8 +1870,8 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 	getBoundingBox: function() {
 		if (this._boundingBoxChanged) {
 			this._boundingBox = [
-				0, 0, 0,
-				this.getXSize(), this.getYSize(), this.getZSize()
+				-this.getOriginX(), -this.getOriginY(), -this.getOriginZ(),
+				this.getXSize() - this.getOriginX(), this.getYSize() - this.getOriginY(), this.getZSize() - this.getOriginZ()
 			];
 			this._boundingBoxChanged = false;
 		}
@@ -1883,5 +1933,279 @@ Fiesta.Camera3D = new Fiesta.Class(Fiesta.LocatableEntity, {
 	addX: function(a) { this.setX(a + this.getX()) },
 	addY: function(a) { this.setY(a + this.getY()) },
 	addZ: function(a) { this.setZ(a + this.getZ()) }
+	
+});/*	Fiesta.js playground
+	License info:
+	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
+
+Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
+	
+	// Constructor
+	initialize: function(theWidth, theHeight, theContext, framerate) {
+		this._entities = [];
+		
+		this._width;
+		this._height;
+		this._backgroundColor;
+		this._element;
+		this._desiredFPS;
+		this._context;
+		this._redraw;
+		this._timePlaced;
+		
+		this._threeRenderer;
+		this._camera3D;
+		this._threeScene;
+		
+		this.setWidth(theWidth || Fiesta.PLAYGROUND_DEFAULT_WIDTH);
+		this.setHeight(theHeight || Fiesta.PLAYGROUND_DEFAULT_HEIGHT);
+		this.setContext(theContext || Fiesta.PLAYGROUND_DEFAULT_CONTEXT);
+		this.setDesiredFPS(framerate || Fiesta.PLAYGROUND_DEFAULT_FPS);
+		this.setRedraw(Fiesta.PLAYGROUND_DEFAULT_REDRAW);
+	},
+	
+	// Size API
+	getWidth: function() { return this._width },
+	getHeight: function() { return this._height },
+	setWidth: function(w) {
+		if ((Fiesta.isNumber(w)) && (w >= 0)) {
+			this._width = w;
+			if (this._element)
+				this._element.setAttribute("width", this._width);
+		}
+		else
+			throw new TypeError(w + " is not a valid playground width");
+	},
+	setHeight: function(h) {
+		if ((Fiesta.isNumber(h)) && (h >= 0)) {
+			this._height = h;
+			if (this._element)
+				this._element.setAttribute("height", this._height);
+		}
+		else
+			throw new TypeError(h + " is not a valid playground height");
+	},
+	setSize: function(w, h) {
+		this.setWidth(w);
+		this.setHeight(h);
+	},
+	
+	// FPS API
+	getDesiredFPS: function() { return this._desiredFPS },
+	setDesiredFPS: function(f) {
+		if ((Fiesta.isNumber(f)) && (f >= 0))
+			this._desiredFPS = f;
+		else
+			throw new TypeError(f + " is not a valid desired FPS");
+	},
+	
+	// Redraw API
+	getRedraw: function() { return this._redraw },
+	setRedraw: function(r) {
+		if (Fiesta.isBoolean(r))
+			this._redraw = r;
+		else
+			throw new TypeError("Cannot set redrawing to " + r);
+	},
+	
+	// DOM API
+	place: function(domElement) {
+		if (!domElement)
+			domElement = document.body;
+		if (!(domElement instanceof HTMLElement))
+			throw new TypeError("Playground cannot be placed in " + domElement);
+		
+		if (this._context === "2d") {
+			this._element = document.createElement("canvas");
+			this._element.style.overflow = "hidden";
+			this._element.setAttribute("width", this._width);
+			this._element.setAttribute("height", this._height);
+		}
+		
+		if (this._context === "3d") {
+			this._element = this._threeRenderer.domElement;
+			this._threeRenderer.setSize(this._width, this._height);
+		}
+		
+		this._element.setAttribute("class", "fiesta_playground");
+		if (this._backgroundColor)
+				this._element.style.backgroundColor = this._backgroundColor;
+		
+		domElement.appendChild(this._element);
+		
+		this.placeTime = Date.now();
+		this.frame();
+		
+		return this._element;
+	},
+	domElementExists: function() { return !!this._element },
+	getDOMElement: function() {
+		if (this._element)
+			return this._element;
+		else
+			throw new Error("This playground is not yet in the DOM, so we can't talk to it");
+	},
+	getContext: function() { return this._element.getContext(this._context) },
+	setContext: function(c) {
+		var context = c.toLowerCase();
+		if ((Fiesta.isString(context)) && ((context === "2d") || (context === "3d"))) {
+			if (context === "3d") {
+				if (THREE) {
+					this._threeRenderer = new THREE.WebGLRenderer();
+					this._camera3D = new Fiesta.Camera3D();
+					this._threeScene = new THREE.Scene();
+					this._threeRenderer.setSize(this.getWidth(), this.getHeight());
+				} else
+					throw new Error("Cannot set context to 3D without three.js");
+			}
+			this._context = context;
+		}
+		else
+			throw new Error(c + " is not a valid context");
+	},
+	getTimePlaced: function() { return this._timePlaced || false },
+	getBackgroundColor: function() { return this._backgroundColor },
+	setBackgroundColor: function(color) {
+		if (!Fiesta.isString(color))
+			throw new TypeError(color + " is not a valid color");
+		this._backgroundColor = color;
+		if (this.domElementExists())
+			this.getDOMElement().style.backgroundColor = color;
+	},
+	
+	// Object API
+	spawn: function(object, x, y, z) {
+		if (object instanceof Fiesta.Entity) {
+			this._entities.push(object);
+			object._setPlayground(this);
+			if (Fiesta.isNumber(x))
+				object.setX(x);
+			if (Fiesta.isNumber(y))
+				object.setY(y);
+			if (Fiesta.isNumber(z))
+				object.setZ(z);
+			object.onSpawn();
+			if (this._context === "3d")
+				this._threeScene.addChild(object.getGraphic().getThreeModel());
+		}
+		else
+			throw new TypeError(object + " is not something that can be spawned");
+	},
+	destroy: function(object) {
+		if (object instanceof Fiesta.Entity) {
+			var location = this._entities.indexOf(object);
+			if (location !== -1) {
+				this._entities.splice(location, 1);
+				object._resetPlayground();
+				object.onDestroy();
+			} else
+				throw new Error("Looks like there is no object " + object + " to destroy");
+		}
+		else
+			throw new TypeError(object + " is not something that can be destroyed");
+	},
+	objectsAt: function(x, y, z) {
+		var undefined;
+		if (z === undefined)
+			z = 0;
+		if ((!Fiesta.isNumber(x)) || (!Fiesta.isNumber(y)) || (!Fiesta.isNumber(z)))
+			throw new TypeError("Cannot look for objects at " + x + ", " + y + ", and " + z);
+		var objects = [];
+		var i = this._entities.length;
+		while (i --) {
+			if (this._entities[i] instanceof Fiesta.PhysicalEntity) {
+				var bound = this._entities[i].getBoundingBox();
+				if ((x > bound[0])
+					&&
+					(x < bound[3])
+					&&
+					(y > bound[1])
+					&&
+					(y < bound[4])
+					&&
+					(z > bound[2])
+					&&
+					(z < bound[5])) {
+					objects.push(this._entities[i]);
+				}
+			}
+		}
+		if (objects.length === 0)
+			return false;
+		return objects;
+	},
+	
+	// 3D API
+	getCamera: function() { return this._camera3D },
+	
+	// Do this every frame
+	frame: function() {
+		
+		// Prepare the next frame
+		var thisObject = this;	// So the next statement works
+		setTimeout(function() { thisObject.frame() }, 1000 / this.getDesiredFPS());
+		
+		// Redraw (if I should, of course)
+		if (this.getRedraw() && (this._context === "2d"))
+			this.getContext().clearRect(0, 0, this._width, this._height);
+		
+		// Deal with every object
+		// The pieces are in try/catch blocks so that one object doesn't break
+		// everything for everyone else
+		var size = this._entities.length;	// This is for a bit later
+		var i = size;
+		while (i --) {
+			
+			// Assign a local object variable
+			var obj = this._entities[i];
+			
+			// Draw 2D entities
+			if (this._context === "2d") {
+				try {
+					if (obj instanceof Fiesta.LocatableEntity)
+						obj.getGraphic().draw(this, obj.getX(), obj.getY(), obj.getZ());
+				} catch (e) { Fiesta.error(e) }
+			}
+			
+			// Render 3D
+			if (this._context === "3d") {
+				try {
+					this._threeRenderer.render(this._threeScene, this._camera3D.getThreeCamera());
+				} catch (e) { Fiesta.error(e) }
+			}
+			
+			// Execute each object's onFrame event
+			try {
+				obj.onFrame();
+			} catch (e) { Fiesta.error(e) }
+			
+			// Collisions
+			try {
+				if (obj instanceof Fiesta.PhysicalEntity) {
+					var objBound = obj.getBoundingBox();
+					for (var j = i + 1; j < size; j ++) {
+						var obj2 = this._entities[j];
+						if (obj2 instanceof Fiesta.PhysicalEntity) {
+							var obj2Bound = obj2.getBoundingBox();
+							if (!(obj2Bound[0] > objBound[3]
+								||
+								obj2Bound[3] < objBound[0]
+								||
+								obj2Bound[1] > objBound[4]
+								||
+								obj2Bound[4] < objBound[1]
+								||
+								obj2Bound[2] > objBound[5]
+								||
+								obj2Bound[5] < objBound[2])) {
+								Fiesta.collidePhysicalObjects(obj, obj2);
+							}
+						}
+					}
+				}
+			} catch (e) { Fiesta.error(e) }
+			
+		}
+	}
 	
 });

@@ -1,7 +1,7 @@
 describe("Physical game object", function() {
 
 	it("constructs properly", function() {
-		var p = new Fiesta.PhysicalGameObject();
+		var p = new Fiesta.PhysicalEntity();
 		expect(p.getX()).toEqual(Fiesta.DEFAULT_X);
 		expect(p.getY()).toEqual(Fiesta.DEFAULT_Y);
 		expect(p.getZ()).toEqual(Fiesta.DEFAULT_Z);
