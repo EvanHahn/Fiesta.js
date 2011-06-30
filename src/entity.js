@@ -40,8 +40,7 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 			throw new TypeError(p + " is not a valid playground");
 	},
 	_resetPlayground: function() {
-		var undefined;
-		this._playground = undefined;
+		this._playground = Fiesta.makeUndefined();
 	},
 	
 	// Remove me from the playground

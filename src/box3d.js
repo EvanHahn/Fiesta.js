@@ -50,8 +50,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 			throw new TypeError(s + " is not a valid Z size");
 	},
 	setSize: function(xSize, ySize, zSize) {
-		var undefined;
-		if ((ySize === undefined) && (zSize === undefined)) {	// Only 1 size = cube
+		if (Fiesta.isUndefined(ySize) && Fiesta.isUndefined(zSize)) {	// Only 1 size = cube
 			this.setXSize(xSize);
 			this.setYSize(xSize);
 			this.setZSize(xSize);

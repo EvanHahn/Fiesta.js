@@ -785,6 +785,44 @@ Fiesta.KEYCODE_TRANSLATIONS = Fiesta.KEYCODE_TRANSLATIONS || {
 	"<": 188,
 	"'": 222,
 	"\"": 222
+};/*	Fiesta.js misc. function
+	License info:
+	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
+
+// Check value types
+Fiesta.isNumber = function(n) { return (((typeof n === typeof 1.0) || (n instanceof Number)) && (!isNaN(n))) };
+Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) === i)) };
+Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };
+Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
+Fiesta.isArray = function(a) { return a.constructor == Array };
+Fiesta.isUndefined = function(u) { return u === void(0) };
+
+// "Create" undefined (nicer-looking version of void())
+Fiesta.makeUndefined = function() { return void(0) };
+
+// Does this string/array contain this element?
+Fiesta.contains = function(searchIn, searchFor) { return !!~searchIn.indexOf(searchFor) };
+
+// Get the file extension
+Fiesta.getFileExtension = function(filename) {
+	var extension = filename.split(".").pop();
+	if (extension === filename)	// No extension
+		return "";
+	else
+		return extension.toLowerCase();
+};
+
+// Make a sorta-GUID
+Fiesta._guids = [];
+Fiesta.guid = function() {
+	var guid = Math.floor(Math.random() * Date.now());
+	var i = this._guids.length;
+	while (i --) {
+		if (this._guids[i] === guid)
+			return this.guid();	// Start over; we already have this GUID
+	}
+	this._guids.push(guid);
+	return guid;
 };/*	Fiesta.js browser detection
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
@@ -801,10 +839,10 @@ var _BrowserDetect = {
 		this.OS = this.searchString(this.dataOS) || "an unknown OS";
 		
 		// Clear old functions
-		this.searchString = undefined;
-		this.searchVersion = undefined;
-		this.dataBrowser = undefined;
-		this.dataOS = undefined;
+		this.searchString = Fiesta.makeUndefined();
+		this.searchVersion = Fiesta.makeUndefined();
+		this.dataBrowser = Fiesta.makeUndefined();
+		this.dataOS = Fiesta.makeUndefined();
 		
 	},
 	searchString: function(data) {
@@ -1173,45 +1211,7 @@ Fiesta.vectorLength = function(i, j, k) {
 	return Fiesta.pointDistance3D(0, 0, 0, i, j, k);
 };
 
-/*	Fiesta.js misc. function
-	License info:
-	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
-
-// Check value types
-Fiesta.isNumber = function(n) { return (((typeof n === typeof 1.0) || (n instanceof Number)) && (!isNaN(n))) };
-Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) === i)) };
-Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };
-Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
-Fiesta.isArray = function(a) { return a.constructor == Array };
-Fiesta.isUndefined = function(u) { return u === void(0) };
-
-// "Create" undefined (nicer-looking version of void())
-Fiesta.undefined = function() { return void(0) };
-
-// Does this string/array contain this element?
-Fiesta.contains = function(searchIn, searchFor) { return !!~searchIn.indexOf(searchFor) };
-
-// Get the file extension
-Fiesta.getFileExtension = function(filename) {
-	var extension = filename.split(".").pop();
-	if (extension === filename)	// No extension
-		return "";
-	else
-		return extension.toLowerCase();
-};
-
-// Make a sorta-GUID
-Fiesta._guids = [];
-Fiesta.guid = function() {
-	var guid = Math.floor(Math.random() * Date.now());
-	var i = this._guids.length;
-	while (i --) {
-		if (this._guids[i] === guid)
-			return this.guid();	// Start over; we already have this GUID
-	}
-	this._guids.push(guid);
-	return guid;
-};/*	Fiesta.js base object
+/*	Fiesta.js base object
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
@@ -1260,8 +1260,7 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 			throw new TypeError(p + " is not a valid playground");
 	},
 	_resetPlayground: function() {
-		var undefined;
-		this._playground = undefined;
+		this._playground = Fiesta.makeUndefined();
 	},
 	
 	// Remove me from the playground
@@ -1316,12 +1315,11 @@ Fiesta.LocatableEntity = new Fiesta.Class(Fiesta.Entity, {
 			throw new TypeError(coord + " is not a valid Z coordinate");
 	},
 	setCoordinates: function(xCoord, yCoord, zCoord) {
-		var undefined;
-		if (xCoord !== undefined)
+		if (!Fiesta.isUndefined(xCoord))
 			this.setX(xCoord);
-		if (yCoord !== undefined)
+		if (!Fiesta.isUndefined(yCoord))
 			this.setY(yCoord);
-		if (zCoord !== undefined)
+		if (!Fiesta.isUndefined(zCoord))
 			this.setZ(zCoord);
 	},
 	addX: function(a) { this.setX(a + this.getX()) },
@@ -1854,8 +1852,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 			throw new TypeError(s + " is not a valid Z size");
 	},
 	setSize: function(xSize, ySize, zSize) {
-		var undefined;
-		if ((ySize === undefined) && (zSize === undefined)) {	// Only 1 size = cube
+		if (Fiesta.isUndefined(ySize) && Fiesta.isUndefined(zSize)) {	// Only 1 size = cube
 			this.setXSize(xSize);
 			this.setYSize(xSize);
 			this.setZSize(xSize);
@@ -1922,12 +1919,11 @@ Fiesta.Camera3D = new Fiesta.Class(Fiesta.LocatableEntity, {
 			throw new TypeError(coord + " is not a valid Z coordinate for the camera");
 	},
 	setCoordinates: function(xCoord, yCoord, zCoord) {
-		var undefined;
-		if (xCoord !== undefined)
+		if (!Fiesta.isUndefined(xCoord))
 			this.setX(xCoord);
-		if (yCoord !== undefined)
+		if (!Fiesta.isUndefined(yCoord))
 			this.setY(yCoord);
-		if (zCoord !== undefined)
+		if (!Fiesta.isUndefined(zCoord))
 			this.setZ(zCoord);
 	},
 	addX: function(a) { this.setX(a + this.getX()) },

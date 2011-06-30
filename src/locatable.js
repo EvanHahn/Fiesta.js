@@ -39,12 +39,11 @@ Fiesta.LocatableEntity = new Fiesta.Class(Fiesta.Entity, {
 			throw new TypeError(coord + " is not a valid Z coordinate");
 	},
 	setCoordinates: function(xCoord, yCoord, zCoord) {
-		var undefined;
-		if (xCoord !== undefined)
+		if (!Fiesta.isUndefined(xCoord))
 			this.setX(xCoord);
-		if (yCoord !== undefined)
+		if (!Fiesta.isUndefined(yCoord))
 			this.setY(yCoord);
-		if (zCoord !== undefined)
+		if (!Fiesta.isUndefined(zCoord))
 			this.setZ(zCoord);
 	},
 	addX: function(a) { this.setX(a + this.getX()) },

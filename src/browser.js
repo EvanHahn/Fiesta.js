@@ -14,10 +14,10 @@ var _BrowserDetect = {
 		this.OS = this.searchString(this.dataOS) || "an unknown OS";
 		
 		// Clear old functions
-		this.searchString = undefined;
-		this.searchVersion = undefined;
-		this.dataBrowser = undefined;
-		this.dataOS = undefined;
+		this.searchString = Fiesta.makeUndefined();
+		this.searchVersion = Fiesta.makeUndefined();
+		this.dataBrowser = Fiesta.makeUndefined();
+		this.dataOS = Fiesta.makeUndefined();
 		
 	},
 	searchString: function(data) {
