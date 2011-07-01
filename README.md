@@ -1,4 +1,4 @@
-Fiesta.js - version 0.3.0
+Fiesta.js - version 0.3.1
 =========================
 
 Fiesta is a JavaScript game library. It aims to be **super badass**.

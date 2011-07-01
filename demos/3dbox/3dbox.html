@@ -21,6 +21,7 @@
 	<script src="../../src/graphic3d.js"></script>
 	<script src="../../src/sprite2d.js"></script>
 	<script src="../../src/box3d.js"></script>
+	<script src="../../src/light3d.js"></script>
 	<script src="../../src/camera3d.js"></script>
 	<script src="../../src/playground.js"></script>
 	
@@ -54,15 +55,18 @@ var Box = new Fiesta.Class(Fiesta.PhysicalEntity, {
 	* Set everything up *
 	*********************	*/
 
-var playground = new Fiesta.Playground(400, 300, "3d");
+var playground = new Fiesta.Playground(800, 600, "3d");
 
 var box = new Box();
 playground.spawn(box, 0, 0, 0);
 
+var light = new Fiesta.Light3D();
+playground.spawn(light, 120, 120, 120);
+
 playground.place(document.body);
 playground.setBackgroundColor("#000");
 
-playground.getCamera().setCoordinates(100, 200, 100);
+playground.getCamera().setCoordinates(100, 100, 200);
 
 
 </script>

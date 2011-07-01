@@ -115,7 +115,7 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 		if ((Fiesta.isString(context)) && ((context === "2d") || (context === "3d"))) {
 			if (context === "3d") {
 				if (THREE) {
-					this._threeRenderer = new THREE.WebGLRenderer();
+					this._threeRenderer = new THREE.WebGLRenderer({ antialias: true });
 					this._camera3D = new Fiesta.Camera3D();
 					this._threeScene = new THREE.Scene();
 					this._threeRenderer.setSize(this.getWidth(), this.getHeight());
@@ -139,6 +139,16 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 	
 	// Object API
 	spawn: function(object, x, y, z) {
+		if (object instanceof Fiesta.Light3D) {
+			this._threeScene.addLight(object.getThreeLight());
+			if (Fiesta.isNumber(x))
+				object.setX(x);
+			if (Fiesta.isNumber(y))
+				object.setY(y);
+			if (Fiesta.isNumber(z))
+				object.setZ(z);
+			return;
+		}
 		if (object instanceof Fiesta.Entity) {
 			this._entities.push(object);
 			object._setPlayground(this);
@@ -149,8 +159,9 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 			if (Fiesta.isNumber(z))
 				object.setZ(z);
 			object.onSpawn();
-			if (this._context === "3d")
+			if (this._context === "3d") {
 				this._threeScene.addChild(object.getGraphic().getThreeModel());
+			}
 		}
 		else
 			throw new TypeError(object + " is not something that can be spawned");
