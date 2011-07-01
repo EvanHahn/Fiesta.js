@@ -48,7 +48,7 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 		this.getPlayground().destroy(this);
 	},
 	
-	// Events
+	// Events (to be overwritten)
 	onSpawn: function() {},
 	onDestroy: function() {},
 	onFrame: function() {}

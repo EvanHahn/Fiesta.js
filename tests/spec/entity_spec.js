@@ -27,8 +27,8 @@ describe("Entity", function() {
 	it("spawns in a playground", function() {
 		var obj = new Fiesta.Entity();
 		var play = new Fiesta.Playground();
-//		play.spawn(obj);
-//		expect(obj.getPlayground()).toBe(play);
+		play.spawn(obj);
+		expect(obj.getPlayground()).toBe(play);
 	});
 	
 	it("destroys itself from a playground", function() {
