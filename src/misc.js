@@ -24,16 +24,3 @@ Fiesta.getFileExtension = function(filename) {
 	else
 		return extension.toLowerCase();
 };
-
-// Make a sorta-GUID
-Fiesta._guids = [];
-Fiesta.guid = function() {
-	var guid = Math.floor(Math.random() * Date.now());
-	var i = this._guids.length;
-	while (i --) {
-		if (this._guids[i] === guid)
-			return this.guid();	// Start over; we already have this GUID
-	}
-	this._guids.push(guid);
-	return guid;
-};
