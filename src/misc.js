@@ -9,9 +9,11 @@ Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceo
 Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
 Fiesta.isArray = function(a) { return a.constructor == Array };
 Fiesta.isUndefined = function(u) { return u === void(0) };
+// If you're looking for it, isNaN() is a built-in function in JavaScript
 
 // "Create" undefined (nicer-looking version of void())
 Fiesta.makeUndefined = function() { return void(0) };
+Fiesta.makeNaN = function() { return parseInt(void(0)) };
 
 // Does this string/array contain this element?
 Fiesta.contains = function(searchIn, searchFor) { return !!~searchIn.indexOf(searchFor) };

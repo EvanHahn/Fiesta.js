@@ -108,7 +108,13 @@ describe("Misc. functions", function() {
 		expect(Fiesta.makeUndefined()).toEqual(x);
 		undefined = x;
 	});
-	
+
+	it("creates NaN", function() {
+		var oldNaN = NaN;
+		expect(isNaN(Fiesta.makeNaN())).toBeTruthy();
+		NaN = oldNaN;
+	});
+
 	it("tells you if a string contains another (if it's there)", function() {
 		var a = "Hello world!";
 		var b = "world";
@@ -134,19 +140,19 @@ describe("Misc. functions", function() {
 	});
 
 	it("gets the file extension from a simple filename (when there is one)", function() {
-		expect(Fiesta.getFileExtension("hello.ogg").toEqual("ogg");
+		expect(Fiesta.getFileExtension("hello.ogg")).toEqual("ogg");
 	});
 
 	it("gets the file extension from a weird-caps filename (when there is one)", function() {
-		expect(Fiesta.getFileExtension("hello.OgG").toEqual("ogg");
+		expect(Fiesta.getFileExtension("hello.OgG")).toEqual("ogg");
 	});
 
 	it("gets the file extension from a more complex filename (when there is one)", function() {
-		expect(Fiesta.getFileExtension("hello. world..ogg").toEqual("ogg");
+		expect(Fiesta.getFileExtension("hello. world..ogg")).toEqual("ogg");
 	});
 
 	it("gets no file extension from a filename when there isn't one", function() {
-		expect(Fiesta.getFileExtension("hello").toEqual("");
+		expect(Fiesta.getFileExtension("hello")).toEqual("");
 	});
 
 });
