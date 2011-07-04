@@ -1,13 +1,23 @@
 describe("Entity", function() {
 	
-	it("initializes with no graphic", function() {
+	it("initializes properly", function() {
 		var obj = new Fiesta.Entity();
 		expect(obj.getGraphic()).toBeFalsy();
-	});
-	
-	it("initializes with no playground", function() {
-		var obj = new Fiesta.Entity();
 		expect(obj.getPlayground()).toBeFalsy();
+		expect(obj.getX()).toEqual(Fiesta.DEFAULT_X);
+		expect(obj.getY()).toEqual(Fiesta.DEFAULT_Y);
+		expect(obj.getZ()).toEqual(Fiesta.DEFAULT_Z);
+		expect(obj.getVelocityX()).toEqual(Fiesta.DEFAULT_X_VELOCITY);
+		expect(obj.getVelocityY()).toEqual(Fiesta.DEFAULT_Y_VELOCITY);
+		expect(obj.getVelocityZ()).toEqual(Fiesta.DEFAULT_Z_VELOCITY);
+		expect(obj.getAccelerationX()).toEqual(Fiesta.DEFAULT_X_ACCELERATION);
+		expect(obj.getAccelerationY()).toEqual(Fiesta.DEFAULT_Y_ACCELERATION);
+		expect(obj.getAccelerationZ()).toEqual(Fiesta.DEFAULT_Z_ACCELERATION);
+		expect(obj.getFrictionX()).toEqual(Fiesta.DEFAULT_X_FRICTION);
+		expect(obj.getFrictionY()).toEqual(Fiesta.DEFAULT_Y_FRICTION);
+		expect(obj.getFrictionZ()).toEqual(Fiesta.DEFAULT_Z_FRICTION);
+		expect(obj.getMass()).toEqual(Fiesta.DEFAULT_MASS);
+		expect(obj.getBounciness()).toEqual(Fiesta.DEFAULT_BOUNCINESS);
 	});
 	
 	it("assigns graphics properly", function() {
@@ -23,7 +33,7 @@ describe("Entity", function() {
 			obj.setGraphic("foo");
 		}).toThrow("foo is not a graphic");
 	});
-
+	
 	it("spawns in a playground", function() {
 		var obj = new Fiesta.Entity();
 		var play = new Fiesta.Playground();
@@ -93,7 +103,7 @@ describe("Entity", function() {
 		var play = new Fiesta.Playground(1, 1, "2d", 10);
 		play.spawn(obj);
 		expect(obj.value).toEqual(0);
-		play.place(document.body);
+		play.place();
 		waits(500);
 		runs(function() {
 			expect(obj.value).toBeGreaterThan(4);

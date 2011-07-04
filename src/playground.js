@@ -237,8 +237,9 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 			// Draw 2D entities
 			if (this._context === "2d") {
 				try {
-					if (obj instanceof Fiesta.LocatableEntity)
-						obj.getGraphic().draw(this, obj.getX(), obj.getY(), obj.getZ());
+					var graphic = obj.getGraphic();
+					if (graphic)
+						graphic.draw(this, obj.getX(), obj.getY(), obj.getZ());
 				} catch (e) { Fiesta.error(e) }
 			}
 			
@@ -256,11 +257,11 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 			
 			// Collisions
 			try {
-				if (obj instanceof Fiesta.PhysicalEntity) {
+				if (obj.isSolid()) {
 					var objBound = obj.getBoundingBox();
 					for (var j = i + 1; j < size; j ++) {
 						var obj2 = this._entities[j];
-						if (obj2 instanceof Fiesta.PhysicalEntity) {
+						if (obj2.isSolid()) {
 							var obj2Bound = obj2.getBoundingBox();
 							if (!(obj2Bound[0] > objBound[3]
 								||

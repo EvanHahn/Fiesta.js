@@ -2,7 +2,7 @@
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
-Fiesta.Camera3D = new Fiesta.Class(Fiesta.LocatableEntity, {
+Fiesta.Camera3D = new Fiesta.Class(Fiesta.Entity, {
 	
 	// Constructor
 	initialize: function() {
