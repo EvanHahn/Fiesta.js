@@ -15,8 +15,6 @@
 	<script src="../../src/browser.js"></script> 
 	<script src="../../src/baseobject.js"></script> 
 	<script src="../../src/entity.js"></script> 
-	<script src="../../src/locatable.js"></script> 
-	<script src="../../src/physical.js"></script> 
 	<script src="../../src/graphic.js"></script> 
 	<script src="../../src/graphic2d.js"></script> 
 	<script src="../../src/graphic3d.js"></script> 
@@ -32,12 +30,12 @@
 	<script>
 	
 	// Config
-	var room_width = 800;
+	var room_width = 500;
 	var room_height = 300;
 	var gravity = 500;
 		
 	// Ballin'
-	var Ball = new Fiesta.Class(Fiesta.PhysicalEntity, {
+	var Ball = new Fiesta.Class(Fiesta.Entity, {
 		
 		// Constructor
 		initialize: function() {

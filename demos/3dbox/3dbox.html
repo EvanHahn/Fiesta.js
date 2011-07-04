@@ -14,8 +14,6 @@
 	<script src="../../src/browser.js"></script>
 	<script src="../../src/baseobject.js"></script>
 	<script src="../../src/entity.js"></script>
-	<script src="../../src/locatable.js"></script>
-	<script src="../../src/physical.js"></script>
 	<script src="../../src/graphic.js"></script>
 	<script src="../../src/graphic2d.js"></script>
 	<script src="../../src/graphic3d.js"></script>
@@ -34,7 +32,7 @@
 	* Box *
 	*******	*/
 
-var Box = new Fiesta.Class(Fiesta.PhysicalEntity, {
+var Box = new Fiesta.Class(Fiesta.Entity, {
 	
 	// Constructor
 	initialize: function() {
@@ -58,7 +56,7 @@ var Box = new Fiesta.Class(Fiesta.PhysicalEntity, {
 	* Set everything up *
 	*********************	*/
 
-var playground = new Fiesta.Playground(800, 600, "3d");
+var playground = new Fiesta.Playground(400, 300, "3d");
 
 var box = new Box();
 playground.spawn(box, 0, 0, 0);
