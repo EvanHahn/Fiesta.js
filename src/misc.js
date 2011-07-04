@@ -7,9 +7,9 @@ Fiesta.isNumber = function(n) { return (((typeof n === typeof 1.0) || (n instanc
 Fiesta.isInteger = function(i) { return ((Fiesta.isNumber(i)) && (Math.floor(i) == i)) };
 Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceof String)) };
 Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
-Fiesta.isArray = function(a) { return a.constructor == Array };
+Fiesta.isArray = function(a) { return a instanceof Array };
 Fiesta.isUndefined = function(u) { return u === void(0) };
-// If you're looking for it, isNaN() is a built-in function in JavaScript
+// Hey, dumbface: if you're looking for it, isNaN() is built into JavaScript
 
 // "Create" undefined (nicer-looking version of void())
 Fiesta.makeUndefined = function() { return void(0) };

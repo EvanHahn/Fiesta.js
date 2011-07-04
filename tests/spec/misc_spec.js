@@ -19,6 +19,11 @@ describe("Misc. functions", function() {
 		var x = new String("5");
 		expect(Fiesta.isNumber(x)).toBeFalsy();
 	});
+	
+	it("checks if undefined is a number", function() {
+		var x;
+		expect(Fiesta.isNumber(x)).toBeFalsy();
+	});
 
 	it("checks if a primitive value is an integer (when it is)", function() {
 		var x = 5;
@@ -45,6 +50,11 @@ describe("Misc. functions", function() {
 		expect(Fiesta.isInteger(x)).toBeFalsy();
 	});
 
+	it("checks if undefined is an integer", function() {
+		var x;
+		expect(Fiesta.isInteger(x)).toBeFalsy();
+	});
+
 	it("checks if a primitive value is a boolean (when it is)", function() {
 		var x = true;
 		expect(Fiesta.isBoolean(x)).toBeTruthy();
@@ -65,6 +75,11 @@ describe("Misc. functions", function() {
 		expect(Fiesta.isBoolean(x)).toBeFalsy();
 	});
 	
+	it("checks if undefined is a boolean", function() {
+		var x;
+		expect(Fiesta.isBoolean(x)).toBeFalsy();
+	});
+	
 	it("checks if a primitive array is an array (when it is)", function() {
 		var x = [1, 2, 3];
 		expect(Fiesta.isArray(x)).toBeTruthy();
@@ -82,6 +97,11 @@ describe("Misc. functions", function() {
 
 	it("checks if an object is an array (when it isn't one)", function() {
 		var x = new String("123");
+		expect(Fiesta.isArray(x)).toBeFalsy();
+	});
+	
+	it("checks if undefined is an array", function() {
+		var x;
 		expect(Fiesta.isArray(x)).toBeFalsy();
 	});
 	

@@ -41,11 +41,14 @@ var Box = new Fiesta.Class(Fiesta.PhysicalEntity, {
 		
 		// Assign 3D model
 		var model = new Fiesta.Box3D(100);
-		model.setColor(0xFF0000);
+		model.setColor(0x0000ff);
 		this.setGraphic(model);
 		
 		// Assign some physics
 		this.setMass(10);
+		
+		// Call super
+		this.callSuper();
 		
 	}
 	
@@ -63,7 +66,7 @@ playground.spawn(box, 0, 0, 0);
 var light = new Fiesta.Light3D();
 playground.spawn(light, 120, 120, 120);
 
-playground.place(document.body);
+playground.place();
 playground.setBackgroundColor("#000");
 
 playground.getCamera().setCoordinates(100, 100, 200);
