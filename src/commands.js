@@ -2,6 +2,13 @@
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
+// These are constants for mouse clicks
+Fiesta._LEFT_MOUSE_BUTTON = 0;
+if (Fiesta.getBrowser() === "Explorer")	Fiesta._LEFT_MOUSE_BUTTON = 1;
+Fiesta._RIGHT_MOUSE_BUTTON = 2;
+Fiesta._MIDDLE_MOUSE_BUTTON = 1;
+if (Fiesta.getBrowser() === "Explorer")	Fiesta._MIDDLE_MOUSE_BUTTON = 4;
+
 // Bind commands to functions (works for any object)
 Fiesta.bindCommands = function(object, binds) {
 	
@@ -16,13 +23,6 @@ Fiesta.bindCommands = function(object, binds) {
 	var mousemoves = [];
 	var keydowns = [];
 	var keyups = [];
-	
-	// Some mouse config variables that probably don't change
-	var leftButton = 0;
-	if (Fiesta.getBrowser() === "Explorer")	leftButton = 1;
-	var rightButton = 2;
-	var middleButton = 1;
-	if (Fiesta.getBrowser() === "Explorer")	middleButton = 4;
 	
 	// Are all my desired modifiers pressed?
 	var modifiersPressed = function(str, key) {
@@ -96,17 +96,17 @@ Fiesta.bindCommands = function(object, binds) {
 	});
 	addListener(mouseBindTo, "click", function(mouse) {
 		for (var i in leftclicks) {
-			var leftPressed = (mouse.button == leftButton);
+			var leftPressed = (mouse.button == Fiesta._LEFT_MOUSE_BUTTON);
 			if (leftPressed && modifiersPressed(leftclicks[i], mouse))
 				binds[leftclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in rightclicks) {
-			var rightPressed = (mouse.button == rightButton);
+			var rightPressed = (mouse.button == Fiesta._RIGHT_MOUSE_BUTTON);
 			if (rightPressed && modifiersPressed(rightclicks[i], mouse))
 				binds[rightclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
 		for (var i in middleclicks) {
-			var middlePressed = (mouse.button == middleButton);
+			var middlePressed = (mouse.button == Fiesta._MIDDLE_MOUSE_BUTTON);
 			if (middlePressed && modifiersPressed(middleclicks[i], mouse))
 				binds[middleclicks[i]].call(object, mouse.clientX, mouse.clientY);
 		}
@@ -130,7 +130,7 @@ Fiesta.bindCommands = function(object, binds) {
 	addListener(mouseBindTo, "contextmenu", function(mouse) {
 		mouse.preventDefault();
 		var ev = document.createEvent("MouseEvents");
-	    ev.initMouseEvent("click", true, true, window, 0, mouse.screenX, mouse.screenY, mouse.clientX, mouse.clientY, mouse.ctrlKey, mouse.altKey, mouse.shiftKey, mouse.metaKey, rightButton, null);
+	    ev.initMouseEvent("click", true, true, window, 0, mouse.screenX, mouse.screenY, mouse.clientX, mouse.clientY, mouse.ctrlKey, mouse.altKey, mouse.shiftKey, mouse.metaKey, Fiesta._RIGHT_MOUSE_BUTTON, null);
 	    mouseBindTo.dispatchEvent(ev);
 	});
 	

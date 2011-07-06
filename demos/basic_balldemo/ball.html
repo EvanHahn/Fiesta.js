@@ -3,26 +3,26 @@
 <head>
 	
 	<!-- Fiesta -->
-	<script src="../../src/namespace.js"></script> 
-	<script src="../../src/jsclass_core.js"></script> 
-	<script src="../../src/three_fiesta.js"></script> 
-	<script src="../../src/stats.js"></script> 
-	<script src="../../src/config.js"></script> 
-	<script src="../../src/misc.js"></script> 
-	<script src="../../src/vector3.js"></script> 
-	<script src="../../src/math.js"></script> 
-	<script src="../../src/commands.js"></script> 
-	<script src="../../src/browser.js"></script> 
-	<script src="../../src/baseobject.js"></script> 
-	<script src="../../src/entity.js"></script> 
-	<script src="../../src/graphic.js"></script> 
-	<script src="../../src/graphic2d.js"></script> 
-	<script src="../../src/graphic3d.js"></script> 
-	<script src="../../src/sprite2d.js"></script> 
-	<script src="../../src/box3d.js"></script> 
-	<script src="../../src/camera3d.js"></script> 
-	<script src="../../src/light3d.js"></script> 
-	<script src="../../src/playground.js"></script> 
+	<script src="../../src/namespace.js"></script>
+	<script src="../../src/jsclass_core.js"></script>
+	<script src="../../src/three_fiesta.js"></script>
+	<script src="../../src/stats.js"></script>
+	<script src="../../src/config.js"></script>
+	<script src="../../src/misc.js"></script>
+	<script src="../../src/vector3.js"></script>
+	<script src="../../src/math.js"></script>
+	<script src="../../src/browser.js"></script>
+	<script src="../../src/commands.js"></script>
+	<script src="../../src/baseobject.js"></script>
+	<script src="../../src/entity.js"></script>
+	<script src="../../src/graphic.js"></script>
+	<script src="../../src/graphic2d.js"></script>
+	<script src="../../src/graphic3d.js"></script>
+	<script src="../../src/sprite2d.js"></script>
+	<script src="../../src/box3d.js"></script>
+	<script src="../../src/camera3d.js"></script>
+	<script src="../../src/light3d.js"></script>
+	<script src="../../src/playground.js"></script>
 	
 </head>
 <body>
@@ -89,9 +89,9 @@
 		// On frame
 		onFrame: function() {
 			this.callSuper();
-			if ((this.getX() < (0 + this.getGraphic().getOriginX())) || (this.getX() > (room_width - this.getGraphic().getOriginX())))
+			if ((this.getX() < (0 + this.getGraphic().getOriginX())) || (this.getX() >(room_width - this.getGraphic().getOriginX())))
 				this.setVelocityX(-this.getVelocityX())
-			if (this.getY() > (room_height - this.getGraphic().getOriginY())) {
+			if (this.getY() >(room_height - this.getGraphic().getOriginY())) {
 				this.setVelocityY(this.getVelocityY() * -0.9);
 				this.setY(room_height - this.getGraphic().getOriginY());
 				if (Math.abs(this.getVelocityY()) < 45)
