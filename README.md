@@ -7,11 +7,10 @@ Fiesta's goals
 --------------
 
 * Be **super badass**.
-* Damn easy to write a game
-* Object-oriented like crazy
+* Easy to read and write
 * Little difference between 2D and 3D games
-* Physics engine is built-in
-* No plugins allowed!
+* Built-in physics engine
+* Only modern browser stuff -- no plugins!
 * No compiling
 
 What is Fiesta made of?
@@ -27,5 +26,5 @@ A few other things
 ------------------
 
 * Fiesta is greatly inspired by [Game Maker](http://www.yoyogames.com/make).
-* Fiesta is licensed under the MIT License. All of the licensing information for Fiesta and the other libraries it uses are in the LICENSE file.
+* Fiesta is licensed under the MIT License. All of the licensing information for Fiesta and libraries it uses are in the LICENSE file.
 * Enjoy!
