@@ -274,7 +274,7 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 								obj2Bound[2] > objBound[5]
 								||
 								obj2Bound[5] < objBound[2])) {
-								Fiesta.collidePhysicalObjects(obj, obj2);
+								Fiesta.collideEntities(obj, obj2);
 							}
 						}
 					}

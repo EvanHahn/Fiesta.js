@@ -312,8 +312,8 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	
 });
 
-// Colliding two physical objects
-Fiesta.collidePhysicalObjects = function(a, b) {
+// Colliding two solid entities
+Fiesta.collideEntities = function(a, b) {
 	var aMass = a.getMass();
 	var bMass = b.getMass();
 	var massRatio = aMass / bMass;
