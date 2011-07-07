@@ -34,7 +34,7 @@ Fiesta.Sound = new Fiesta.Class(Fiesta.BaseObject, {
 	// existing element), but those don't seem to work as reliably.
 	play: function() {
 		if (this._element)
-			document.getElementsByTagName("body")[0].removeChild(this._element);
+			document.body.removeChild(this._element);
 		var audio = document.createElement("audio");
 		audio.setAttribute("autoplay", "autoplay");
 		var i = this._files.length;
@@ -43,7 +43,7 @@ Fiesta.Sound = new Fiesta.Class(Fiesta.BaseObject, {
 			source.setAttribute("src", this._files[i]);
 			audio.appendChild(source);
 		}
-		document.getElementsByTagName("body")[0].appendChild(audio);
+		document.body.appendChild(audio);
 		this._element = audio;
 	}
 	
