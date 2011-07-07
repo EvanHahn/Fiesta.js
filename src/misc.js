@@ -12,7 +12,7 @@ Fiesta.isUndefined = function(u) { return u === void(0) };
 // Hey, dumbface: if you're looking for it, isNaN() is built into JavaScript
 
 // "Create" undefined (nicer-looking version of void())
-Fiesta.makeUndefined = function() { return void(0) };
+Fiesta.makeUndefined = function() { return; };
 Fiesta.makeNaN = function() { return parseInt(void(0)) };
 
 // Does this string/array contain this element?
