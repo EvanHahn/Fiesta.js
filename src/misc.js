@@ -9,7 +9,7 @@ Fiesta.isString = function(s) { return ((typeof s === typeof "") || (s instanceo
 Fiesta.isBoolean = function(b) { return ((typeof b === typeof true) || (b instanceof Boolean)) };
 Fiesta.isArray = function(a) { return a instanceof Array };
 Fiesta.isUndefined = function(u) { return typeof u === "undefined"; };
-// Hey, dumbface: if you're looking for it, isNaN() is built into JavaScript
+// If you're looking for it, isNaN() is built into JavaScript
 
 // "Create" undefined (nicer-looking version of void())
 Fiesta.makeUndefined = function() { return; };
