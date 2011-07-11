@@ -57,7 +57,7 @@ open-source Ruby libraries:
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-Three.js r41/ROME
+Three.js r42
 http://github.com/mrdoob/three.js
 Copyright (c) 2010-2011 three.js Authors. All rights reserved.
 
