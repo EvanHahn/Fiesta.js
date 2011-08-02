@@ -20,6 +20,7 @@ What is Fiesta made of?
 * [Three.js](http://github.com/mrdoob/three.js)
 * [Stats.js](http://github.com/mrdoob/stats.js)
 * [browser-detect](http://github.com/rsyring/browser-detect)
+* [JSTypes](http://github.com/EvanHahn/JSTypes)
 * [Jasmine](http://pivotal.github.com/jasmine/) for unit testing
 
 A few other things
