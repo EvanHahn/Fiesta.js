@@ -23,7 +23,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-JS.Class: Ruby-style JavaScript (version 3.0.1)
+JS.Class: Ruby-style JavaScript (version 3.0.2)
 http://jsclass.jcoglan.com
 Copyright (c) 2007-2011 James Coglan and contributors
 
