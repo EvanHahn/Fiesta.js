@@ -5,14 +5,25 @@
 Fiesta.Light3D = new Fiesta.Class(Fiesta.Entity, {
 
 	// Constructor
-	initialize: function() {
-		this._threeLight = new THREE.PointLight(0xFF0000);	// temp
+	initialize: function(color) {
+		this._threeLight = new THREE.PointLight(color || 0xFFFFFF);	// temp
 		
 		this.callSuper();
 	},
 	
 	// THREE API
 	getThreeLight: function() { return this._threeLight },
+	setThreeLight: function(l) {
+     	if (l instanceof THREE.Light)
+       	this._threeLight = l;
+       else
+       	throw new TypeError(l + " is not a valid light");
+	},
+	
+	// Color API
+	setColor: function(c) {
+     	this.setThreeLight(new THREE.PointLight(c));  // temp
+	},
 	
 	// Position API
 	setX: function(coord) {

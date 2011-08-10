@@ -36,20 +36,17 @@
 var Box = new Fiesta.Class(Fiesta.Entity, {
 	
 	// Constructor
-	initialize: function() {
+	initialize: function(size) {
 		
 		// Assign 3D model
-		var model = new Fiesta.Box3D(100);
-		model.setColor(0x0000ff);
+		var model = new Fiesta.Box3D(size);
 		this.setGraphic(model);
-		
-		// Assign some physics
-		this.setMass(10);
+		this.getGraphic().setOriginY(0);
 		
 		// Call super
 		this.callSuper();
 		
-	}
+	},
 	
 });
 
@@ -57,19 +54,31 @@ var Box = new Fiesta.Class(Fiesta.Entity, {
 	* Set everything up *
 	*********************	*/
 
-var playground = new Fiesta.Playground(400, 300, "3d");
+var playground = new Fiesta.Playground(444, 333, "3d");
 
-var box = new Box();
-playground.spawn(box, 0, 0, 0);
+var littleBox = new Box(10);
+playground.spawn(littleBox, 0, 0, -100);
+littleBox.setAccelerationZ(50);
+littleBox.setMass(1);
 
-var light = new Fiesta.Light3D();
-playground.spawn(light, 120, 120, 120);
+var bigBox = new Box(100);
+playground.spawn(bigBox, 0, 0, 100);
+bigBox.setAccelerationZ(-20);
+bigBox.setMass(2);
+
+for (var i = -500; i < 500; i += 100) {
+	playground.spawn(new Box(50), -80, 0, i);
+}
+
+var light = new Fiesta.Light3D(0xFF9900);
+playground.spawn(light, 0, 0, 0);
+var light2 = new Fiesta.Light3D(0x0000FF);
+playground.spawn(light2, 100, 200, 100);
 
 playground.place();
 playground.setBackgroundColor("#000");
 
-playground.getCamera().setCoordinates(100, 100, 200);
-
+playground.getCamera().setCoordinates(200, 100, 0);
 
 </script>
 

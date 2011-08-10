@@ -172,5 +172,5 @@ Fiesta.KEYCODE_TRANSLATIONS = Fiesta.KEYCODE_TRANSLATIONS || {
 	",": 188,
 	"<": 188,
 	"'": 222,
-	"\"": 222
+	'"': 222
 };

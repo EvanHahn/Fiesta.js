@@ -26,9 +26,9 @@ Fiesta.Graphic3D = new Fiesta.Class(Fiesta.Graphic, {
 		this._material = m;	
 	},
 	setColor: function(c) {
-		this._material = new THREE.MeshLambertMaterial({
+		this.setMaterial(new THREE.MeshLambertMaterial({
 			color: c
-		});
+		}));
 	}
 	
 });

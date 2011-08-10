@@ -267,8 +267,10 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 			throw new TypeError("Cannot set solidity to " + s);
 	},
 	
-	// Do physics stuff on each frame
+	// Each frame
 	onFrame: function() {
+
+		// Physics
 		var fps = this.getPlayground().getDesiredFPS();
 		this._x += this._velocityX / fps;
 		this._y += this._velocityY / fps;
@@ -303,6 +305,14 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 			else
 				this._velocityZ = 0;
 		}
+		
+		// Keep 3D model in sync (if there is one)
+		try {
+    		this.getGraphic().getThreeModel().position.x = this._x;
+    		this.getGraphic().getThreeModel().position.y = this._y;
+    		this.getGraphic().getThreeModel().position.z = this._z;
+		} catch (_) {}
+
 	},
 	
 	// Events (to be overwritten)
