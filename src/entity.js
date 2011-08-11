@@ -10,21 +10,13 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 		
 		this._graphic;
 		this._playground;
-		this._x;
-		this._y;
-		this._z;
-		this._velocityX;
-		this._velocityY;
-		this._velocityZ;
-		this._accelerationX;
-		this._accelerationY;
-		this._accelerationZ;
-		this._frictionX;
-		this._frictionY;
-		this._frictionZ;
+		this._position = new Fiesta.Vector3();
+		this._velocity = new Fiesta.Vector3();
+		this._acceleration = new Fiesta.Vector3();
+		this._friction = new Fiesta.Vector3();
 		this._mass;
 		this._bounciness;
-		this._boundingBox = [];
+		this._boundingBox = new Array(6);
 		this._boundingBoxAuto = Fiesta.DEFAULT_BOUNDING_BOX_AUTO;
 		this._isSolid = Fiesta.DEFAULT_ENTITY_SOLID;
 		
@@ -79,25 +71,25 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	},
 	
 	// Location API
-	getX: function() { return this._x; },
-	getY: function() { return this._y; },
-	getZ: function() { return this._z; },
-	getCoordinates: function() { return [this._x, this._y, this._z] },
+	getX: function() { return this._position.getX() },
+	getY: function() { return this._position.getY() },
+	getZ: function() { return this._position.getZ() },
+	getCoordinates: function() { return this._position.getVector() },
 	setX: function(coord) {
 		if (Fiesta.isNumber(coord))
-			this._x = coord;
+			this._position.setX(coord);
 		else
 			throw new TypeError(coord + " is not a valid X coordinate");
 	},
 	setY: function(coord) {
 		if (Fiesta.isNumber(coord))
-			this._y = coord;
+			this._position.setY(coord);
 		else
 			throw new TypeError(coord + " is not a valid Y coordinate");
 	},
 	setZ: function(coord) {
 		if (Fiesta.isNumber(coord))
-			this._z = coord;
+			this._position.setZ(coord);
 		else
 			throw new TypeError(coord + " is not a valid Z coordinate");
 	},
@@ -114,25 +106,25 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	addZ: function(a) { this.setZ(a + this.getZ()) },
 	
 	// Velocity API
-	getVelocityX: function() { return this._velocityX; },
-	getVelocityY: function() { return this._velocityY; },
-	getVelocityZ: function() { return this._velocityZ; },
-	getVelocity: function() { return Fiesta.vectorLength(this._velocityX, this._velocityY, this._velocityZ); },
+	getVelocityX: function() { return this._velocity.getX() },
+	getVelocityY: function() { return this._velocity.getY() },
+	getVelocityZ: function() { return this._velocity.getZ() },
+	getVelocity: function() { return Fiesta.vectorLength(this._velocity.getVector()); },
 	setVelocityX: function(v) {
 		if (Fiesta.isNumber(v))
-			this._velocityX = v;
+			this._velocity.setX(v);
 		else
 			throw new TypeError(v + " is not a valid X velocity");
 	},
 	setVelocityY: function(v) {
 		if (Fiesta.isNumber(v))
-			this._velocityY = v;
+			this._velocity.setY(v);
 		else
 			throw new TypeError(v + " is not a valid Y velocity");
 	},
 	setVelocityZ: function(v) {
 		if (Fiesta.isNumber(v))
-			this._velocityZ = v;
+			this._velocity.setZ(v);
 		else
 			throw new TypeError(v + " is not a valid Z velocity");
 	},
@@ -141,25 +133,24 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	addVelocityZ: function(a) { this.setVelocityZ(a + this.getVelocityZ()) },
 	
 	// Acceleration API
-	getAccelerationX: function() { return this._accelerationX; },
-	getAccelerationY: function() { return this._accelerationY; },
-	getAccelerationZ: function() { return this._accelerationZ; },
-	getAcceleration: function() { return Fiesta.vectorLength(this._accelerationX, this._accelerationY, this._accelerationZ); },
+	getAccelerationX: function() { return this._acceleration.getX() },
+	getAccelerationY: function() { return this._acceleration.getY() },
+	getAccelerationZ: function() { return this._acceleration.getZ() },
 	setAccelerationX: function(a) {
 		if (Fiesta.isNumber(a))
-			this._accelerationX = a;
+			this._acceleration.setX(a);
 		else
 			throw new TypeError(a + " is not a valid X acceleration");
 	},
 	setAccelerationY: function(a) {
 		if (Fiesta.isNumber(a))
-			this._accelerationY = a;
+			this._acceleration.setY(a);
 		else
 			throw new TypeError(a + " is not a valid Y acceleration");
 	},
 	setAccelerationZ: function(a) {
 		if (Fiesta.isNumber(a))
-			this._accelerationZ = a;
+			this._acceleration.setZ(a);
 		else
 			throw new TypeError(a + " is not a valid Z acceleration");
 	},
@@ -168,25 +159,25 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	addAccelerationZ: function(a) { this.setAccelerationZ(a + this.getAccelerationZ()) },
 	
 	// Friction API
-	getFrictionX: function() { return this._frictionX; },
-	getFrictionY: function() { return this._frictionY; },
-	getFrictionZ: function() { return this._frictionZ; },
-	getFriction: function() { return Fiesta.vectorLength(this._frictionX, this._frictionY, this._frictionZ); },
+	getFrictionX: function() { return this._friction.getX() },
+	getFrictionY: function() { return this._friction.getY() },
+	getFrictionZ: function() { return this._friction.getZ() },
+	getFriction: function() { return Fiesta.vectorLength(this._friction.getVector()); },
 	setFrictionX: function(f) {
 		if (Fiesta.isNumber(f))
-			this._frictionX = f;
+			this._friction.setX(f);
 		else
 			throw new TypeError(f + " is not a valid X friction");
 	},
 	setFrictionY: function(f) {
 		if (Fiesta.isNumber(f))
-			this._frictionY = f;
+			this._friction.setY(f);
 		else
 			throw new TypeError(f + " is not a valid Y friction");
 	},
 	setFrictionZ: function(f) {
 		if (Fiesta.isNumber(f))
-			this._frictionZ = f;
+			this._friction.setZ(f);
 		else
 			throw new TypeError(f + " is not a valid Z friction");
 	},
@@ -270,47 +261,49 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	// Each frame
 	onFrame: function() {
 
+//		console.log(this._acceleration.getY());
+
 		// Physics
 		var fps = this.getPlayground().getDesiredFPS();
-		this._x += this._velocityX / fps;
-		this._y += this._velocityY / fps;
-		this._z += this._velocityZ / fps;
-		this._velocityX += this._accelerationX / fps;
-		this._velocityY += this._accelerationY / fps;
-		this._velocityZ += this._accelerationZ / fps;
-		if (this._frictionX !== 0) {
-			var frictX = this._frictionX / fps;
-			if (this._velocityX < 0)
-				frictX = frictX * -1;
-			if (Math.abs(this._velocityX) > Math.abs(frictX))
-				this._velocityX -= frictX;
+		this.addX(this.getVelocityX() / fps);
+		this.addY(this.getVelocityY() / fps);
+		this.addZ(this.getVelocityZ() / fps);
+		this.addVelocityX(this.getAccelerationX() / fps);
+		this.addVelocityY(this.getAccelerationY() / fps);
+		this.addVelocityZ(this.getAccelerationZ() / fps);
+		if (this.getFrictionX() !== 0) {
+			var frictX = this.getFrictionX() / fps;
+			if (this.getVelocityX() < 0)
+				frictX *= -1;
+			if (Math.abs(this.getVelocityX()) > Math.abs(frictX))
+				this.addVelocityX(-frictX);
 			else
-				this._velocityX = 0;
+				this.setVelocityX(0);
 		}
-		if (this._frictionY !== 0) {
-			var frictY = this._frictionY / fps;
-			if (this._velocityY < 0)
-				frictY = frictY * -1;
-			if (Math.abs(this._velocityY) > Math.abs(frictY))
-				this._velocityY -= frictY;
+		if (this.getFrictionY() !== 0) {
+			var frictY = this.getFrictionY() / fps;
+			if (this.getVelocityY() < 0)
+				frictY *= -1;
+			if (Math.abs(this.getVelocityY()) > Math.abs(frictY))
+				this.addVelocityY(-frictY);
 			else
-				this._velocityY = 0;
+				this.setVelocityY(0);
 		}
-		if (this._frictionZ !== 0) {
-			var frictZ = this._frictionZ / fps;
-			if (this.velocityZ < 0)
-				frictZ = frictZ * -1;
-			if (Math.abs(this._velocityZ) > Math.abs(frictZ))
-				this._velocityZ -= frictZ;
+		if (this.getFrictionZ() !== 0) {
+			var frictZ = this.getFrictionZ() / fps;
+			if (this.getVelocityZ() < 0)
+				frictZ *= -1;
+			if (Math.abs(this.getVelocityZ()) > Math.abs(frictZ))
+				this.addVelocityZ(-frictZ);
 			else
-				this._velocityZ = 0;
+				this.setVelocityZ(0);
 		}
 		
 		// Keep 3D model in sync (if there is one)
 		try {
-    		this.getGraphic().getThreeModel().position.x = this._x;
-    		this.getGraphic().getThreeModel().position.y = this._y;
-    		this.getGraphic().getThreeModel().position.z = this._z;
+			this.getGraphic().getThreeModel().position.x = this.getX();
+			this.getGraphic().getThreeModel().position.y = this.getY();
+			this.getGraphic().getThreeModel().position.z = this.getZ();
 		} catch (_) {}
 
 	},

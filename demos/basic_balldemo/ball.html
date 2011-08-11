@@ -39,7 +39,6 @@
 		
 		// Constructor
 		initialize: function() {
-			
 			// Call super
 			this.callSuper();
 			
@@ -49,13 +48,13 @@
 			this.setGraphic(this._spr_ball);
 			
 			// Config
-			this._friction = 100;
-			this._velocityBump = 200;
-			this._acceleration = 500;
-			this._jumpSpeed = 300;
+			this.frict = 100;
+			this.velocityBump = 200;
+			this.accel = 500;
+			this.jumpSpeed = 300;
 			
 			// Go for it!
-			this.setFrictionX(this._friction);
+			this.setFrictionX(this.frict);
 			this.setAccelerationY(gravity);
 			this.setMass(10);
 		},
@@ -63,16 +62,16 @@
 		// Movement
 		moveLeft: function() {
 			if (this.getVelocityX() === 0)
-				this.setVelocityX(this._velocityBump * -1);
-			this.setAccelerationX(this._acceleration * -1);
+				this.setVelocityX(this.velocityBump * -1);
+			this.setAccelerationX(this.accel * -1);
 		},
 		moveRight: function() {
 			if (this.getVelocityX() === 0)
-				this.setVelocityX(this._velocityBump);
-			this.setAccelerationX(this._acceleration);
+				this.setVelocityX(this.velocityBump);
+			this.setAccelerationX(this.accel);
 		},
 		stopX: function() { this.setAccelerationX(0); },
-		jump: function() { this.setVelocityY(-this._jumpSpeed); },
+		jump: function() { this.setVelocityY(-this.jumpSpeed); },
 		
 		// On spawn
 		onSpawn: function() {

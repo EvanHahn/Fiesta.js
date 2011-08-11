@@ -3,32 +3,30 @@
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
 Fiesta.Vector3 = function(xCoord, yCoord, zCoord) {
-	var x, y, z;
-	this.setVector(Fiesta.DEFAULT_X, Fiesta.DEFAULT_Y, Fiesta.DEFAULT_Z);
 	this.setVector(xCoord, yCoord, zCoord);
 };
 
 Fiesta.Vector3.prototype = {
-	
-	getX: function() { return x },
-	getY: function() { return y },
-	getZ: function() { return z },
+
+	getX: function() { return this._x },
+	getY: function() { return this._y },
+	getZ: function() { return this._z },
 	getVector: function() { return [this.getX(), this.getY(), this.getZ()] },
 	setX: function(coord) {
 		if (Fiesta.isNumber(coord))
-			x = coord;
+			this._x = coord;
 		else
 			throw new TypeError(coord + " is not a valid X value");
 	},
 	setY: function(coord) {
 		if (Fiesta.isNumber(coord))
-			y = coord;
+			this._y = coord;
 		else
 			throw new TypeError(coord + " is not a valid Y value");
 	},
 	setZ: function(coord) {
 		if (Fiesta.isNumber(coord))
-			z = coord;
+			this._z = coord;
 		else
 			throw new TypeError(coord + " is not a valid Z value");
 	},
@@ -45,5 +43,5 @@ Fiesta.Vector3.prototype = {
 	addX: function(a) { this.setX(a + this.getX()) },
 	addY: function(a) { this.setY(a + this.getY()) },
 	addZ: function(a) { this.setZ(a + this.getZ()) }
-	
+
 };

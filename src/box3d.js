@@ -8,9 +8,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 	initialize: function(xSize, ySize, zSize) {
 		this.callSuper();
 		
-		this._xSize;
-		this._ySize;
-		this._zSize;
+		this._size = new Fiesta.Vector3();
 		
 		xSize = xSize || Fiesta.DEFAULT_BOX3D_SIZE;
 		this.setSize(xSize, ySize, zSize);
@@ -21,13 +19,13 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 	},
 	
 	// Size API
-	getXSize: function() { return this._xSize },
-	getYSize: function() { return this._ySize },
-	getZSize: function() { return this._zSize },
-	getSize: function() { return [this._xSize, this._ySize, this._zSize] },
+	getXSize: function() { return this._size.getX() },
+	getYSize: function() { return this._size.getY() },
+	getZSize: function() { return this._size.getZ() },
+	getSize: function() { return this._size.getVector() },
 	setXSize: function(s) {
 		if ((Fiesta.isNumber(s)) && (s >= 0)) {
-			this._xSize = s;
+			this._size.setX(s);
 			this._boundingBoxChanged = true;
 		}
 		else
@@ -35,7 +33,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 	},
 	setYSize: function(s) {
 		if ((Fiesta.isNumber(s)) && (s >= 0)) {
-			this._ySize = s;
+			this._size.setY(s);
 			this._boundingBoxChanged = true;
 		}
 		else
@@ -43,7 +41,7 @@ Fiesta.Box3D = new Fiesta.Class(Fiesta.Graphic3D, {
 	},
 	setZSize: function(s) {
 		if ((Fiesta.isNumber(s)) && (s >= 0)) {
-			this._zSize = s;
+			this._size.setZ(s);
 			this._boundingBoxChanged = true;
 		}
 		else

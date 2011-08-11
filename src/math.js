@@ -11,7 +11,7 @@ Fiesta.sign = function(d) {
 	return 0;
 }
 
-// Wrap a value around (examples below are good examples)
+// Wrap a value around (functions below are good examples)
 Fiesta.wrap = function(min, max, value) {
 	if (!Fiesta.isNumber(min)) throw new TypeError(min + " is not a valid minimum");
 	if (!Fiesta.isNumber(max)) throw new TypeError(max + " is not a valid maximum");
@@ -40,7 +40,15 @@ Fiesta.pointDistance3D = function(x1, y1, z1, x2, y2, z2) { return Math.sqrt(Mat
 
 // Vector length
 Fiesta.vectorLength = function(i, j, k) {
+
+	// If it's a 3D vector
+	if (i instanceof Fiesta.Vector3) {
+		return Fiesta.vectorLength(i.getX(), i.getY(), i.getZ());
+	}
+
+	// If it's an array
 	if (!k) return Fiesta.pointDistance2D(0, 0, i, j);
 	return Fiesta.pointDistance3D(0, 0, 0, i, j, k);
+
 };
 

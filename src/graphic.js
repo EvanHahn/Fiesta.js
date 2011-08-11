@@ -3,27 +3,25 @@
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
 Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
-	
+
 	// Constructor
 	initialize: function() {
 		this.callSuper();
 		
-		this._originX;
-		this._originY;
-		this._originZ;
-		this._boundingBox = [];
+		this._origin = new Fiesta.Vector3();
+		this._boundingBox = new Array(6);
 		this._boundingBoxChanged = true;
 		
 		this.setOrigin(Fiesta.DEFAULT_GRAPHIC_ORIGIN_X, Fiesta.DEFAULT_GRAPHIC_ORIGIN_Y, Fiesta.DEFAULT_GRAPHIC_ORIGIN_Z);
 	},
 	
 	// Origin API
-	getOriginX: function() { return this._originX; },
-	getOriginY: function() { return this._originY; },
-	getOriginZ: function() { return this._originZ; },
+	getOriginX: function() { return this._origin.getX(); },
+	getOriginY: function() { return this._origin.getY(); },
+	getOriginZ: function() { return this._origin.getZ(); },
 	setOriginX: function(coord) {
 		if (Fiesta.isNumber(coord)) {
-			this._originX = coord;
+			this._origin.setX(coord);
 			this._boundingBoxChanged = true;
 		}
 		else
@@ -31,7 +29,7 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 	},
 	setOriginY: function(coord) {
 		if (Fiesta.isNumber(coord)) {
-			this._originY = coord;
+			this._origin.setY(coord);
 			this._boundingBoxChanged = true;
 		}
 		else
@@ -39,7 +37,7 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 	},
 	setOriginZ: function(coord) {
 		if (Fiesta.isNumber(coord)) {
-			this._originZ = coord;
+			this._origin.setZ(coord);
 			this._boundingBoxChanged = true;
 		}
 		else
@@ -53,5 +51,5 @@ Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
 	
 	// "Abstract" functions
 	getBoundingBox: function() { throw new Error("This graphic must know how to get a bounding box") }
-	
+
 });

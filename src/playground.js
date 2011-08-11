@@ -8,8 +8,7 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 	initialize: function(theWidth, theHeight, theContext, framerate) {
 		this._entities = [];
 		
-		this._width;
-		this._height;
+		this._size = new Fiesta.Vector3();
 		this._backgroundColor;
 		this._element;
 		this._desiredFPS;
@@ -29,22 +28,22 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 	},
 	
 	// Size API
-	getWidth: function() { return this._width },
-	getHeight: function() { return this._height },
+	getWidth: function() { return this._size.getX() },
+	getHeight: function() { return this._size.getY() },
 	setWidth: function(w) {
 		if ((Fiesta.isNumber(w)) && (w >= 0)) {
-			this._width = w;
+			this._size.setX(w);
 			if (this._element)
-				this._element.setAttribute("width", this._width);
+				this._element.setAttribute("width", w);
 		}
 		else
 			throw new TypeError(w + " is not a valid playground width");
 	},
 	setHeight: function(h) {
 		if ((Fiesta.isNumber(h)) && (h >= 0)) {
-			this._height = h;
+			this._size.setY(h);
 			if (this._element)
-				this._element.setAttribute("height", this._height);
+				this._element.setAttribute("height", h);
 		}
 		else
 			throw new TypeError(h + " is not a valid playground height");
@@ -82,13 +81,13 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 		if (this._context === "2d") {
 			this._element = document.createElement("canvas");
 			this._element.style.overflow = "hidden";
-			this._element.setAttribute("width", this._width);
-			this._element.setAttribute("height", this._height);
+			this._element.setAttribute("width", this.getWidth());
+			this._element.setAttribute("height", this.getHeight());
 		}
 		
 		if (this._context === "3d") {
 			this._element = this._threeRenderer.domElement;
-			this._threeRenderer.setSize(this._width, this._height);
+			this._threeRenderer.setSize(this.getWidth(), this.getHeight());
 		}
 		
 		this._element.setAttribute("class", "fiesta_playground");
@@ -222,7 +221,7 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 		
 		// Redraw (if I should, of course)
 		if (this.getRedraw() && (this._context === "2d"))
-			this.getContext().clearRect(0, 0, this._width, this._height);
+			this.getContext().clearRect(0, 0, this.getWidth(), this.getHeight());
 		
 		// Deal with every object
 		// The pieces are in try/catch blocks so that one object doesn't break
