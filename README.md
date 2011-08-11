@@ -1,4 +1,4 @@
-Fiesta.js - version 0.3.1
+Fiesta.js - version 0.3.2
 =========================
 
 Fiesta is a JavaScript game library. It aims to be **super badass**.
@@ -22,6 +22,7 @@ What is Fiesta made of?
 * [browser-detect](http://github.com/rsyring/browser-detect)
 * [JSTypes](http://github.com/EvanHahn/JSTypes)
 * [Jasmine](http://pivotal.github.com/jasmine/) for unit testing
+* HTML5, JavaScript, and the open web!
 
 A few other things
 ------------------
