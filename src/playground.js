@@ -222,6 +222,13 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 		// Redraw (if I should, of course)
 		if (this.getRedraw() && (this._context === "2d"))
 			this.getContext().clearRect(0, 0, this.getWidth(), this.getHeight());
+
+		// Render 3D
+		if (this._context === "3d") {
+			try {
+				this._threeRenderer.render(this._threeScene, this.getCamera().getThreeCamera());
+			} catch (e) { Fiesta.error(e) }
+		}
 		
 		// Deal with every object
 		// The pieces are in try/catch blocks so that one object doesn't break
@@ -239,13 +246,6 @@ Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
 					var graphic = obj.getGraphic();
 					if (graphic)
 						graphic.draw(this, obj.getX(), obj.getY(), obj.getZ());
-				} catch (e) { Fiesta.error(e) }
-			}
-			
-			// Render 3D
-			if (this._context === "3d") {
-				try {
-					this._threeRenderer.render(this._threeScene, this._camera3D.getThreeCamera());
 				} catch (e) { Fiesta.error(e) }
 			}
 			
