@@ -42,8 +42,12 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 			return false;
 	},
 	setGraphic: function(g) {
-		if (g instanceof Fiesta.Graphic)
+		if (g instanceof Fiesta.Graphic) {
 			this._graphic = g;
+			if (g instanceof Fiesta.Sprite2D) {
+				g.getImage();
+			}
+		}
 		else
 			throw new TypeError(g + " is not a graphic");
 	},
@@ -260,8 +264,6 @@ Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
 	
 	// Each frame
 	onFrame: function() {
-
-//		console.log(this._acceleration.getY());
 
 		// Physics
 		var fps = this.getPlayground().getDesiredFPS();
