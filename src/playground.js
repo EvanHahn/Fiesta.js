@@ -2,7 +2,7 @@
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
-Fiesta.Playground = new Fiesta.Class(Fiesta.BaseObject, {
+Fiesta.Playground = new Fiesta.Class({
 	
 	// Constructor
 	initialize: function(theWidth, theHeight, theContext, framerate) {

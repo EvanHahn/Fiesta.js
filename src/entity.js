@@ -2,12 +2,10 @@
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
-Fiesta.Entity = new Fiesta.Class(Fiesta.BaseObject, {
+Fiesta.Entity = new Fiesta.Class({
 	
 	// Constructor
 	initialize: function() {
-		this.callSuper();
-		
 		this._graphic;
 		this._playground;
 		this._position = new Fiesta.Vector3();

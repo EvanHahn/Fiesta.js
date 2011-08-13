@@ -2,12 +2,10 @@
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
-Fiesta.Graphic = new Fiesta.Class(Fiesta.BaseObject, {
+Fiesta.Graphic = new Fiesta.Class({
 
 	// Constructor
 	initialize: function() {
-		this.callSuper();
-		
 		this._origin = new Fiesta.Vector3();
 		this._boundingBox = new Array(6);
 		this._boundingBoxChanged = true;

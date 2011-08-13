@@ -2,7 +2,7 @@
 	License info:
 	http://raw.github.com/EvanHahn/Fiesta.js/master/LICENSE.txt	*/
 
-Fiesta.Sound = new Fiesta.Class(Fiesta.BaseObject, {
+Fiesta.Sound = new Fiesta.Class({
 	
 	// Constructor
 	initialize: function(sources) {
