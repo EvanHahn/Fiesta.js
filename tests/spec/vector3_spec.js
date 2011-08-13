@@ -2,7 +2,7 @@ describe("Vector", function() {
 
 	it("initializes properly with no arguments", function() {
 		var vector = new Fiesta.Vector3();
-		expect(vector.getVector()).toEqual([Fiesta.DEFAULT_X, Fiesta.DEFAULT_Y, Fiesta.DEFAULT_Z]);
+		expect(vector.getVector()).toEqual([,,,]);
 	});
 
 	it("initializes properly with arguments", function() {
