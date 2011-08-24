@@ -27,7 +27,7 @@ Fiesta.modifiersPressed = function(str, key) {
 // This function does cross-browser binding
 Fiesta.addListener = function(element, event, fn) {
 	if (element.addEventListener) {	// Everything else
-		bubble = true;
+		var bubble = true;
 		element.addEventListener(event, fn, bubble);
 	} else if (this.attachEvent) {	// IE
 		element.attachEvent("on" + event, fn);
