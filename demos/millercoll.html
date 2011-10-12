@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Styler -->
+	<style type="text/css">
+	
+	canvas {
+		background-color: #000;
+	}
+	
+	</style>
+
+	<!-- CoffeeScript compiler -->
+	<script src="../utils/coffee-script.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- Fiesta -->
+	<script type="text/coffeescript" src="../src/core/namespace.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/misc.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/event.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/vector.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/boundary.coffee"></script>
+	
+	<script type="text/coffeescript" src="../src/graphic/graphic.coffee"></script>
+	<script type="text/coffeescript" src="../src/graphic/box.coffee"></script>
+
+	<script type="text/coffeescript" src="../src/entity/entity.coffee"></script>
+
+	<script type="text/coffeescript" src="../src/scene/scene.coffee"></script>
+
+	<!-- Ball demo -->
+	<script type="text/coffeescript">
+
+window.boxScene = new Fiesta.Scene 800, 300, '2d', 60
+boxScene.place()
+
+a = new Fiesta.Entity
+a.graphic = new Fiesta.Box 100, 100
+a.position.x = 100
+a.position.y = 100
+a.mass = 1
+a.graphic.fillStyle = 'rgb(255, 0, 0)'
+boxScene.spawn a
+
+b = new Fiesta.Entity
+b.position.x = 120
+b.position.y = 125
+b.graphic = new Fiesta.Box 50, 50
+b.graphic.fillStyle = 'rgb(0, 0, 255)'
+boxScene.spawn b
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

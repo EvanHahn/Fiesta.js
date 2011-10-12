@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Styler -->
+	<style type="text/css">
+	
+	canvas {
+		background-color: #000;
+	}
+	
+	</style>
+
+	<!-- CoffeeScript compiler -->
+	<script src="../utils/coffee-script.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- Fiesta -->
+	<script type="text/coffeescript" src="../src/core/namespace.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/misc.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/event.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/vector.coffee"></script>
+	<script type="text/coffeescript" src="../src/core/boundary.coffee"></script>
+	
+	<script type="text/coffeescript" src="../src/graphic/graphic.coffee"></script>
+	<script type="text/coffeescript" src="../src/graphic/box.coffee"></script>
+
+	<script type="text/coffeescript" src="../src/entity/entity.coffee"></script>
+
+	<script type="text/coffeescript" src="../src/scene/scene.coffee"></script>
+
+	<!-- Ball demo -->
+	<script type="text/coffeescript">
+
+window.boxScene = new Fiesta.Scene 800, 300, '2d', 60
+boxScene.place()
+
+floor = new Fiesta.Entity
+floor.graphic = new Fiesta.Box 600, 25
+floor.position.y = 300 - 50
+floor.mass = Infinity
+floor.graphic.fillStyle = 'rgb(255, 0, 0)'
+boxScene.spawn floor
+
+b = new Fiesta.Entity
+b.position.x = 300
+b.position.y = 50
+b.acceleration.y = 1000
+b.graphic = new Fiesta.Box 50, 50
+b.graphic.fillStyle = 'rgb(0, 0, 255)'
+boxScene.spawn b
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
