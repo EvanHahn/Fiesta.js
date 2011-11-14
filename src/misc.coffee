@@ -16,4 +16,4 @@ Fiesta.isString = (s) ->
 	(typeof s is 'string') or (s instanceof String)
 
 Fiesta.isInternetExplorer = ->
-	window.navigator.userAgent.indexOf('MSIE') isnt -1
+	navigator.appName is 'Microsoft Internet Explorer'
